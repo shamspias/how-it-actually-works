@@ -1,0 +1,474 @@
+.physical-lesson {
+  display: grid;
+  gap: 24px;
+}
+.physical-lesson .panel > p {
+  max-width: 930px;
+  line-height: 1.85;
+}
+.physical-lesson .panel-header h2 {
+  margin: 8px 0 0;
+}
+.physical-bit-row {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 24px;
+}
+.physical-bit {
+  display: grid;
+  justify-items: center;
+  gap: 11px;
+  padding: 13px 4px 12px;
+  color: #5b6a5d;
+  border: 1px solid #e1e6de;
+  border-radius: 12px;
+  background: #f5f6f1;
+  font: inherit;
+  cursor: pointer;
+}
+.physical-bit.on {
+  color: #634ca5;
+  background: #eeebf8;
+  border-color: #b1a1d7;
+}
+.physical-bit.sign-bit {
+  border-top: 3px solid #8771b1;
+  padding-top: 11px;
+}
+.physical-bit-position {
+  font-size: 11px;
+}
+.physical-bit strong {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1;
+}
+.physical-bit small {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.physical-voltage {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  height: 27px;
+  width: 100%;
+}
+.physical-voltage i {
+  display: block;
+  width: 22px;
+  height: 4px;
+  border-radius: 3px 3px 0 0;
+  background: #bdc6b9;
+  transition: height 0.2s;
+}
+.physical-bit.on .physical-voltage i {
+  height: 26px;
+  background: #9a80d3;
+}
+.physical-encoding-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 11px;
+  font-size: 11px;
+  color: #5e6c57;
+}
+.physical-value-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+  align-items: center;
+  margin-top: 26px;
+}
+.physical-value-controls .control-group {
+  display: grid;
+  gap: 10px;
+}
+.physical-value-controls .control-group > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.physical-value-controls .control-group strong {
+  font-size: 18px;
+  color: #735ab2;
+}
+.physical-value-controls input {
+  width: 100%;
+  accent-color: #8b70bd;
+}
+.physical-value-controls small {
+  color: #5e6c57;
+  font-size: 11px;
+}
+.physical-value-equation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #f2f4ed;
+  padding: 19px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.physical-value-equation code {
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+.physical-value-equation strong {
+  font-size: 23px;
+  font-weight: 500;
+}
+.physical-small-note {
+  font-size: 12px;
+  color: #687768;
+  line-height: 1.9;
+}
+.physical-stage-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+  margin-top: 24px;
+}
+.physical-stage-list button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #f4f5ef;
+  color: #5e6c57;
+  padding: 11px 7px;
+  font: inherit;
+  font-size: 11px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.physical-stage-list button > span {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #e6eae0;
+  font-size: 10px;
+}
+.physical-stage-list button.active {
+  color: #634c9e;
+  border-color: #c3b6e1;
+  background: #f0ebf8;
+}
+.physical-stage-list button.active > span {
+  background: #dcd2ed;
+}
+.physical-circuit {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 5px;
+}
+.physical-chip {
+  fill: #f5f6f0;
+  stroke: #dce2d5;
+  stroke-width: 1.5;
+}
+.physical-chip.active {
+  fill: #eeebf7;
+  stroke: #ad99d0;
+}
+.physical-svg-label {
+  fill: #5e6c57;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+.physical-svg-bits {
+  fill: #735aa9;
+  font-size: 24px;
+  letter-spacing: 3px;
+  font-family: ui-monospace, monospace;
+}
+.physical-svg-value {
+  fill: #40543f;
+  font-size: 20px;
+}
+.physical-svg-note {
+  fill: #5e6c57;
+  font-size: 10px;
+}
+.physical-svg-operation {
+  fill: #766090;
+  font-size: 15px;
+}
+.physical-wire {
+  fill: none;
+  stroke: #a6b69e;
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+}
+.physical-packet.outbound {
+  animation: physical-read 1.35s linear 2 forwards;
+}
+.physical-packet.inbound {
+  animation: physical-write 1.35s linear 2 forwards;
+}
+@keyframes physical-read {
+  from {
+    transform: translate(234px, 107px);
+    opacity: 0.4;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(402px, 107px);
+    opacity: 0;
+  }
+}
+@keyframes physical-write {
+  from {
+    transform: translate(407px, 165px);
+    opacity: 0.4;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(238px, 165px);
+    opacity: 0;
+  }
+}
+.physical-hardware-notes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+.physical-hardware-notes p {
+  display: flex;
+  align-items: start;
+  gap: 11px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #5e6c57;
+}
+.physical-hardware-notes svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #9c86bd;
+}
+.physical-stage-explanation {
+  display: flex;
+  align-items: start;
+  gap: 18px;
+  margin-top: 23px;
+  padding: 20px;
+  background: #edf2e9;
+  border-radius: 12px;
+}
+.physical-stage-explanation > span {
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  font-size: 11px;
+  color: #53634c;
+  background: #dce7d5;
+}
+.physical-stage-explanation h3 {
+  font-size: 15px;
+  margin: 0 0 5px;
+}
+.physical-stage-explanation p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.physical-play-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 18px;
+}
+.physical-play-controls .text-button {
+  font-size: 12px;
+  margin-left: auto;
+}
+.physical-result-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-top: 25px;
+  padding-top: 23px;
+  border-top: 1px solid #e3e8dd;
+}
+.physical-result-row > div {
+  display: grid;
+  gap: 7px;
+}
+.physical-result-row > div > span {
+  font-size: 10px;
+  color: #5e6c57;
+}
+.physical-result-row code {
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  color: #7c649e;
+}
+.physical-result-row strong {
+  font-size: 22px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.physical-result-row > svg {
+  color: #a3ac9b;
+}
+.physical-result-loss {
+  margin-left: auto;
+}
+.physical-result-loss small {
+  font-size: 10px;
+  color: #5e6c57;
+}
+.physical-math-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 24px;
+}
+.physical-math-grid > div {
+  display: grid;
+  gap: 12px;
+  border-radius: 10px;
+  padding: 20px;
+  background: #f6f7f2;
+  border: 1px solid #e2e8db;
+}
+.physical-math-grid > div.active {
+  background: #f0ebf8;
+  border-color: #ac97cf;
+}
+.physical-math-grid span {
+  color: #5e6c57;
+  font-size: 11px;
+}
+.physical-math-grid code {
+  color: #705484;
+  font-size: 12px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.physical-math-grid strong {
+  font-size: 15px;
+  font-weight: 500;
+}
+.physical-meaning details {
+  border-top: 1px solid #e2e8dc;
+  padding-top: 17px;
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.85;
+}
+.physical-meaning summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #5a7052;
+}
+.physical-sources {
+  padding-left: 18px;
+}
+.physical-sources li {
+  margin: 7px 0;
+}
+.physical-sources a {
+  color: #7a619b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.physical-quiz {
+  border: 1px solid #dfd7e9;
+  border-radius: 15px;
+  padding: 25px;
+  background: #f3eff8;
+}
+.physical-quiz > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.physical-quiz .button {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.6;
+}
+.physical-quiz > p {
+  margin-bottom: 0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+@media (max-width: 700px) {
+  .physical-bit-row {
+    gap: 5px;
+  }
+  .physical-bit {
+    padding: 11px 2px;
+  }
+  .physical-bit small {
+    font-size: 9px;
+  }
+  .physical-bit strong {
+    font-size: 22px;
+  }
+  .physical-encoding-caption {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .physical-value-controls {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .physical-stage-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .physical-stage-list button {
+    justify-content: start;
+  }
+  .physical-hardware-notes {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .physical-result-row {
+    gap: 15px;
+  }
+  .physical-result-loss {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+  .physical-result-row strong {
+    font-size: 20px;
+  }
+  .physical-math-grid {
+    grid-template-columns: 1fr;
+  }
+  .physical-play-controls .text-button {
+    margin-left: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .physical-packet {
+    display: none;
+    animation: none !important;
+  }
+  .physical-voltage i {
+    transition: none;
+  }
+}

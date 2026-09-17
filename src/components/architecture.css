@@ -1,0 +1,467 @@
+.architecture-journey {
+  display: grid;
+  gap: 24px;
+}
+.architecture-journey .lesson-heading {
+  margin-bottom: 0;
+}
+.architecture-panel {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+.architecture-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.architecture-tabs button {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 5px 10px;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 18px;
+  background: var(--surface);
+}
+.architecture-tabs button > span {
+  grid-row: span 2;
+  font-size: 20px;
+  color: #5e6e59;
+}
+.architecture-tabs button[aria-pressed='true'] {
+  border-color: #a3b493;
+  background: #e8efe2;
+}
+.architecture-tabs small {
+  color: #606e61;
+}
+.architecture-word-controls {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.architecture-word-controls > div {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f5f7f0;
+  min-width: 0;
+}
+.architecture-word-controls > div.selected {
+  background: #f0eaf7;
+  border-color: #b5a2cf;
+}
+.architecture-word-controls label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #5c684f;
+}
+.architecture-word-controls select {
+  width: 100%;
+  min-width: 0;
+}
+.architecture-word-controls button {
+  background: transparent;
+  border: 0;
+  padding: 5px 0;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 5px;
+}
+.architecture-word-controls button[aria-pressed='true'] {
+  background: #e0d4ed;
+}
+.architecture-toggle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 650;
+}
+.architecture-toggle input {
+  accent-color: #8670b5;
+  width: 17px;
+  height: 17px;
+}
+.architecture-toggle span {
+  font-weight: 400;
+  color: #62715f;
+}
+.architecture-stage-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.architecture-stage-list button {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  background: #f4f5ee;
+  border: 1px solid transparent;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 12px;
+}
+.architecture-stage-list button span {
+  display: grid;
+  place-items: center;
+  height: 23px;
+  width: 23px;
+  border-radius: 50%;
+  background: #e0e7d8;
+  font-weight: 700;
+}
+.architecture-stage-list button.active {
+  border-color: #ac98ca;
+  background: #efe8f6;
+}
+.architecture-stage-list button.active span {
+  background: #795eaa;
+  color: white;
+}
+.architecture-scene,
+.architecture-memory-scene {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  background: #f6f8f1;
+  color: #6e8c60;
+}
+.architecture-scene text,
+.architecture-memory-scene text,
+.architecture-miniature text {
+  fill: var(--ink);
+  font-family: 'DM Sans Variable', sans-serif;
+}
+.architecture-svg-caption {
+  font-size: 17px;
+  font-weight: 600;
+}
+.architecture-card-word {
+  font-size: 23px;
+  font-weight: 700;
+}
+.architecture-svg-small {
+  font-size: 14px;
+}
+.architecture-story {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 13px;
+  padding: 18px;
+  background: #f0eaf7;
+  border: 1px solid #dfd4ec;
+  border-radius: 12px;
+}
+.architecture-story > span {
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  color: white;
+  background: #795eaa;
+  font-weight: 750;
+}
+.architecture-story h3 {
+  font-size: 17px;
+  margin: 3px 0 6px;
+}
+.architecture-story p {
+  font-size: 14px;
+  line-height: 1.65;
+}
+.architecture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.architecture-actions .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+}
+.architecture-actions button[aria-pressed='true'],
+.architecture-choice button[aria-pressed='true'] {
+  background: #e9e1f3;
+  border-color: #ac98ca;
+}
+.architecture-challenge {
+  display: grid;
+  gap: 14px;
+  background: #faf3e5;
+  border: 1px solid #e9d4a3;
+  padding: 18px;
+  border-radius: 12px;
+}
+.architecture-challenge.success {
+  background: #e8efe2;
+  border-color: #a3b493;
+}
+.architecture-challenge p {
+  font-size: 14px;
+}
+.architecture-scope {
+  font-size: 12px;
+  color: #606d62;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.architecture-details {
+  border-top: 1px solid var(--border);
+  padding-top: 15px;
+}
+.architecture-details summary {
+  cursor: pointer;
+  font-weight: 650;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.architecture-details[open] summary {
+  margin-bottom: 18px;
+}
+.architecture-details p {
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+.architecture-math {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.architecture-formula {
+  padding: 16px;
+  background: #f2f5ec;
+  border-radius: 10px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.architecture-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.architecture-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+.architecture-table-scroll caption {
+  text-align: left;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: #657160;
+}
+.architecture-table-scroll th,
+.architecture-table-scroll td {
+  padding: 12px 9px;
+  border-bottom: 1px solid var(--border);
+  min-width: 110px;
+}
+.architecture-table-scroll th small {
+  display: block;
+  font-weight: 400;
+  white-space: nowrap;
+  padding-top: 4px;
+}
+.architecture-run {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.architecture-run code {
+  background: #edf1e7;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+.architecture-blocks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 15px 0;
+}
+.architecture-blocks span {
+  padding: 9px;
+  border: 1px solid #b8c7ad;
+  border-radius: 8px;
+  background: #f2f5ec;
+  font-size: 12px;
+}
+.architecture-question {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.architecture-question select {
+  max-width: 100%;
+}
+.architecture-memory-tape {
+  display: flex;
+  gap: 10px;
+}
+.architecture-memory-tape > div {
+  flex: 1;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  padding: 11px 6px;
+  border-radius: 11px;
+  border: 1px solid var(--border);
+  background: #f5f5f0;
+  min-width: 0;
+}
+.architecture-memory-tape .marked {
+  background: #e8efe2;
+  border-color: #a3b493;
+}
+.architecture-memory-tape .current {
+  box-shadow: 0 0 0 3px #c6b5dd;
+  border-color: #8670b5;
+}
+.architecture-memory-tape .read:not(.current) {
+  color: #5d6b55;
+  background: #f0f2eb;
+  border-color: #d6dece;
+}
+.architecture-memory-tape strong {
+  font-size: 26px;
+}
+.architecture-memory-tape small,
+.architecture-memory-tape span {
+  font-size: 11px;
+}
+.architecture-memory-number {
+  font-size: 28px;
+  font-weight: 750;
+}
+.architecture-memory-pulse {
+  animation: architecture-pulse 1.5s ease-out;
+  transform-origin: 612px 150px;
+}
+.architecture-source {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #59684f;
+  overflow-wrap: anywhere;
+}
+.architecture-source a {
+  text-decoration-color: #a3b493;
+  text-underline-offset: 3px;
+}
+.architecture-alternatives {
+  margin: 0;
+  padding-top: 22px;
+}
+.architecture-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 18px;
+}
+.architecture-choice + h3 {
+  margin-bottom: 10px;
+}
+.architecture-miniature {
+  display: block;
+  width: 100%;
+  max-width: 650px;
+  height: auto;
+  margin: 10px auto 22px;
+}
+.architecture-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.architecture-comparison strong {
+  display: block;
+  margin-bottom: 6px;
+}
+.architecture-alternatives .architecture-formula {
+  margin: 0 0 14px;
+}
+@keyframes architecture-pulse {
+  0%,
+  45% {
+    transform: scale(0.96);
+  }
+  80% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (max-width: 650px) {
+  .architecture-tabs {
+    grid-template-columns: 1fr;
+  }
+  .architecture-tabs button {
+    padding: 14px;
+  }
+  .architecture-word-controls {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .architecture-stage-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .architecture-panel {
+    gap: 18px;
+  }
+  .architecture-scene {
+    min-height: 210px;
+  }
+  .architecture-memory-scene {
+    min-height: 165px;
+  }
+  .architecture-svg-small {
+    font-size: 17px;
+  }
+  .architecture-svg-caption {
+    font-size: 19px;
+  }
+  .architecture-comparison {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .architecture-story {
+    grid-template-columns: 28px 1fr;
+    padding: 13px;
+    gap: 10px;
+  }
+  .architecture-story > span {
+    width: 28px;
+    height: 28px;
+  }
+  .architecture-memory-tape {
+    gap: 5px;
+  }
+  .architecture-memory-tape strong {
+    font-size: 23px;
+  }
+  .architecture-memory-tape small,
+  .architecture-memory-tape span {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .architecture-memory-pulse {
+    animation: none;
+  }
+  .architecture-message-dot {
+    display: none;
+  }
+}

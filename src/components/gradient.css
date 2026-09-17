@@ -1,0 +1,338 @@
+.gradient-lesson {
+  display: grid;
+  gap: 22px;
+}
+.gradient-lesson .lesson-heading {
+  margin-bottom: 0;
+}
+.gradient-guide-top,
+.gradient-guide-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.gradient-guide-top .text-button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.gradient-progress {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin: 18px 0 25px;
+}
+.gradient-progress span {
+  height: 4px;
+  background: #eceee6;
+  border-radius: 4px;
+}
+.gradient-progress .filled {
+  background: #7b9768;
+}
+.gradient-story {
+  display: flex;
+  gap: 16px;
+  max-width: 740px;
+  margin: auto;
+  min-height: 114px;
+}
+.gradient-step-number {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #ece7f3;
+  color: #785b9b;
+  border-radius: 12px;
+  font-weight: 750;
+}
+.gradient-story h2 {
+  font-size: 23px;
+  margin: 3px 0 9px;
+}
+.gradient-story p {
+  font-size: 14px;
+  color: #586450;
+  max-width: 650px;
+}
+.gradient-mapping {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 24px;
+  font-size: 11px;
+  color: #65715d;
+  margin: 25px 0 0;
+}
+.gradient-mapping strong {
+  color: #405439;
+}
+.gradient-mountain {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: visible;
+}
+.gradient-svg-note {
+  fill: #65715d;
+  font-size: 10px;
+  letter-spacing: 1.1px;
+  font-weight: 600;
+}
+.gradient-svg-number {
+  fill: #465c3e;
+  font-size: 12px;
+}
+.gradient-svg-caption {
+  fill: #765993;
+  font-size: 17px;
+  font-weight: 600;
+}
+.gradient-hiker {
+  transition: transform 850ms cubic-bezier(0.2, 0.65, 0.35, 1);
+}
+.gradient-readings {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin: 10px 0 22px;
+}
+.gradient-readings div {
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+.gradient-readings span {
+  color: #64715c;
+  font-size: 11px;
+}
+.gradient-readings strong {
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.8px;
+}
+.gradient-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.gradient-local-hint {
+  font-size: 13px;
+  color: #795c98;
+  background: #f3eef7;
+  padding: 12px 20px;
+  border-radius: 8px;
+}
+.gradient-status {
+  text-align: center;
+  font-size: 12px;
+  min-height: 48px;
+  margin: 15px auto 0;
+  max-width: 660px;
+  color: #5d6c50;
+}
+.gradient-next {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  background: #f5f5ef;
+  border: 1px solid #e9eadd;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px auto 22px;
+}
+.gradient-next > span {
+  font-size: 10px;
+  color: #64715c;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.gradient-next code {
+  font-size: 17px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.gradient-next small {
+  color: #58634f;
+  font-size: 11px;
+  text-align: center;
+}
+.gradient-guide-nav {
+  justify-content: flex-end;
+  padding-top: 18px;
+  border-top: 1px solid #e7eade;
+}
+.gradient-guide-nav .text-button {
+  margin-right: auto;
+}
+.gradient-finished {
+  padding: 18px 20px;
+  background: #eef3e9;
+  border-radius: 9px;
+  margin-top: 10px;
+}
+.gradient-finished strong {
+  font-size: 14px;
+}
+.gradient-finished p {
+  font-size: 12px;
+  margin-top: 6px;
+  color: #57674e;
+}
+.gradient-challenges > summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.6;
+}
+.gradient-challenge-body {
+  display: grid;
+  gap: 20px;
+  padding-top: 20px;
+}
+.gradient-challenge-body p {
+  font-size: 13px;
+}
+.gradient-challenge-body .insight {
+  display: block;
+  margin: 0;
+}
+.gradient-settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+.gradient-settings label {
+  font-size: 12px;
+  display: grid;
+  gap: 10px;
+}
+.gradient-settings select {
+  width: 100%;
+}
+.gradient-method-note {
+  background: #f3f0f6;
+  padding: 16px;
+  border-radius: 9px;
+  color: #665475;
+}
+.gradient-maths {
+  display: grid;
+  gap: 20px;
+}
+.gradient-maths h2 {
+  font-size: 24px;
+}
+.gradient-maths > p {
+  font-size: 14px;
+}
+.gradient-equations {
+  display: grid;
+  gap: 22px;
+  padding-left: 23px;
+  margin: 0;
+}
+.gradient-equations li {
+  padding-left: 7px;
+}
+.gradient-equations code {
+  display: block;
+  padding: 13px 0;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+.gradient-equations p {
+  color: #5f6a57;
+  font-size: 13px;
+}
+.gradient-live-math {
+  display: grid;
+  gap: 14px;
+  background: #eff3e9;
+  border-radius: 12px;
+  padding: 22px;
+}
+.gradient-live-math p {
+  font-size: 13px;
+}
+.gradient-live-math code {
+  overflow-wrap: anywhere;
+}
+.gradient-live-math .button {
+  justify-self: start;
+}
+.gradient-code {
+  display: grid;
+  gap: 18px;
+}
+.gradient-code .panel p {
+  font-size: 13px;
+  margin-top: 10px;
+}
+@media (max-width: 640px) {
+  .gradient-story {
+    gap: 10px;
+    min-height: 163px;
+  }
+  .gradient-story h2 {
+    font-size: 20px;
+  }
+  .gradient-story p {
+    font-size: 13px;
+  }
+  .gradient-step-number {
+    height: 30px;
+    width: 30px;
+    border-radius: 9px;
+  }
+  .gradient-mapping {
+    font-size: 10px;
+    gap: 6px 12px;
+  }
+  .gradient-mountain {
+    margin-top: 14px;
+  }
+  .gradient-svg-caption {
+    font-size: 20px;
+  }
+  .gradient-svg-note {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+  .gradient-svg-number {
+    font-size: 16px;
+  }
+  .gradient-readings {
+    gap: 22px;
+  }
+  .gradient-readings strong {
+    font-size: 21px;
+  }
+  .gradient-readings span {
+    font-size: 10px;
+  }
+  .gradient-settings {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .gradient-guide-top {
+    align-items: flex-start;
+  }
+  .gradient-guide-top .text-button {
+    font-size: 10px;
+  }
+  .gradient-guide-nav .button {
+    padding: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gradient-hiker {
+    transition: none;
+  }
+}

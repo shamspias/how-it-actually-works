@@ -1,0 +1,115 @@
+.backprop-scene-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+.backprop-scene {
+  background: linear-gradient(145deg, #fafaf5, #f6f2fa);
+  border: 1px solid #e4e5da;
+  border-radius: 12px;
+  padding: 20px 9px;
+  margin-top: 22px;
+  overflow: hidden;
+}
+.backprop-scene svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.bp-column {
+  font-size: 10px;
+  fill: #637457;
+  letter-spacing: 1px;
+}
+.bp-value {
+  font-size: 19px;
+  fill: #3f5537;
+  font-weight: 600;
+}
+.bp-small-value {
+  font-size: 13px;
+  fill: #735332;
+}
+.bp-label {
+  font-size: 10px;
+  fill: #627256;
+}
+.bp-weight {
+  font-size: 12px;
+  fill: #75508f;
+}
+.backprop-auto-note {
+  font-size: 11px !important;
+  margin: 13px auto 0;
+  text-align: center;
+  color: #637258;
+}
+.backprop-receipt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #d5e1c9;
+  background: #edf4e7;
+  padding: 19px;
+  gap: 20px;
+  border-radius: 9px;
+}
+.backprop-receipt span {
+  display: block;
+  color: #637850;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.backprop-receipt strong {
+  font-size: 18px;
+  font-weight: 500;
+  color: #456134;
+}
+.backprop-lab-invitation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 27px 0;
+}
+.backprop-lab-invitation h3 {
+  font-size: 18px;
+  margin-bottom: 9px;
+}
+.backprop-lab-invitation p {
+  color: #657357;
+  font-size: 13px;
+}
+.backprop-lab-invitation .button {
+  flex-shrink: 0;
+}
+.backprop-journey .math-story label {
+  display: block;
+  font-size: 13px;
+  line-height: 2;
+}
+.backprop-journey .math-story label input {
+  display: block;
+}
+@media (max-width: 640px) {
+  .backprop-scene {
+    padding: 14px 0;
+    overflow-x: auto;
+  }
+  .backprop-scene svg {
+    min-width: 550px;
+  }
+  .backprop-lab-invitation {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .backprop-scene-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .backprop-receipt {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
