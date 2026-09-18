@@ -1,0 +1,345 @@
+.first-steps {
+  display: grid;
+  gap: 25px;
+}
+.first-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: clamp(20px, 3vw, 38px);
+}
+.first-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.first-card-top .text-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.first-card h2 {
+  font-size: clamp(23px, 2.5vw, 31px);
+  line-height: 1.3;
+}
+.first-story {
+  font-size: 17px;
+  max-width: 730px;
+  margin: 16px 0 22px;
+}
+.pip-machine {
+  display: grid;
+  grid-template-columns: 1fr 28px 1.2fr 28px 1fr;
+  align-items: center;
+  max-width: 740px;
+  margin: 25px auto 18px;
+  padding: 22px 12px;
+  border-radius: 16px;
+  background: #f3f5ed;
+  gap: 10px;
+}
+.pip-input,
+.pip-output,
+.pip-robot {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
+  text-align: center;
+  min-width: 0;
+}
+.pip-machine span,
+.first-answer > span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #53634d;
+}
+.pip-input strong,
+.pip-output strong {
+  font-size: 20px;
+}
+.pip-robot {
+  background: #e9e1f4;
+  border: 2px solid #aa94cb;
+  border-radius: 22px;
+  padding: 20px 9px;
+  color: #503a75;
+}
+.pip-robot > strong {
+  font-size: 34px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.pip-robot small {
+  font-size: 11px;
+}
+.pip-robot > span {
+  color: #594275;
+}
+.pip-face {
+  width: 75px;
+  height: 43px;
+  border-radius: 13px;
+  background: #523f70;
+  display: flex;
+  justify-content: center;
+  gap: 19px;
+  position: relative;
+  padding-top: 9px;
+}
+.pip-face > i {
+  width: 8px;
+  height: 9px;
+  background: #f8f8ed;
+  border-radius: 50%;
+}
+.pip-face > span {
+  position: absolute;
+  bottom: 9px;
+  width: 24px;
+  height: 6px;
+  border-bottom: 2px solid #f8f8ed;
+  border-radius: 0 0 50% 50%;
+}
+.pip-seeds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  justify-content: center;
+  align-content: center;
+  min-height: 65px;
+  max-width: 105px;
+}
+.pip-seeds i {
+  display: block;
+  width: 21px;
+  height: 29px;
+  border-radius: 75% 15% 75% 25%;
+  background: #708e50;
+  border: 2px solid #466c3e;
+  transform: rotate(15deg);
+}
+.pip-glass {
+  width: 49px;
+  height: 67px;
+  border: 2px solid #608487;
+  border-top: 1px dashed #608487;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: end;
+  background: #fbfdfa;
+}
+.pip-glass i {
+  background: #a3d2d0;
+  width: 100%;
+  transition: height 0.55s ease;
+}
+.pip-equation {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 12px;
+}
+.first-answer {
+  display: grid;
+  gap: 6px;
+  text-align: center;
+  background: #e8efe2;
+  border-radius: 12px;
+  padding: 18px;
+}
+.first-answer > strong {
+  font-size: 23px;
+}
+.first-answer p {
+  font-size: 14px;
+}
+.first-action {
+  margin-top: 22px;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+.first-action > div:first-child {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.first-action p {
+  max-width: 700px;
+  font-size: 16px;
+}
+.first-action .button {
+  min-height: 45px;
+  font-size: 14px;
+  white-space: normal;
+}
+.first-action .button[aria-pressed='true'] {
+  background: #e9e1f4;
+  border-color: #8973ad;
+  color: #503a75;
+}
+.first-action .first-choices {
+  flex-direction: column;
+  align-items: stretch;
+  width: min(100%, 510px);
+}
+.first-step-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  margin-top: 28px;
+  padding-top: 22px;
+}
+.first-step-footer > span {
+  font-size: 12px;
+}
+.first-step-footer .button {
+  white-space: normal;
+  line-height: 1.5;
+}
+.pip-remember {
+  display: grid;
+  justify-items: center;
+  gap: 13px;
+  background: #ede8f4;
+  border-radius: 16px;
+  padding: 25px;
+  margin-top: 24px;
+}
+.first-win {
+  background: #e8efe2;
+  border-radius: 9px;
+  padding: 10px 16px;
+}
+.first-word-map {
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+}
+.first-word-map dl {
+  display: grid;
+  gap: 12px;
+}
+.first-word-map dl > div {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 12px;
+}
+.first-word-map dt {
+  font-weight: 700;
+}
+.first-word-map dd {
+  margin: 0;
+}
+.first-boundary {
+  padding: 10px 4px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.first-boundary summary,
+.first-math summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.first-boundary p {
+  margin-top: 12px;
+  max-width: 850px;
+}
+.first-math {
+  display: grid;
+  gap: 22px;
+  font-size: 16px;
+}
+.first-math ol {
+  display: grid;
+  gap: 15px;
+  line-height: 1.7;
+  padding-left: 25px;
+}
+.first-math .button {
+  justify-self: start;
+}
+.first-math details p {
+  margin-top: 12px;
+}
+.pip-practicing {
+  animation: pip-pulse 0.55s ease 1;
+}
+@keyframes pip-pulse {
+  50% {
+    background: #d7c8ed;
+    transform: translateY(-4px);
+  }
+}
+@media (max-width: 600px) {
+  .first-story {
+    font-size: 16px;
+  }
+  .pip-machine {
+    gap: 4px;
+    padding: 15px 5px;
+    grid-template-columns: 1fr 17px 1.3fr 17px 1fr;
+  }
+  .pip-arrow {
+    width: 16px;
+  }
+  .pip-machine span {
+    font-size: 8px;
+    letter-spacing: 0.4px;
+  }
+  .pip-input strong,
+  .pip-output strong {
+    font-size: 14px;
+  }
+  .pip-robot {
+    padding: 13px 3px;
+    border-radius: 15px;
+  }
+  .pip-face {
+    width: 55px;
+    gap: 15px;
+  }
+  .pip-robot > strong {
+    font-size: 27px;
+  }
+  .pip-seeds {
+    gap: 3px;
+  }
+  .pip-seeds i {
+    width: 15px;
+    height: 23px;
+  }
+  .pip-equation {
+    font-size: 14px;
+  }
+  .first-step-footer .button {
+    flex: 1;
+    min-width: 100px;
+  }
+  .first-step-footer > span {
+    display: none;
+  }
+  .first-word-map dl > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pip-glass i {
+    transition: none;
+  }
+  .pip-practicing {
+    animation: none;
+  }
+}

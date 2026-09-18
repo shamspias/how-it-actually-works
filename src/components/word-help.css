@@ -1,0 +1,106 @@
+.word-help {
+  width: min(760px, calc(100% - 30px));
+  max-height: 88vh;
+  padding: clamp(20px, 3vw, 34px);
+  border: 1px solid #d4dcca;
+  border-radius: 20px;
+  background: #fffefa;
+  color: #293d35;
+}
+.word-help::backdrop {
+  background: #1a2920a8;
+}
+.word-help-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.word-help h2 {
+  font-size: 29px;
+  margin-top: 8px;
+}
+.word-help > p {
+  font-size: 15px;
+}
+.word-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 12px;
+  border: 1px solid #cbd7c4;
+  border-radius: 12px;
+  padding: 13px;
+  background: #f3f5ef;
+}
+.word-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #293d35;
+  padding: 4px;
+}
+.word-search input::placeholder {
+  color: #63715b;
+}
+.word-count {
+  color: #56644f;
+  font-size: 12px !important;
+}
+.word-definitions {
+  display: grid;
+  gap: 13px;
+}
+.word-definitions > div {
+  border-top: 1px solid #e1e5db;
+  padding-top: 18px;
+}
+.word-definitions dt {
+  font-weight: 750;
+  color: #584478;
+  font-size: 17px;
+}
+.word-definitions dd {
+  margin: 7px 0 0;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.word-definitions dd p {
+  font-size: 14px;
+  color: #56644f;
+  margin-top: 8px;
+}
+.chapter-part {
+  padding: 17px 10px 5px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: #58674f;
+}
+.learning-bridge {
+  margin: 0 0 22px;
+  border-left: 3px solid #bca8d1;
+  background: #eeebf3;
+  padding: 14px 18px;
+  border-radius: 0 10px 10px 0;
+  font-size: 14px;
+}
+.learning-bridge summary {
+  font-weight: 650;
+  cursor: pointer;
+  color: #584478;
+}
+.learning-bridge p {
+  margin-top: 10px;
+  max-width: 780px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

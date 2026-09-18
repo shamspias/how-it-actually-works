@@ -11,7 +11,7 @@ async function setRange(page: Page, id: string, value: string) {
 test('one training step matches the visible arithmetic, and reset restores the start', async ({
   page,
 }) => {
-  await page.goto('/');
+  await page.goto('/#one-weight');
   await expect(page.getByRole('heading', { name: 'How does a machine learn?' })).toBeVisible();
   await expect(page.locator('.tiny-result').first()).toContainText('0.500');
   await page.getByRole('button', { name: 'Train one step' }).click();
@@ -28,7 +28,7 @@ test('one training step matches the visible arithmetic, and reset restores the s
 });
 
 test('manual fitting, automatic training, pause, and recall feedback work', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/#one-weight');
   await setRange(page, 'tiny-weight', '2');
   await expect(page.locator('.tiny-result').nth(1)).toContainText('0.000');
   await page.getByRole('button', { name: 'Reset the tiny machine' }).click();
@@ -56,7 +56,7 @@ test('manual fitting, automatic training, pause, and recall feedback work', asyn
 test('chapter navigation remembers completion, supports deep links and browser back', async ({
   page,
 }) => {
-  await page.goto('/');
+  await page.goto('/#one-weight');
   await page.getByRole('button', { name: 'Go a little deeper' }).click();
   await expect(page).toHaveURL(/#gradient-descent$/);
   expect(await page.evaluate(() => localStorage.getItem('hiaw-progress-v2'))).toBe(
@@ -207,7 +207,7 @@ test('all lessons fit the viewport without runtime errors or external requests',
 });
 
 test('sources dialog supports Escape and presentation mode hides navigation', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/#one-weight');
   await page.getByRole('button', { name: 'Open field notes and sources' }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.keyboard.press('Escape');

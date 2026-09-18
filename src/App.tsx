@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { Fragment, lazy, Suspense, useEffect, useRef, useState } from 'react';
 import {
   ArrowDownToLine,
   ArrowRight,
@@ -21,6 +21,8 @@ import {
   Zap,
 } from 'lucide-react';
 import TinyLearner from './components/TinyLearner';
+import FirstSteps from './components/FirstSteps';
+import WordHelp from './components/WordHelp';
 const BackpropJourney = lazy(() => import('./components/BackpropJourney'));
 const GradientJourney = lazy(() => import('./components/GradientJourney'));
 const ArchitectureJourney = lazy(() => import('./components/ArchitectureJourney'));
@@ -30,6 +32,13 @@ const PredictionJourney = lazy(() => import('./components/PredictionJourney'));
 const ScaleLesson = lazy(() => import('./components/ScaleLesson'));
 
 const chapters = [
+  {
+    id: 'first-steps',
+    title: 'What does learning change?',
+    note: 'Teach Pip. Keep one changed number.',
+    time: '4 min',
+    icon: Lightbulb,
+  },
   {
     id: 'one-weight',
     title: 'One tiny learner',
@@ -87,6 +96,29 @@ const chapters = [
     icon: Zap,
   },
 ];
+const chapterBridges: Record<string, string> = {
+  'one-weight':
+    'Pip kept a changed dial. Now use three examples and see exactly how they suggest the next adjustment.',
+  'gradient-descent':
+    'You have seen a weight improve a guess. Now ask why a slope gives a useful direction, and why a large step can go wrong.',
+  'neural-network':
+    'A slope tells one dial which way to move. With several connected dials, the chain rule follows each effect back from the loss.',
+  shortcut:
+    'Weights can produce correct answers by using an unwanted clue. Change just one clue to investigate which information the model uses.',
+  'before-training':
+    'A successful practice score does not choose between all possible explanations. Separate what you can calculate from what requires new evidence.',
+  architectures:
+    'Hidden values describe an input. Attention and carried state are two ways to bring information from other positions into those values.',
+  scale:
+    'You have followed attention and state updates. Now separate the size of a model from the behavior its learned parameters produce.',
+  physical:
+    'Weights are numbers in our equations. Now follow how their encoded values are read, changed by arithmetic, and written to memory.',
+};
+const chapterParts: Record<string, string> = {
+  'first-steps': '1 · START WITH ONE CHANGE',
+  'learned-features': '2 · BUILD AND TEST PATTERNS',
+  architectures: '3 · READ BIGGER MACHINES',
+};
 const legacyIds = ['one-weight', 'neural-network', 'shortcut', 'before-training', 'scale'];
 
 function chapterFromHash() {
@@ -131,6 +163,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [presenting, setPresenting] = useState(false);
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  const [wordsOpen, setWordsOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const content = useRef<HTMLElement>(null);
 
@@ -197,7 +230,7 @@ export default function App() {
         />
       )}
       <aside className={`sidebar ${menuOpen ? 'is-open' : ''}`} aria-label="Course navigation">
-        <a className="brand" href="#one-weight" onClick={() => navigate(0)}>
+        <a className="brand" href="#first-steps" onClick={() => navigate(0)}>
           <span className="brand-mark">
             <Layers3 size={27} strokeWidth={1.5} />
           </span>
@@ -226,20 +259,27 @@ export default function App() {
         </div>
         <nav className="chapter-nav">
           {chapters.map((item, i) => (
-            <button
-              key={item.id}
-              onClick={() => navigate(i)}
-              aria-current={chapter === i ? 'step' : undefined}
-              className={`chapter-link ${chapter === i ? 'active' : ''}`}
-            >
-              <span className={`chapter-number ${completed.includes(item.id) ? 'is-done' : ''}`}>
-                {completed.includes(item.id) ? <Check size={14} /> : `0${i + 1}`}
-              </span>
-              <span>
-                <strong>{item.title}</strong>
-                <small>{item.note}</small>
-              </span>
-            </button>
+            <Fragment key={item.id}>
+              {chapterParts[item.id] && <p className="chapter-part">{chapterParts[item.id]}</p>}
+              <button
+                key={item.id}
+                onClick={() => navigate(i)}
+                aria-current={chapter === i ? 'step' : undefined}
+                className={`chapter-link ${chapter === i ? 'active' : ''}`}
+              >
+                <span className={`chapter-number ${completed.includes(item.id) ? 'is-done' : ''}`}>
+                  {completed.includes(item.id) ? (
+                    <Check size={14} />
+                  ) : (
+                    String(i + 1).padStart(2, '0')
+                  )}
+                </span>
+                <span>
+                  <strong>{item.title}</strong>
+                  <small>{item.note}</small>
+                </span>
+              </button>
+            </Fragment>
           ))}
         </nav>
         <div className="course-progress">
@@ -292,6 +332,14 @@ export default function App() {
             <strong>Machine learning</strong>
           </div>
           <div className="topbar-actions">
+            <button
+              className="icon-button"
+              aria-label="Explain a word"
+              title="Explain a word"
+              onClick={() => setWordsOpen(true)}
+            >
+              <BookOpen size={19} />
+            </button>
             <span className="local-badge">
               <span /> Runs in your browser
             </span>
@@ -324,21 +372,32 @@ export default function App() {
               <BookOpen size={13} /> {chapters[chapter].time} of curiosity
             </span>
           </div>
+          {chapterBridges[chapters[chapter].id] && (
+            <details className="learning-bridge" key={chapters[chapter].id}>
+              <summary>How does this connect to what I just learned?</summary>
+              <p>{chapterBridges[chapters[chapter].id]}</p>
+            </details>
+          )}
           <Suspense fallback={<p role="status">Opening this discovery…</p>}>
             <div key={chapter} className="lesson-body">
-              {chapter === 0 && <TinyLearner onContinue={complete} />}
-              {chapter === 1 && <GradientJourney />}
-              {chapter === 2 && <BackpropJourney />}
-              {chapter === 3 && <ShortcutJourney />}
-              {chapter === 4 && <PredictionJourney />}
-              {chapter === 5 && <ArchitectureJourney />}
-              {chapter === 6 && <ScaleLesson />}
-              {chapter === 7 && <PhysicalJourney />}
+              {chapters[chapter].id === 'first-steps' && <FirstSteps />}
+              {chapters[chapter].id === 'one-weight' && <TinyLearner onContinue={complete} />}
+              {chapters[chapter].id === 'gradient-descent' && <GradientJourney />}
+              {chapters[chapter].id === 'neural-network' && <BackpropJourney />}
+              {chapters[chapter].id === 'shortcut' && <ShortcutJourney />}
+              {chapters[chapter].id === 'before-training' && <PredictionJourney />}
+              {chapters[chapter].id === 'architectures' && <ArchitectureJourney />}
+              {chapters[chapter].id === 'scale' && <ScaleLesson />}
+              {chapters[chapter].id === 'physical' && <PhysicalJourney />}
             </div>
           </Suspense>
-          {chapter > 0 && (
+          {chapters[chapter].id !== 'one-weight' && (
             <div className="lesson-navigation">
-              <button className="text-button" onClick={() => navigate(chapter - 1)}>
+              <button
+                className="text-button"
+                disabled={chapter === 0}
+                onClick={() => navigate(chapter - 1)}
+              >
                 ← Previous discovery
               </button>
               <button className="button primary" onClick={complete}>
@@ -369,6 +428,7 @@ export default function App() {
         </main>
       </div>
 
+      <WordHelp open={wordsOpen} onClose={() => setWordsOpen(false)} />
       <dialog
         ref={dialog}
         className="notes-dialog"

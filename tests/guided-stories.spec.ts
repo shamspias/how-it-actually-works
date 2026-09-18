@@ -112,6 +112,7 @@ test('three modes remain usable on every chapter without horizontal page overflo
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   for (const chapter of [
+    'first-steps',
     'one-weight',
     'gradient-descent',
     'neural-network',
@@ -144,7 +145,8 @@ test('existing completed chapters migrate by stable id when lessons are inserted
   await page.goto('/');
   await page.evaluate(() => localStorage.setItem('hiaw-progress-v1', '[0,1,4]'));
   await page.reload();
-  await expect(page.locator('.course-progress')).toContainText('3 / 8');
+  const count = await page.locator('.chapter-link').count();
+  await expect(page.locator('.course-progress')).toContainText(`3 / ${count}`);
   await expect(
     page.locator('.chapter-link').filter({ hasText: 'Follow one mistake' }).locator('.is-done'),
   ).toHaveCount(1);
