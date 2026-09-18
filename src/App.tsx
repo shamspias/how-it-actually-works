@@ -23,6 +23,7 @@ import {
 import TinyLearner from './components/TinyLearner';
 import FirstSteps from './components/FirstSteps';
 import WordHelp from './components/WordHelp';
+const PaperJourney = lazy(() => import('./components/PaperJourney'));
 const DeepJourney = lazy(() => import('./components/DeepJourney'));
 const FeatureJourney = lazy(() => import('./components/FeatureJourney'));
 const BackpropJourney = lazy(() => import('./components/BackpropJourney'));
@@ -111,8 +112,17 @@ const chapters = [
     time: '6 min',
     icon: Zap,
   },
+  {
+    id: 'research-paper',
+    title: 'Read a research blueprint',
+    note: 'Trace the boxes. Check the evidence.',
+    time: '10 min',
+    icon: BookOpen,
+  },
 ];
 const chapterBridges: Record<string, string> = {
+  'research-paper':
+    'You have followed weights, gradients, features, attention, memory, and physical storage. Put them together: trace a text model from inputs to training feedback, then audit a research blueprint.',
   'deep-networks':
     'Learned internal responses can feed another layer. Trace one path through a deeper computation and test why a small sensitivity can fade, grow, or take a bypass.',
   'learned-features':
@@ -411,6 +421,7 @@ export default function App() {
               {chapters[chapter].id === 'architectures' && <ArchitectureJourney />}
               {chapters[chapter].id === 'scale' && <ScaleLesson />}
               {chapters[chapter].id === 'physical' && <PhysicalJourney />}
+              {chapters[chapter].id === 'research-paper' && <PaperJourney />}
             </div>
           </Suspense>
           {chapters[chapter].id !== 'one-weight' && (

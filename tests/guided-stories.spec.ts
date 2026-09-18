@@ -123,6 +123,7 @@ test('three modes remain usable on every chapter without horizontal page overflo
     'architectures',
     'scale',
     'physical',
+    'research-paper',
   ]) {
     await page.goto(`/#${chapter}`);
     await expect(page.locator('main h1')).toBeVisible();
