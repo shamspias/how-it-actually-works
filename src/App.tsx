@@ -23,6 +23,7 @@ import {
 import TinyLearner from './components/TinyLearner';
 import FirstSteps from './components/FirstSteps';
 import WordHelp from './components/WordHelp';
+const FeatureJourney = lazy(() => import('./components/FeatureJourney'));
 const BackpropJourney = lazy(() => import('./components/BackpropJourney'));
 const GradientJourney = lazy(() => import('./components/GradientJourney'));
 const ArchitectureJourney = lazy(() => import('./components/ArchitectureJourney'));
@@ -61,6 +62,13 @@ const chapters = [
     icon: Layers3,
   },
   {
+    id: 'learned-features',
+    title: 'Where do features come from?',
+    note: 'Watch hidden responses change.',
+    time: '7 min',
+    icon: Lightbulb,
+  },
+  {
     id: 'shortcut',
     title: 'The shortcut detective',
     note: 'Right answer. Which clue?',
@@ -97,6 +105,8 @@ const chapters = [
   },
 ];
 const chapterBridges: Record<string, string> = {
+  'learned-features':
+    'You traced a mistake back to a weight. Now repeat across examples and watch how the changed weights create different internal responses. Then test what those responses contribute.',
   'one-weight':
     'Pip kept a changed dial. Now use three examples and see exactly how they suggest the next adjustment.',
   'gradient-descent':
@@ -384,6 +394,7 @@ export default function App() {
               {chapters[chapter].id === 'one-weight' && <TinyLearner onContinue={complete} />}
               {chapters[chapter].id === 'gradient-descent' && <GradientJourney />}
               {chapters[chapter].id === 'neural-network' && <BackpropJourney />}
+              {chapters[chapter].id === 'learned-features' && <FeatureJourney />}
               {chapters[chapter].id === 'shortcut' && <ShortcutJourney />}
               {chapters[chapter].id === 'before-training' && <PredictionJourney />}
               {chapters[chapter].id === 'architectures' && <ArchitectureJourney />}
