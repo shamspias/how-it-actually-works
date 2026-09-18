@@ -1,0 +1,372 @@
+.deep-journey {
+  min-width: 0;
+}
+.deep-story-description {
+  line-height: 1.8;
+  margin: 12px 0 22px;
+}
+.deep-parcel-route {
+  background: #f6f4f9;
+  border: 1px solid #ded7e6;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+.deep-input,
+.deep-answer {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  color: #4e4161;
+}
+.deep-input strong,
+.deep-answer strong {
+  font-size: 23px;
+}
+.deep-answer {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #d8cfe1;
+}
+.deep-answer > span:last-child {
+  margin-left: auto;
+}
+.deep-stations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  gap: 14px;
+  margin: 20px 0 0;
+  padding: 0;
+  counter-reset: none;
+}
+.deep-station {
+  position: relative;
+  border: 1px dashed #bab1c4;
+  background: #fffcff;
+  border-radius: 10px;
+  padding: 16px;
+  min-width: 0;
+}
+.deep-station.revealed {
+  border-style: solid;
+  border-color: #b5a5c6;
+  animation: deep-arrive 450ms ease-out 1;
+}
+.deep-station-name {
+  display: block;
+  font-size: 10px;
+  color: #6c4c89;
+  letter-spacing: 1.1px;
+  margin-bottom: 12px;
+}
+.deep-station > p {
+  font-size: 13px;
+  color: #51485b;
+  overflow-wrap: anywhere;
+}
+.deep-gate {
+  margin: 13px 0 10px;
+  font-size: 11px;
+  color: #555a4a;
+  background: #eff1e8;
+  border-radius: 5px;
+  padding: 6px 9px;
+}
+.deep-station > strong {
+  display: block;
+  color: #624782;
+  font-size: 24px;
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+.deep-bypass {
+  display: block;
+  border-top: 2px dashed #7d9a5b;
+  padding-top: 8px;
+  color: #42602f;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.deep-local-effect {
+  color: #775027;
+  font-size: 11px;
+  padding-top: 10px;
+  border-top: 1px solid #e6d9c8;
+  line-height: 1.6;
+}
+.deep-local-effect b {
+  white-space: nowrap;
+}
+.deep-station-compact {
+  padding: 12px;
+}
+.deep-station-compact > p,
+.deep-station-compact .deep-gate,
+.deep-station-compact .deep-bypass {
+  display: none;
+}
+.deep-station-compact .deep-station-name {
+  margin-bottom: 5px;
+}
+.deep-station-compact > strong {
+  font-size: 21px;
+  margin: 5px 0;
+}
+.deep-station-compact .deep-local-effect {
+  padding-top: 5px;
+}
+.deep-path-receipt,
+.deep-backward {
+  padding: 18px;
+  margin: 20px 0;
+  border: 1px solid #dfd1bb;
+  border-radius: 10px;
+  background: #fbf4e8;
+  color: #6c4a2b;
+}
+.deep-path-receipt > span {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.deep-path-receipt p {
+  color: #634527;
+  overflow-wrap: anywhere;
+}
+.deep-path-receipt small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 10px;
+}
+.deep-backward {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.deep-backward svg {
+  flex-shrink: 0;
+}
+.deep-backward p {
+  color: #634527;
+}
+.deep-update-receipt {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: #edf3e7;
+  border: 1px solid #cddcbe;
+  border-radius: 10px;
+  padding: 18px;
+}
+.deep-update-receipt span {
+  display: block;
+  font-size: 12px;
+  color: #4e6640;
+  margin-bottom: 8px;
+}
+.deep-update-receipt strong {
+  font-size: 24px;
+  color: #426030;
+}
+.deep-update-receipt p {
+  width: 100%;
+  font-size: 12px;
+}
+.deep-caution {
+  padding: 15px;
+  background: #f0f1e8;
+  border-radius: 8px;
+  font-size: 13px !important;
+  line-height: 1.8;
+  margin: 16px 0;
+}
+.deep-choice-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.deep-choice-row button[aria-pressed='true'] {
+  border-color: #9376ad;
+  background: #eee5f6;
+  color: #563775;
+}
+.deep-parcel-examples {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+.deep-parcel-examples > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  background: #f2eef7;
+  border: 1px solid #d7cce4;
+  padding: 15px 5px;
+  border-radius: 10px;
+  color: #63447f;
+}
+.deep-parcel-examples span {
+  font-size: 12px;
+}
+.deep-parcel-examples strong {
+  font-size: 23px;
+}
+.deep-gate-game svg {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  margin: 15px auto;
+}
+.deep-gate-game svg text {
+  fill: #545c49;
+  font-size: 12px;
+}
+.deep-gate-game > p {
+  line-height: 1.8;
+}
+.deep-understanding {
+  border-left: 3px solid #8ca270;
+  padding: 20px;
+  background: #eff3e8;
+  margin: 22px 0;
+  border-radius: 0 9px 9px 0;
+}
+.deep-understanding strong {
+  font-size: 15px;
+  color: #405b32;
+}
+.deep-understanding p {
+  margin-top: 13px;
+  line-height: 1.8;
+}
+.deep-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.deep-controls label {
+  color: #4f6045;
+  font-size: 12px;
+  min-width: 0;
+}
+.deep-controls select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin-top: 7px;
+  padding: 11px 8px;
+  border: 1px solid #c7cfbd;
+  border-radius: 7px;
+  background: #fffefa;
+  color: #435438;
+  font-size: 12px;
+}
+.deep-experiment {
+  margin: 20px 0;
+  padding: 18px;
+  border: 1px solid #d6ddca;
+  border-radius: 10px;
+}
+.deep-experiment summary {
+  color: #4e6640;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.deep-experiment > p {
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 15px 0;
+}
+.deep-math .guide-card > p {
+  margin: 15px 0;
+  line-height: 1.9;
+}
+.deep-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #dce0d1;
+  border-radius: 8px;
+  margin: 18px 0;
+}
+.deep-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 470px;
+  font-size: 12px;
+  text-align: left;
+  color: #4d5a41;
+}
+.deep-table-scroll caption {
+  text-align: left;
+  padding: 13px;
+  line-height: 1.7;
+  background: #f4f6ee;
+}
+.deep-table-scroll th,
+.deep-table-scroll td {
+  padding: 13px;
+  border-top: 1px solid #e0e3d6;
+  font-variant-numeric: tabular-nums;
+}
+.deep-journey .guide-next-question a {
+  color: #624580;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@keyframes deep-arrive {
+  from {
+    transform: translateY(8px);
+    background: #e7ddf0;
+  }
+  to {
+    transform: translateY(0);
+    background: #fffcff;
+  }
+}
+@media (max-width: 520px) {
+  .deep-stations,
+  .deep-controls {
+    grid-template-columns: 1fr;
+  }
+  .deep-story[data-stage='6'] .deep-stations,
+  .deep-story[data-stage='7'] .deep-stations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .deep-parcel-route {
+    padding: 13px;
+  }
+  .deep-story {
+    padding: 18px;
+  }
+  .deep-story > h2 {
+    font-size: 22px;
+  }
+  .deep-parcel-examples strong {
+    font-size: 20px;
+  }
+  .deep-update-receipt > svg {
+    transform: rotate(90deg);
+  }
+  .deep-update-receipt {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .deep-journey .guide-controls > button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deep-station.revealed {
+    animation: none;
+  }
+}

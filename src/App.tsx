@@ -23,6 +23,7 @@ import {
 import TinyLearner from './components/TinyLearner';
 import FirstSteps from './components/FirstSteps';
 import WordHelp from './components/WordHelp';
+const DeepJourney = lazy(() => import('./components/DeepJourney'));
 const FeatureJourney = lazy(() => import('./components/FeatureJourney'));
 const BackpropJourney = lazy(() => import('./components/BackpropJourney'));
 const GradientJourney = lazy(() => import('./components/GradientJourney'));
@@ -69,6 +70,13 @@ const chapters = [
     icon: Lightbulb,
   },
   {
+    id: 'deep-networks',
+    title: 'When networks get deep',
+    note: 'Trace gradients through a longer chain.',
+    time: '8 min',
+    icon: Layers3,
+  },
+  {
     id: 'shortcut',
     title: 'The shortcut detective',
     note: 'Right answer. Which clue?',
@@ -105,6 +113,8 @@ const chapters = [
   },
 ];
 const chapterBridges: Record<string, string> = {
+  'deep-networks':
+    'Learned internal responses can feed another layer. Trace one path through a deeper computation and test why a small sensitivity can fade, grow, or take a bypass.',
   'learned-features':
     'You traced a mistake back to a weight. Now repeat across examples and watch how the changed weights create different internal responses. Then test what those responses contribute.',
   'one-weight':
@@ -395,6 +405,7 @@ export default function App() {
               {chapters[chapter].id === 'gradient-descent' && <GradientJourney />}
               {chapters[chapter].id === 'neural-network' && <BackpropJourney />}
               {chapters[chapter].id === 'learned-features' && <FeatureJourney />}
+              {chapters[chapter].id === 'deep-networks' && <DeepJourney />}
               {chapters[chapter].id === 'shortcut' && <ShortcutJourney />}
               {chapters[chapter].id === 'before-training' && <PredictionJourney />}
               {chapters[chapter].id === 'architectures' && <ArchitectureJourney />}

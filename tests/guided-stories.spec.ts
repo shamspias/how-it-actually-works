@@ -117,6 +117,7 @@ test('three modes remain usable on every chapter without horizontal page overflo
     'gradient-descent',
     'neural-network',
     'learned-features',
+    'deep-networks',
     'shortcut',
     'before-training',
     'architectures',
