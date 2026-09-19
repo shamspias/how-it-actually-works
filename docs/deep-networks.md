@@ -1,6 +1,6 @@
 # From one layer to a deep network
 
-Open the **Small stations. A longer chain.** chapter. The visual story moves one parcel at a time, pauses for three decisions, updates actual parameters, then tries depth, a bypass, and a nonlinear gate. Every animation finishes; advancing is manual, and reduced-motion preferences are respected.
+Open **When networks get deep** (`#deep-networks`). The visual story moves one parcel at a time, pauses for three decisions, updates actual parameters, then tries depth, a bypass, and a nonlinear gate. Every animation finishes; advancing is manual, and reduced-motion preferences are respected.
 
 ## What is actually computed
 

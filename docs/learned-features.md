@@ -1,6 +1,6 @@
 # How does a network learn what to notice?
 
-Open **Learned features** (`#learned-features`). The small task has two lights and one bell. The bell should ring when exactly one light is on. The model receives two numbers, not pictures: off is 0 and on is 1.
+Open **Where do features come from?** (`#learned-features`). The small task has two lights and one bell. The bell should ring when exactly one light is on. The model receives two numbers, not pictures: off is 0 and on is 1.
 
 The important distinction is between the **answer labels** we provide and the **hidden responses** we do not provide. Nobody labels hidden unit 1 “detect both lights.” The network receives only the four final answers. Backpropagation computes how changes to earlier weights would affect the final loss, and gradient descent changes those weights. As a result, the same input can produce a different internal representation. Hidden responses can become useful to the output without being human-named concepts. This is the learning-representations idea studied by [Rumelhart, Hinton, and Williams (1986)](https://www.nature.com/articles/323533a0).
 

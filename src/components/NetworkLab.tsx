@@ -42,7 +42,7 @@ export default function NetworkLab() {
     <>
       <div className="lesson-heading">
         <div className="eyebrow">
-          EXPERIMENT 03 <span> / </span> CONNECT THE DOTS
+          EXPERIMENT 04 <span> / </span> CONNECT THE DOTS
         </div>
         <h1>
           A network comes <em>alive.</em>

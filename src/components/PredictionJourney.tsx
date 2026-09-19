@@ -15,7 +15,7 @@ export default function PredictionJourney() {
     <div className="prediction-journey">
       <header className="lesson-heading">
         <p className="eyebrow">
-          EXPERIMENT 05 <span> / </span> THE MISSING CLUE
+          EXPERIMENT 08 <span> / </span> THE MISSING CLUE
         </p>
         <h1>
           Can you predict <em>the hidden rule?</em>

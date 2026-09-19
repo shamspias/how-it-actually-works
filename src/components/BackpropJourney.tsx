@@ -118,7 +118,7 @@ export default function BackpropJourney() {
     <div className="backprop-journey">
       <header className="lesson-heading">
         <p className="eyebrow">
-          EXPERIMENT 03 <span> / </span> FOLLOW ONE MISTAKE
+          EXPERIMENT 04 <span> / </span> FOLLOW ONE MISTAKE
         </p>
         <h1>
           A network is a <em>chain of effects.</em>

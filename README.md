@@ -2,11 +2,11 @@
 
 A hands-on field guide for the question behind the explanation: **“But what is actually happening?”**
 
-The first collection opens up machine learning. Move a weight, guide a blindfolded hiker, follow one mistake backward through a network, and watch an updated number become a new pattern of bits. Each idea starts with a small game or visible action, then connects to its calculation and real code.
+The first collection opens up machine learning, starting before the technical words. Teach a pretend watering helper, keep the number it changed, and use it for another guess. Then follow that same idea through backpropagation, learned features, deep networks, and the boxes in a research paper. Each step connects a visible action to its calculation and runnable code.
 
-![The learning lab with eight chapters and visual, mathematical, and code learning modes](docs/learning-lab.png)
+![The learning lab with visual, mathematical, and code learning modes](docs/learning-lab.png)
 
-This repository is also the foundation for a future YouTube channel. The **eight machine-learning chapters below are implemented now**. Full collections about electricity, computer memory, semiconductors, sound, and everyday devices will follow; the final chapter gives a first bridge into hardware.
+This repository is also the foundation for a future YouTube channel. The **twelve machine-learning chapters below are implemented now**. Full collections about electricity, computer memory, semiconductors, sound, and everyday devices will follow; the electricity chapter gives a first bridge into hardware.
 
 ## Run the learning lab
 
@@ -37,26 +37,32 @@ Every chapter offers these modes:
 | **Follow the math** | Inspect the numbers, derivatives, assumptions, and update rules behind the mechanism.                  |
 | **Read the code**   | Walk through highlighted source lines, copy the code, and run a small implementation yourself.         |
 
-Begin with **Play & see**. Pause after one change and explain it in your own words before opening the equations. The guided stories introduce one mechanism at a time; the network and shortcut chapters also have optional free labs for more experiments.
+Begin with **Play & see**. Pause after one change and explain it in your own words before opening the equations. Prediction questions and short checkpoints help you find the step to revisit. Use **Explain a word** in the top bar whenever a term is unfamiliar; its searchable explanations connect the word to an example. The network and shortcut chapters also have optional free labs.
 
-## Eight discoveries, one learning path
+## Twelve discoveries, one learning path
 
-| Chapter                            | Your experiment                                                         | What becomes visible                                                                                 |
-| ---------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **1. One tiny learner**            | Drag one weight, predict its next move, and train one step.             | A prediction, a mistake score, a gradient, and an exact update.                                      |
-| **2. The blindfolded hiker**       | Feel a local slope, choose a step size, and try other search rules.     | Why gradient descent can help, why it can fail, and what alternatives trade off.                     |
-| **3. Follow one mistake**          | Send values forward, trace a derivative backward, and move the weights. | Activations, the chain rule, backpropagation, and simultaneous updates.                              |
-| **4. The shortcut detective**      | Keep the shape fixed and change its background.                         | Correct answers can depend on a clue that stops working when the world changes.                      |
-| **5. Can we know beforehand?**     | Guess a hidden rule, reveal two possible worlds, and add a clue.        | What data cannot identify, alongside exact forecasts and conditional bounds.                         |
-| **6. Attention & a backpack**      | Let word cards exchange messages; carry a number past distractions.     | Attention arithmetic, selective memory, and their connection to Transformer and Mamba architectures. |
-| **7. From tiny to enormous**       | Follow architecture schematics and count dense-network parameters.      | How connectivity and storage grow, and why a count does not predict quality.                         |
-| **8. From numbers to electricity** | Toggle stored bits and step through memory → arithmetic → memory.       | How a program changes a physically represented weight, including rounding.                           |
+Start with one change, learn how networks build and test patterns, then trace larger machines. Chapter links also work as direct URLs, for example `http://127.0.0.1:5173/#learned-features`.
+
+| Chapter                             | Your experiment                                                            | What becomes visible                                                                                                 |
+| ----------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| **1. What does learning change?**   | Teach Pip to water seeds, then hide the answer and reuse its dial.         | The difference between an example, a guess, changing a stored number, and using it.                                  |
+| **2. One tiny learner**             | Drag one weight and train one step from three examples.                    | An exact prediction, loss, gradient, and update.                                                                     |
+| **3. The blindfolded hiker**        | Feel a local slope, choose a step size, and try other search rules.        | Why gradient descent helps, where it fails, and what alternatives trade off.                                         |
+| **4. Follow one mistake**           | Send values forward and trace one error backward.                          | Activations, the chain rule, backpropagation, and simultaneous updates.                                              |
+| **5. Where do features come from?** | Watch four unlabeled hidden mixers learn, then disconnect one.             | Internal responses change through final-answer errors; interventions test their contributions.                       |
+| **6. When networks get deep**       | Pass a number through layers, trace gradients, and add a bypass.           | Composition, nonlinear gates, shrinking or growing derivatives, and residual paths.                                  |
+| **7. The shortcut detective**       | Keep the shape fixed and change its background.                            | A successful answer may depend on a clue that fails in another world.                                                |
+| **8. Can we know beforehand?**      | Reveal two rules that fit the same clues, then add an observation.         | Missing information, exact forecasts in small cases, and conditional guarantees.                                     |
+| **9. Attention & a backpack**       | Exchange messages between word cards and carry state past distractions.    | Attention, selective memory, and connections to Transformer and Mamba architectures.                                 |
+| **10. From tiny to enormous**       | Change network dimensions and count connections.                           | Parameter growth and storage, distinguished from expected quality.                                                   |
+| **11. From numbers to electricity** | Toggle bits and step through memory → arithmetic → memory.                 | How program instructions change a physically represented weight.                                                     |
+| **12. Read a research blueprint**   | Trace text → representations → predictions → feedback, and audit each box. | Next-token targets, embeddings, masks, normalization, array shapes, parameter counts, and a paper-reading worksheet. |
 
 The chapters work on a phone or desktop, with keyboard controls and reduced-motion styles. Use the presentation control in the top bar for demonstrations. **Field notes & sources** opens references and a print/save-as-PDF option. Your browser handles PDF generation.
 
 ## Your first calculation
 
-In chapter 1, the examples are `1 → 2`, `2 → 4`, and `3 → 6`. The machine computes `guess = weight × input`.
+In **One tiny learner**, the examples are `1 → 2`, `2 → 4`, and `3 → 6`. The machine computes `guess = weight × input`.
 
 Starting with weight `0.5`, its guesses are `0.5, 1, 1.5`. The loss is half the mean squared error:
 
@@ -70,7 +76,7 @@ new loss ≈ 1.49333
 
 Press **Train one step**, then select **Follow the math** to inspect those numbers. The examples supply the correct outputs; the update rule uses their errors to change the multiplier. The displayed training results come from actual calculations.
 
-Chapter 3 then guides you through one small ReLU network. Its optional free lab trains a separate two-input network with `tanh` hidden units, a sigmoid output, and handwritten backpropagation. Both implementations expose the arithmetic directly; no machine-learning library performs it for you.
+**Follow one mistake** guides you through one small ReLU network. Its optional free lab trains a separate two-input network with `tanh` hidden units, a sigmoid output, and handwritten backpropagation. Both implementations expose the arithmetic directly; no machine-learning library performs it for you. **Where do features come from?** then answers the missing question: how do those updates change the hidden responses, without labels for each hidden unit?
 
 ## Run the code on its own
 
@@ -86,11 +92,24 @@ Or run the complete XOR learner directly, without installing the website's depen
 node examples/neural-network.mjs
 ```
 
-It initializes 17 parameters, computes predictions, differentiates the loss, updates every parameter, and prints the measured result. All four binary inputs are training examples, so its result demonstrates fitting XOR. The other programs cover a single weight, gradient descent, one backpropagation step, shortcut learning, exact forecasts, attention, selective state, and parameter counts.
+It initializes 17 parameters, computes predictions, differentiates the loss, updates every parameter, and prints the measured result. All four binary inputs are training examples, so its result demonstrates fitting XOR. The other programs cover the learning loop, a single weight, gradient descent, one backpropagation step, learned features, deep chains, shortcut learning, exact forecasts, attention, selective state, parameter counts, and an architecture audit.
+
+Try the new bridges directly:
+
+```sh
+node examples/learning-loop.mjs      # What persists after practice?
+node examples/learned-features.mjs   # How do hidden responses change?
+node examples/deep-network.mjs      # How does feedback cross more layers?
+node examples/read-architecture.mjs # Do the blueprint's shapes and counts fit?
+```
+
+The architecture audit calculates shapes, counts, masks, labels, and a token-loss example. It is not a full language-model trainer.
 
 See [the code walkthrough and example index](docs/code-examples.md). These are ordinary JavaScript programs using arrays, numbers, and `Math`, with no ML package imports.
 
 ## What this lab can—and cannot—tell you
+
+This is a foundation for understanding and questioning architectures, including the operations in Transformer and Mamba papers. It is not a promise that one course makes every paper understandable, or that the same explanation works for every child. New mathematics and guided practice may still be needed.
 
 We can calculate every update in these small models. Some objectives even let us derive the entire training trajectory before running it. That differs from guaranteeing an arbitrary architecture's future accuracy from its dataset alone.
 
@@ -100,11 +119,11 @@ The free network lab's separate “unseen” examples never provide training gra
 
 The simplifications are explicit: the shortcut classifier receives two numerical features instead of pixels; the attention and memory games demonstrate ingredients rather than complete trained Transformer or Mamba models; and the eight-bit hardware lesson is a teaching format rather than a transistor-level simulation. Physics and quantum computing are discussed with those boundaries in view.
 
-Read the [mathematical derivations and assumptions](docs/theory.md), [architecture notes](docs/architectures.md), and [physical computation notes](docs/physical-computation.md). Each includes sources beside the claims they support.
+Read the [mathematical derivations](docs/theory.md), [learned-feature experiment](docs/learned-features.md), [deep-network derivation](docs/deep-networks.md), [architecture notes](docs/architectures.md), [physical computation notes](docs/physical-computation.md), and [research-paper reading guide](docs/reading-papers.md). Sources sit beside the claims they support.
 
 ## Save an experiment
 
-In chapter 3, choose **Open the free network lab**, then **Save experiment** to download JSON containing the current settings, seed, weights, training examples, separate evaluation examples, and measured history. Seeded data and initialization make controlled comparisons repeatable in the same engine.
+In **Follow one mistake**, choose **Open the free network lab**, then **Save experiment** to download JSON containing the current settings, seed, weights, training examples, separate evaluation examples, and measured history. Seeded data and initialization make controlled comparisons repeatable in the same engine.
 
 The export is a snapshot: history contains displayed checkpoints, not every update or a complete record of earlier learning-rate changes. Temporary neuron disconnections are excluded. There is currently no import interface; inspect the JSON directly or load its values from your own code.
 
@@ -136,8 +155,9 @@ The mobile suite uses Chromium with a phone-sized viewport and touch settings; i
 ```text
 src/App.tsx                        Chapter navigation, progress, presentation, sources
 src/components/LearningModes.tsx    Shared modes and highlighted code walkthroughs
-src/components/*Journey.tsx        Guided hiker, backprop, detective, prediction,
-                                   architecture, and physical stories
+src/components/FirstSteps.tsx       First learning loop before technical terminology
+src/components/WordHelp.tsx         Searchable explanations of course vocabulary
+src/components/*Journey.tsx        Guided stories, features, depth, and paper workshop
 src/components/TinyLearner.tsx      One-weight playground and worked arithmetic
 src/components/NetworkLab.tsx       Free neural-network experiment and JSON export
 src/components/ShortcutLab.tsx      Free shape/background experiment

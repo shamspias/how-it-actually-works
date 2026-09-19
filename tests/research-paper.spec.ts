@@ -21,11 +21,15 @@ test('the paper route links shifted text targets, causal context, loss, and lear
   await expect(page.getByTestId('paper-token-loss')).toContainText('0.223');
   await page.getByRole('button', { name: 'Next stop', exact: true }).click();
   await page.getByRole('button', { name: 'Only today’s attention shares', exact: true }).click();
-  await expect(page.locator('.paper-story .paper-question')).toContainText('underlying stored parameters');
+  await expect(page.locator('.paper-story .paper-question')).toContainText(
+    'underlying stored parameters',
+  );
   await page
     .getByRole('button', { name: 'The stored lookup and weight tables', exact: true })
     .click();
-  await expect(page.locator('.paper-story .paper-question')).toContainText('Yes. The stored parameters persist');
+  await expect(page.locator('.paper-story .paper-question')).toContainText(
+    'Yes. The stored parameters persist',
+  );
 });
 
 test('a blueprint rejects broken shapes and counts complete configurations instead of guessing performance', async ({

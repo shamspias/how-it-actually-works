@@ -390,7 +390,7 @@ export default function ArchitectureJourney() {
     <div className="architecture-journey">
       <header className="lesson-heading">
         <p className="eyebrow">
-          EXPERIMENT 06 <span> / </span> ATTENTION & MEMORY
+          EXPERIMENT 09 <span> / </span> ATTENTION & MEMORY
         </p>
         <h1>
           How does “it”

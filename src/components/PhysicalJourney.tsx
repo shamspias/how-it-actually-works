@@ -89,7 +89,7 @@ console.log({ weight, loss, gradient, idealNext, stored: nextRaw / scale, bits }
   return (
     <div className="physical-lesson">
       <header className="lesson-heading">
-        <p className="eyebrow">EXPERIMENT 08 / FOLLOW THE ELECTRICITY</p>
+        <p className="eyebrow">EXPERIMENT 11 / FOLLOW THE ELECTRICITY</p>
         <h1>
           How does a weight become <em>electricity?</em>
         </h1>

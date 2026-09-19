@@ -278,7 +278,7 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
       <header className="lesson-heading tiny-heading">
         <div className="tiny-heading-top">
           <p className="eyebrow">
-            EXPERIMENT 01 <span> / </span> START SMALL
+            EXPERIMENT 02 <span> / </span> START SMALL
           </p>
           <span className="tiny-duration">No experience needed</span>
         </div>

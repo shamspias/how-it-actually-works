@@ -116,3 +116,5 @@ They require different information. Choose a simple baseline, keep the evaluatio
 - [`src/components/ArchitectureJourney.tsx`](../src/components/ArchitectureJourney.tsx) renders the guided scenes and imports those complete examples for the code view.
 
 The visual labels round numbers for readability; internal calculations use JavaScript numbers. These examples illustrate finite arithmetic and mechanisms, not language understanding, training performance, or a guarantee about an unseen dataset.
+
+Continue with [the research blueprint workshop](reading-papers.md) to trace a complete specified decoder, distinguish parameters from activations, and count its layers. The preceding [deep-network lesson](deep-networks.md) makes residual paths and gradients inspectable.

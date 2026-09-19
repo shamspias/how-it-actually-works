@@ -1,6 +1,6 @@
 # What can we know before training?
 
-These notes support chapters 5 and 7 of the interactive lab. For the live attention and memory experiments, see [the architecture notes](architectures.md); for the physical bit update, see [physical computation](physical-computation.md). The experiments are intentionally small enough to inspect. They distinguish exact mathematical claims from empirical findings and open questions.
+These notes support “Can we know beforehand?” and “From tiny to enormous” in the interactive lab. For the live attention and memory experiments, see [the architecture notes](architectures.md); for the physical bit update, see [physical computation](physical-computation.md). The experiments are intentionally small enough to inspect. They distinguish exact mathematical claims from empirical findings and open questions.
 
 The reusable calculations live in [`src/lib/theory.ts`](../src/lib/theory.ts). Their tests compare a closed-form prediction with actual iterative updates, verify convergence and divergence regimes, count a real tiny network's stored parameters, and check the unseen-input counterexample. Run `npm test -- src/lib/theory.test.ts` to verify them.
 

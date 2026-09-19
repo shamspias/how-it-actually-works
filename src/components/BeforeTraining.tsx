@@ -50,7 +50,7 @@ export default function BeforeTraining() {
     <div className="theory-lesson">
       <header className="lesson-heading">
         <p className="eyebrow">
-          EXPERIMENT 05 <span> / </span> THE PREDICTION PUZZLE
+          EXPERIMENT 08 <span> / </span> THE PREDICTION PUZZLE
         </p>
         <h1>
           Can we know <em>before we train?</em>

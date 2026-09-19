@@ -208,6 +208,9 @@ export default function App() {
   useEffect(() => {
     document.title = `${chapters[chapter].title} · How it actually works`;
     window.scrollTo({ top: 0, behavior: 'instant' });
+    document
+      .querySelector('.chapter-link[aria-current="step"]')
+      ?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
   }, [chapter]);
   useEffect(() => {
     if (sourcesOpen) dialog.current?.showModal();

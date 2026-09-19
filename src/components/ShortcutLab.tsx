@@ -92,7 +92,7 @@ export default function ShortcutLab() {
     <div className="shortcut-lesson">
       <div className="lesson-heading">
         <div className="eyebrow">
-          EXPERIMENT 04 <span> / </span> QUESTION THE PATTERN
+          EXPERIMENT 07 <span> / </span> QUESTION THE PATTERN
         </div>
         <h1>
           Right answer.

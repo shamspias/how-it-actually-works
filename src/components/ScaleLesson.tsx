@@ -89,7 +89,7 @@ export default function ScaleLesson() {
     <div className={`theory-lesson scale-${mode}`}>
       <header className="lesson-heading">
         <p className="eyebrow">
-          EXPERIMENT 07 <span> / </span> CHANGE THE SCALE
+          EXPERIMENT 10 <span> / </span> CHANGE THE SCALE
         </p>
         <h1>
           More weights.

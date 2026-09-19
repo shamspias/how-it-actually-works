@@ -65,7 +65,7 @@ export default function ShortcutJourney() {
     <div className="shortcut-journey">
       <header className="lesson-heading">
         <p className="eyebrow">
-          EXPERIMENT 04 <span> / </span> THE SHORTCUT DETECTIVE
+          EXPERIMENT 07 <span> / </span> THE SHORTCUT DETECTIVE
         </p>
         <h1>
           Right answer.
