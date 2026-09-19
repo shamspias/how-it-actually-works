@@ -275,7 +275,7 @@ export default function FeatureJourney() {
                   </div>
                   <ArrowRight className="feature-machine-arrow" size={22} aria-hidden="true" />
                   <div className="feature-machine-output">
-                    <span>GUESS: RING</span>
+                    <span>CHANCE OF RING</span>
                     <strong data-testid="feature-probability">{probability(response.p)}</strong>
                     <span>{response.p >= 0.5 ? 'Ring' : 'Quiet'} at a 50% cutoff</span>
                   </div>

@@ -26,23 +26,26 @@ export default function FirstSteps() {
   const shownInput = stage === 3 ? input : 2;
   const guess = predict(dial, shownInput);
   const current = practice(dial);
-  function reset() {
-    setStage(0);
+  function resetPractice() {
     setDial(1);
     setSteps(0);
     setReceipt(null);
+  }
+  function reset() {
+    setStage(0);
+    resetPractice();
     setChoice(null);
     setRevealed(false);
     setInput(4);
   }
   function move(next: number) {
-    if (next === 2 && stage !== 2) {
-      setDial(1);
-      setSteps(0);
-      setReceipt(null);
-    }
+    if (next <= 2 && next !== stage) resetPractice();
     setStage(next);
     setRevealed(false);
+  }
+  function changeMode(next: LearningMode) {
+    if (next === 'visual' && stage < 2 && receipt) resetPractice();
+    setMode(next);
   }
   function train() {
     const step = practice(dial);
@@ -59,7 +62,7 @@ export default function FirstSteps() {
   ];
   const stories = [
     `We want 2 drops of water for each seed. We show Pip 2 seeds and the answer: 4 drops. Its current dial is ${number(dial)}, so it guesses ${number(predict(dial, 2))} drops.`,
-    'The answer is 4 drops. Turn the dial until 2 seeds give 4 drops. You are choosing the number here; Pip is not choosing it yet.',
+    'Your turn starts with the dial at 1. Turn it until 2 seeds give 4 drops. You are choosing the number here; Pip is not choosing it yet.',
     'This practice run starts with the dial reset to 1. Press Practice once. The program compares its guess with 4 and calculates a small change. Press again to repeat the same instructions.',
     'Asking a new question reads the saved dial. It does not turn it. Try different numbers of seeds and watch the dial stay still.',
     'After practice, the machine can reuse one changed number for different inputs. Choose what stayed in its memory.',
@@ -76,7 +79,7 @@ export default function FirstSteps() {
           technical name.
         </p>
       </header>
-      <ModeSwitcher value={mode} onChange={setMode} />
+      <ModeSwitcher value={mode} onChange={changeMode} />
       {mode === 'visual' && (
         <section className="first-card">
           <div className="first-card-top">
@@ -337,6 +340,9 @@ export default function FirstSteps() {
           <button className="button primary" onClick={train}>
             Calculate this practice step
           </button>
+          {stage < 2 && (
+            <p>Returning to the opening visual steps resets the dial to 1 for that exercise.</p>
+          )}
           <p>
             For this single example, d²L/dw² = x² = 4. The chosen rate 0.1 makes the distance from w
             = 2 shrink by a factor of 0.6 each step. This fact belongs to this small model and

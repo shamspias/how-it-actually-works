@@ -36,6 +36,28 @@ test('the first lesson separates a manual choice, a training update, and a froze
   ).toContain('first-steps');
 });
 
+test('revisiting the manual dial remains solvable after practice in either view', async ({
+  page,
+}) => {
+  await page.goto('/#first-steps');
+  await page.getByRole('button', { name: 'Next: You move the dial' }).click();
+  for (let i = 0; i < 2; i++) await page.getByRole('button', { name: 'Bigger dial' }).click();
+  await page.getByRole('button', { name: 'Next: Let the program practice' }).click();
+  for (let i = 0; i < 2; i++)
+    await page.getByRole('button', { name: 'Practice once', exact: true }).click();
+  await expect(page.getByTestId('pip-dial')).toHaveText('1.64');
+  await page.getByRole('button', { name: 'Back one step' }).click();
+  await expect(page.getByTestId('pip-dial')).toHaveText('1');
+  await page.getByRole('button', { name: 'Bigger dial' }).click();
+  await page.getByRole('button', { name: 'Follow the math', exact: true }).click();
+  await page.getByRole('button', { name: 'Calculate this practice step' }).click();
+  await page.getByRole('button', { name: 'Play & see', exact: true }).click();
+  await expect(page.getByTestId('pip-dial')).toHaveText('1');
+  for (let i = 0; i < 2; i++) await page.getByRole('button', { name: 'Bigger dial' }).click();
+  await expect(page.getByTestId('pip-guess')).toHaveText('4 drops');
+  await expect(page.getByRole('button', { name: 'Next: Let the program practice' })).toBeEnabled();
+});
+
 test('word help gives examples, searches, and returns focus without leaving the lesson', async ({
   page,
 }) => {
