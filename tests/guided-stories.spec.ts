@@ -17,7 +17,16 @@ test('backprop story waits for a decision, moves real weights, and reveals a com
   page,
 }) => {
   await page.goto('/#neural-network');
-  for (let i = 0; i < 5; i++) await page.getByRole('button', { name: /^Next:/ }).click();
+  await expect(page.locator('.backprop-closeup')).toContainText('First input');
+  await expect(page.locator('.backprop-scene svg')).not.toBeVisible();
+  for (let i = 0; i < 4; i++) await page.getByRole('button', { name: /^Next:/ }).click();
+  await page.getByRole('button', { name: 'Preview +0.1 on one weight', exact: true }).click();
+  await expect(page.getByTestId('bp-nudge-feedback')).toContainText('0.28125 → 0.245');
+  await expect(page.getByTestId('bp-nudge-feedback')).toContainText(
+    'saved first weight is still 0.5',
+  );
+  await expect(page.locator('.bp-nudge-path')).toContainText('1.3');
+  await page.getByRole('button', { name: /^Next:/ }).click();
   await expect(page.locator('.guide-narration')).toContainText('-0.375');
   await page.getByRole('button', { name: 'Increase ↑', exact: true }).click();
   await expect(page.locator('.guide-feedback')).toContainText('Yes');
@@ -28,6 +37,28 @@ test('backprop story waits for a decision, moves real weights, and reveals a com
   await page.getByRole('button', { name: 'A complete XOR learner', exact: true }).click();
   await expect(page.locator('.source-code')).toContainText('function gradients');
   await expect(page.locator('.code-explanation')).toContainText('tanh and sigmoid');
+});
+
+test('backprop previews follow the selected answer and a closed gate', async ({ page }) => {
+  await page.goto('/#neural-network');
+  await page.getByRole('button', { name: 'Follow the math', exact: true }).click();
+  await page.locator('#bp-target').selectOption('0');
+  await page.getByRole('button', { name: 'Play & see', exact: true }).click();
+  for (let i = 0; i < 4; i++) await page.getByRole('button', { name: /^Next:/ }).click();
+  await page.getByRole('button', { name: 'Preview +0.1 on one weight', exact: true }).click();
+  await expect(page.getByTestId('bp-nudge-feedback')).toContainText('rose: 0.78125 → 0.845');
+  await page.getByRole('button', { name: /^Next:/ }).click();
+  await page.getByRole('button', { name: 'Decrease ↓', exact: true }).click();
+  await expect(page.locator('.guide-feedback')).toContainText('Yes');
+  await page.getByRole('button', { name: 'Follow the math', exact: true }).click();
+  await page.getByRole('button', { name: 'Turn off the top ReLU', exact: true }).click();
+  await page.getByRole('button', { name: 'Play & see', exact: true }).click();
+  for (let i = 0; i < 4; i++) await page.getByRole('button', { name: /^Next:/ }).click();
+  await page.getByRole('button', { name: 'Preview +0.1 on one weight', exact: true }).click();
+  await expect(page.getByTestId('bp-nudge-feedback')).toContainText(
+    'stayed the same: 0.28125 → 0.28125',
+  );
+  await expect(page.locator('.bp-nudge-path li').nth(1)).toContainText('0');
 });
 
 test('detective story changes one clue before changing the training data', async ({ page }) => {

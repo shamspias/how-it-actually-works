@@ -22,6 +22,11 @@ const stageNames = [
   'Choose the adjustment',
   'Try the new numbers',
 ];
+type StepReceipt = ReturnType<typeof trainOneStep> & {
+  firstWeightBefore: number;
+  learningRate: number;
+  practiceAnswer: number;
+};
 
 export default function BackpropJourney() {
   const [mode, setMode] = useState<LearningMode>('visual');
@@ -32,15 +37,21 @@ export default function BackpropJourney() {
   const [rate, setRate] = useState(0.1);
   const [target, setTarget] = useState(2);
   const [choice, setChoice] = useState<'up' | 'down' | null>(null);
-  const [receipt, setReceipt] = useState<ReturnType<typeof trainOneStep> | null>(null);
+  const [receipt, setReceipt] = useState<StepReceipt | null>(null);
   const [round, setRound] = useState(0);
   const [lab, setLab] = useState(false);
+  const [showNudge, setShowNudge] = useState(false);
   const reducedMotion = useReducedMotion();
   const trace = useMemo(() => explain(network, [1, 2], target), [network, target]);
+  const nudged = useMemo(() => {
+    const preview = structuredClone(network);
+    preview.weights[0][0] += 0.1;
+    return explain(preview, [1, 2], target);
+  }, [network, target]);
 
   useEffect(() => {
     if (!playing || stage >= 5 || mode !== 'visual' || lab) return;
-    const timer = window.setTimeout(() => setStage(stage + 1), 2400);
+    const timer = window.setTimeout(() => setStage(stage + 1), 6500);
     return () => window.clearTimeout(timer);
   }, [playing, stage, mode, lab]);
   function reset() {
@@ -50,12 +61,19 @@ export default function BackpropJourney() {
     setChoice(null);
     setReceipt(null);
     setRound(0);
+    setShowNudge(false);
   }
   function next() {
+    setShowNudge(false);
     if (stage < 5) setStage(stage + 1);
     else if (stage === 5) {
       const update = trainOneStep(network, rate, [1, 2], target);
-      setReceipt(update);
+      setReceipt({
+        ...update,
+        firstWeightBefore: network.weights[0][0],
+        learningRate: rate,
+        practiceAnswer: target,
+      });
       setNetwork(update.network);
       setStage(6);
       setPlaying(false);
@@ -69,36 +87,255 @@ export default function BackpropJourney() {
   const g = trace.gradients.weights[0][0];
   const scenes = [
     {
-      title: 'Two numbers enter. Nothing has learned yet.',
-      text: `Think of two ingredient amounts: 1 and 2. These inputs are just numbers. The target answer is ${target}. We choose the connections; training will adjust the numbers on them.`,
+      title: 'Start with two numbers.',
+      text: `The network receives 1 and 2. This practice example has an answer of ${target}. First we will see what the network guesses with its current settings.`,
+      action: 'Follow the inputs into the first mixing station.',
+      calculation: `Inputs: x₁ = 1, x₂ = 2. Target: ${target}. The target is used to score the guess; it is not an input to these mixing stations.`,
     },
     {
-      title: 'Each hidden neuron is a tiny mixing station.',
-      text: `The top station makes 1 × ${n(network.weights[0][0])} + 2 × ${n(network.weights[0][1])} + ${n(network.biases[0])} = ${n(trace.sums[0])}. Its gate keeps a positive total and turns a negative total into zero. That gate is called ReLU.`,
+      title: 'A weight controls how much gets through.',
+      text: `The top station scales each input, then adds the pieces. A weight is the adjustable multiplier on one input. The station’s result is ${n(trace.hidden[0])}.`,
+      action: 'Follow the two pieces below. The second station makes its own mixture.',
+      calculation: `Top total: 1 × ${n(network.weights[0][0])} + 2 × ${n(network.weights[0][1])} + ${n(network.biases[0])} = ${n(trace.sums[0])}. Bottom total: 1 × ${n(network.weights[1][0])} + 2 × ${n(network.weights[1][1])} + ${n(network.biases[1])} = ${n(trace.sums[1])}. Each total passes through ReLU: keep positive totals; change negative totals to zero. A bias is the extra amount added before that gate.`,
     },
     {
-      title: 'The last station mixes those mixtures.',
-      text: `${n(trace.hidden[0])} × ${n(network.outputWeights[0])} + ${n(trace.hidden[1])} × ${n(network.outputWeights[1])} + ${n(network.outputBias)} = ${n(trace.prediction)}. This is the network’s whole guess. No person or secret decision sits inside it.`,
+      title: 'Mix the two results to make a guess.',
+      text: `One final station combines the two mixtures. Its answer is ${n(trace.prediction)}. So far, we have only calculated: none of the weights have changed.`,
+      action: 'Look at the guess. Next we will compare it with the practice answer.',
+      calculation: `${n(trace.hidden[0])} × ${n(network.outputWeights[0])} + ${n(trace.hidden[1])} × ${n(network.outputWeights[1])} + ${n(network.outputBias)} = ${n(trace.prediction)}. The final station has its own two weights and a bias. This example uses no gate at the output.`,
     },
     {
-      title: 'How far did the guess miss?',
-      text: `The guess is ${n(trace.prediction)}. The correct answer is ${target}. Error = guess − answer = ${n(trace.error)}. Half the squared error is ${n(trace.loss)}. This loss is the mountain height from the last lesson.`,
+      title: 'Compare the guess with the answer.',
+      text: `The guess is ${n(trace.prediction)}; the answer is ${target}. We turn that miss into a score called loss. For this scoring rule, a smaller loss means a closer guess.`,
+      action: 'Now ask: which setting could make this miss smaller?',
+      calculation: `Error = guess − answer = ${n(trace.error)}. Loss = error² ÷ 2 = ${n(trace.loss)}. Squaring makes both overestimates and underestimates count as a positive miss. This is the height in the hiker lesson.`,
     },
     {
-      title: 'Follow one connection’s effect backward.',
-      text: `Nudging the first weight changes the top mixture; that changes the guess; that changes the loss. Multiply these local effects: ${n(trace.error)} × ${n(network.outputWeights[0])} × ${trace.sums[0] > 0 ? '1' : '0'} × 1 = ${n(g)}. That is this weight’s gradient.`,
+      title: 'Try changing just one dial.',
+      text: 'A weight changes a mixture, the mixture changes the guess, and the guess changes the loss. Backpropagation calculates how strongly each dial affects that loss.',
+      action: 'Preview a small increase. Watch the change travel through this one path.',
+      calculation: `First-weight gradient = ${n(trace.error)} × ${n(network.outputWeights[0])} × ${trace.sums[0] > 0 ? '1' : '0'} × 1 = ${n(g)}. These factors are loss → guess, guess → top mixture, the ReLU gate’s local effect, and first input. The derivative describes a tiny local change; the +0.1 preview recomputes the actual finite change. Backpropagation gets derivatives by reusing these local effects, without testing every dial one at a time.`,
     },
     {
-      title: 'Which way should this one weight move?',
-      text: `Its gradient is ${n(g)}. We subtract learning rate × gradient. ${g < 0 ? 'Subtracting a negative number increases the weight.' : g > 0 ? 'Subtracting a positive number decreases the weight.' : 'A zero gradient leaves this weight unchanged.'} Every other weight gets its own calculation, using the same old network.`,
+      title: 'Choose which way to turn the dial.',
+      text: `The first weight’s gradient is ${n(g)}. ${g < 0 ? 'Its negative sign says a tiny increase would lower this loss.' : g > 0 ? 'Its positive sign says a tiny decrease would lower this loss.' : 'A zero gradient suggests no change to this weight.'} Now choose a direction.`,
+      action: 'Make your prediction, then move all the weights once.',
+      calculation: `New first weight = ${n(network.weights[0][0])} − ${rate} × (${n(g)}) = ${n(network.weights[0][0] - rate * g)}. We subtract learning rate × gradient. Each weight and bias gets its own gradient, calculated using the same old network. A finite step can still overshoot.`,
     },
     {
-      title: 'New numbers. A new guess.',
+      title: 'This is the part where learning happens.',
       text: receipt
-        ? `The loss moved from ${n(receipt.before.loss)} to ${n(receipt.after.loss)}. The first weight is now ${n(network.weights[0][0])}. ${receipt.after.loss < receipt.before.loss ? 'This step improved this example.' : 'This step did not improve this example; try a smaller learning rate.'} We have only practiced one example, so this says nothing yet about new examples.`
+        ? `The program saved new weights and biases. The same inputs now give ${n(receipt.after.prediction)}. ${receipt.after.loss < receipt.before.loss ? 'That is closer to this example’s answer.' : 'This step did not improve the loss; a smaller learning rate may help.'}`
+        : '',
+      action:
+        'The inputs stayed the same. The saved settings changed. That changes future guesses.',
+      calculation: receipt
+        ? `Loss: ${n(receipt.before.loss)} → ${n(receipt.after.loss)}. First weight: ${n(receipt.firstWeightBefore)} → ${n(receipt.network.weights[0][0])}, using learning rate ${receipt.learningRate} and practice answer ${receipt.practiceAnswer}. Every update used the same old snapshot. This is one practice example; performance on new examples still needs to be tested.`
         : '',
     },
   ];
+
+  const closeUp = (
+    <div className={`backprop-closeup backprop-closeup-${stage}`} key={stage}>
+      {stage === 0 && (
+        <>
+          <p className="bp-focus-label">WHAT THE NETWORK RECEIVES</p>
+          <div className="bp-value-pair">
+            <div className="bp-big-value">
+              <span>First input</span>
+              <strong>1</strong>
+            </div>
+            <div className="bp-big-value">
+              <span>Second input</span>
+              <strong>2</strong>
+            </div>
+          </div>
+          <p className="bp-answer-note">
+            Practice answer: <strong>{target}</strong>. We keep this aside to check the guess later.
+          </p>
+        </>
+      )}
+      {stage === 1 && (
+        <>
+          <p className="bp-focus-label">ZOOM IN: THE TOP MIXING STATION</p>
+          {[0, 1].map((i) => (
+            <div className="bp-piece-row" key={i}>
+              <span>
+                <small>Input {i + 1}</small>
+                <strong>{i + 1}</strong>
+              </span>
+              <span className="bp-operation">×</span>
+              <span className="bp-dial">
+                <small>Weight</small>
+                <strong>{n(network.weights[0][i])}</strong>
+              </span>
+              <span className="bp-operation">=</span>
+              <span>
+                <small>This piece</small>
+                <strong>{n((i + 1) * network.weights[0][i])}</strong>
+              </span>
+            </div>
+          ))}
+          <div className="bp-combined-value">
+            <span>
+              Add the pieces and bias {n(network.biases[0])}
+              <small>Then keep positives; turn negatives into 0.</small>
+            </span>
+            <strong>{n(trace.hidden[0])}</strong>
+          </div>
+          <p className="bp-answer-note">
+            The other station uses different weights and produces{' '}
+            <strong>{n(trace.hidden[1])}</strong>. A station like this is also called a neuron.
+          </p>
+        </>
+      )}
+      {stage === 2 && (
+        <>
+          <p className="bp-focus-label">TWO MIXTURES BECOME ONE GUESS</p>
+          <div className="bp-value-pair">
+            {[0, 1].map((i) => (
+              <div className="bp-big-value" key={i}>
+                <span>{i === 0 ? 'Top' : 'Bottom'} mixture</span>
+                <strong>{n(trace.hidden[i])}</strong>
+                <small>
+                  × weight {n(network.outputWeights[i])} ={' '}
+                  {n(trace.hidden[i] * network.outputWeights[i])}
+                </small>
+              </div>
+            ))}
+          </div>
+          <div className="bp-combined-value">
+            <span>
+              Add these two pieces<small>Plus the final bias: {n(network.outputBias)}</small>
+            </span>
+            <strong>{n(trace.prediction)}</strong>
+          </div>
+          <p className="bp-answer-note">
+            This is a forward pass: turn the inputs into an answer using the current settings.
+          </p>
+        </>
+      )}
+      {stage === 3 && (
+        <>
+          <p className="bp-focus-label">HOW CLOSE WAS THE GUESS?</p>
+          <div className="bp-value-pair">
+            <div className="bp-big-value">
+              <span>Network’s guess</span>
+              <strong>{n(trace.prediction)}</strong>
+            </div>
+            <div className="bp-big-value bp-target-value">
+              <span>Practice answer</span>
+              <strong>{target}</strong>
+            </div>
+          </div>
+          <div className="bp-miss">
+            <span>Distance from the answer</span>
+            <strong>{n(Math.abs(trace.error))}</strong>
+          </div>
+          <p className="bp-answer-note">
+            Loss is the score we choose for this miss. Here it is <strong>{n(trace.loss)}</strong>.
+            Zero means an exact match on this example.
+          </p>
+        </>
+      )}
+      {stage === 4 && (
+        <>
+          <p className="bp-focus-label">ONE DIAL. ONE CHAIN OF EFFECTS.</p>
+          <button
+            className="button bp-nudge-button"
+            aria-pressed={showNudge}
+            onClick={() => {
+              setPlaying(false);
+              setShowNudge(!showNudge);
+            }}
+          >
+            {showNudge ? 'Undo the preview' : 'Preview +0.1 on one weight'}
+          </button>
+          <ol className="bp-nudge-path">
+            {[
+              {
+                label: 'First weight',
+                before: network.weights[0][0],
+                after: network.weights[0][0] + 0.1,
+                note: 'Scales the first input',
+              },
+              {
+                label: 'Top mixture',
+                before: trace.hidden[0],
+                after: nudged.hidden[0],
+                note: 'Feeds the final station',
+              },
+              {
+                label: 'Guess',
+                before: trace.prediction,
+                after: nudged.prediction,
+                note: 'Gets compared with the answer',
+              },
+              { label: 'Loss', before: trace.loss, after: nudged.loss, note: 'Scores the miss' },
+            ].map((item, i) => (
+              <li key={item.label} className={showNudge ? 'is-previewing' : ''}>
+                <span className="bp-path-step">{i + 1}</span>
+                <span className="bp-path-label">{item.label}</span>
+                <div className="bp-path-values">
+                  <strong>{n(item.before)}</strong>
+                  {showNudge && (
+                    <>
+                      <ArrowRight size={16} aria-hidden="true" />
+                      <strong>{n(item.after)}</strong>
+                    </>
+                  )}
+                </div>
+                <small>{item.note}</small>
+              </li>
+            ))}
+          </ol>
+          <p className="bp-preview-feedback" role="status" data-testid="bp-nudge-feedback">
+            {showNudge
+              ? `The preview loss ${nudged.loss < trace.loss ? 'fell' : nudged.loss > trace.loss ? 'rose' : 'stayed the same'}: ${n(trace.loss)} → ${n(nudged.loss)}. The saved first weight is still ${n(network.weights[0][0])}; this was a test of one dial.`
+              : 'Only the first weight will be tested. All other weights, biases, and inputs stay fixed.'}
+          </p>
+        </>
+      )}
+      {stage === 5 && (
+        <>
+          <p className="bp-focus-label">A GRADIENT TELLS US A LOCAL DIRECTION</p>
+          <div className="bp-value-pair">
+            <div className="bp-big-value">
+              <span>First weight now</span>
+              <strong>{n(network.weights[0][0])}</strong>
+            </div>
+            <div className="bp-big-value bp-gradient-value">
+              <span>Its loss gradient</span>
+              <strong>{n(g)}</strong>
+            </div>
+          </div>
+          <p className="bp-answer-note">
+            A gradient measures how quickly the loss changes when this weight changes a tiny amount.
+            Every weight gets its own gradient.
+          </p>
+        </>
+      )}
+      {stage === 6 && receipt && (
+        <>
+          <p className="bp-focus-label">SAME INPUTS. NEW SETTINGS.</p>
+          <div className="bp-value-pair">
+            <div className="bp-big-value">
+              <span>Previous guess</span>
+              <strong>{n(receipt.before.prediction)}</strong>
+            </div>
+            <div className="bp-big-value bp-target-value">
+              <span>Guess after the update</span>
+              <strong>{n(receipt.after.prediction)}</strong>
+            </div>
+          </div>
+          <p className="bp-answer-note">
+            The practice answer is still <strong>{receipt.practiceAnswer}</strong>. One successful
+            update does not establish success on new examples.
+          </p>
+        </>
+      )}
+    </div>
+  );
 
   if (lab)
     return (
@@ -130,6 +367,7 @@ export default function BackpropJourney() {
         onChange={(value) => {
           setMode(value);
           setPlaying(false);
+          setShowNudge(false);
         }}
       />
       {mode === 'visual' && (
@@ -140,271 +378,302 @@ export default function BackpropJourney() {
             </span>
             <span className="pill">{round} WEIGHT UPDATES</span>
           </div>
-          <div className="backprop-scene">
-            <svg viewBox="0 0 740 330" role="img" aria-labelledby="route-title route-desc">
-              <title id="route-title">One example moves through a two-neuron network</title>
-              <desc id="route-desc">
-                {scenes[stage].text} Purple paths carry values forward. Orange paths carry gradients
-                backward.
-              </desc>
-              <defs>
-                <marker
-                  id="backprop-arrow"
-                  markerWidth="7"
-                  markerHeight="7"
-                  refX="6"
-                  refY="3.5"
-                  orient="auto"
-                >
-                  <path d="M0 0L7 3.5L0 7Z" fill="#9c87b5" />
-                </marker>
-              </defs>
-              <text x="64" y="30" className="bp-column" textAnchor="middle">
-                INPUTS
-              </text>
-              <text x="300" y="30" className="bp-column" textAnchor="middle">
-                HIDDEN: MIX + GATE
-              </text>
-              <text x="554" y="30" className="bp-column" textAnchor="middle">
-                GUESS
-              </text>
-              <text x="689" y="30" className="bp-column" textAnchor="middle">
-                MISTAKE
-              </text>
-              {[
-                [0, 0],
-                [0, 1],
-                [1, 0],
-                [1, 1],
-              ].map(([i, j]) => {
-                const path = `M96 ${i === 0 ? 110 : 243} C165 ${i === 0 ? 110 : 243}, 204 ${j === 0 ? 110 : 243}, 254 ${j === 0 ? 110 : 243}`;
-                return (
-                  <g key={`${i}-${j}`}>
-                    <path
-                      d={path}
-                      fill="none"
-                      stroke={stage === 4 && i === 0 && j === 0 ? '#c5834a' : '#c7bed5'}
-                      strokeWidth={i === 0 && j === 0 ? 3 : 1.5}
-                      markerEnd="url(#backprop-arrow)"
-                    />
-                    {stage === 1 && !reducedMotion && (
-                      <circle r="5" fill="#80629f">
-                        <animateMotion dur="1.6s" path={path} repeatCount="2" fill="freeze" />
-                      </circle>
-                    )}
-                    {stage === 4 && i === 0 && j === 0 && !reducedMotion && (
-                      <circle r="5" fill="#b9773a">
-                        <animateMotion
-                          dur="1.8s"
-                          path="M254 110 C204 110,165 110,96 110"
-                          repeatCount="2"
-                          fill="freeze"
-                        />
-                      </circle>
-                    )}
-                  </g>
-                );
-              })}
-              {[0, 1].map((j) => {
-                const path = `M346 ${j === 0 ? 110 : 243} C427 ${j === 0 ? 110 : 243},452 174,518 174`;
-                return (
-                  <g key={j}>
-                    <path
-                      d={path}
-                      fill="none"
-                      stroke={stage === 4 && j === 0 ? '#c5834a' : '#b5c8b3'}
-                      strokeWidth="2"
-                      markerEnd="url(#backprop-arrow)"
-                    />
-                    {stage === 2 && !reducedMotion && (
-                      <circle r="5" fill="#608958">
-                        <animateMotion dur="1.6s" path={path} repeatCount="2" fill="freeze" />
-                      </circle>
-                    )}
-                    {stage === 4 && j === 0 && !reducedMotion && (
-                      <circle r="5" fill="#b9773a">
-                        <animateMotion
-                          dur="1.8s"
-                          path="M518 174 C452 174,427 110,346 110"
-                          repeatCount="2"
-                          fill="freeze"
-                        />
-                      </circle>
-                    )}
-                  </g>
-                );
-              })}
-              <path
-                d="M590 174H650"
-                stroke="#b5c8b3"
-                strokeWidth="2"
-                markerEnd="url(#backprop-arrow)"
-              />
-              {[1, 2].map((x, i) => (
-                <g key={x}>
-                  <circle cx="64" cy={i === 0 ? 110 : 243} r="31" fill="#eef1e6" stroke="#c7d3bf" />
-                  <text x="64" y={i === 0 ? 117 : 250} textAnchor="middle" className="bp-value">
-                    {x}
-                  </text>
-                </g>
-              ))}
-              {[0, 1].map((j) => (
-                <g key={j}>
-                  <rect
-                    x="254"
-                    y={(j === 0 ? 110 : 243) - 33}
-                    width="92"
-                    height="66"
-                    rx="18"
-                    fill={stage === 4 && j === 0 ? '#fae9d8' : '#eee6f6'}
-                    stroke={stage === 4 && j === 0 ? '#c5834a' : '#b29bc8'}
-                    strokeWidth={stage === 1 || stage === 4 ? 2 : 1}
-                  />
-                  <text
-                    x="300"
-                    y={(j === 0 ? 110 : 243) + 5}
-                    textAnchor="middle"
-                    className="bp-value"
-                  >
-                    {stage >= 1 ? n(trace.hidden[j]) : '?'}
-                  </text>
-                  <text
-                    x="300"
-                    y={(j === 0 ? 110 : 243) + 50}
-                    textAnchor="middle"
-                    className="bp-label"
-                  >
-                    mixing station {j + 1}
-                  </text>
-                </g>
-              ))}
-              <circle
-                cx="554"
-                cy="174"
-                r="36"
-                fill="#e3eddd"
-                stroke="#7b9a69"
-                opacity={stage >= 2 ? 1 : 0.35}
-              />
-              <text x="554" y="180" className="bp-value" textAnchor="middle">
-                {stage >= 2 ? n(trace.prediction) : '?'}
-              </text>
-              <text x="554" y="230" className="bp-label" textAnchor="middle">
-                target: {target}
-              </text>
-              <rect
-                x="650"
-                y="149"
-                width="78"
-                height="50"
-                rx="12"
-                fill="#f4eadf"
-                stroke="#c5a581"
-                opacity={stage >= 3 ? 1 : 0.35}
-              />
-              <text x="689" y="178" className="bp-small-value" textAnchor="middle">
-                {stage >= 3 ? n(trace.loss) : '?'}
-              </text>
-              <text x="689" y="219" className="bp-label" textAnchor="middle">
-                loss
-              </text>
-              <rect x="125" y="70" width="100" height="27" rx="7" fill="#f2edf8" />
-              <text x="175" y="89" className="bp-weight" textAnchor="middle">
-                w = {n(network.weights[0][0])}
-              </text>
-              {stage >= 4 && stage < 6 && (
-                <>
-                  <rect x="125" y="138" width="114" height="31" rx="7" fill="#f8e8d7" />
-                  <text x="182" y="158" className="bp-weight" textAnchor="middle">
-                    gradient {n(g)}
-                  </text>
-                  <text x="370" y="325" textAnchor="middle" className="bp-label">
-                    ← Backward means calculating sensitivity. Inputs are not flowing backward.
-                  </text>
-                </>
+          <div className="backprop-workbench">
+            <div className="backprop-instructions">
+              <div className="guide-narration backprop-narration" aria-live="polite">
+                <span className="guide-number">{stage + 1}</span>
+                <div>
+                  <h2>{scenes[stage].title}</h2>
+                  <p>{scenes[stage].text}</p>
+                </div>
+              </div>
+              <p className="backprop-action">
+                <ArrowRight size={17} aria-hidden="true" />
+                {scenes[stage].action}
+              </p>
+              {stage === 5 && (
+                <div className="guide-prompt">
+                  <p>
+                    Before pressing the button: should the highlighted weight increase or decrease?
+                  </p>
+                  <div>
+                    <button
+                      className="button"
+                      aria-pressed={choice === 'up'}
+                      onClick={() => setChoice('up')}
+                    >
+                      Increase ↑
+                    </button>
+                    <button
+                      className="button"
+                      aria-pressed={choice === 'down'}
+                      onClick={() => setChoice('down')}
+                    >
+                      Decrease ↓
+                    </button>
+                  </div>
+                  <p className="guide-feedback" role="status">
+                    {choice
+                      ? g === 0
+                        ? 'Its gradient is zero. Neither direction is suggested by this local derivative.'
+                        : (choice === 'up') === g < 0
+                          ? 'Yes. Subtracting the signed gradient moves this weight in that direction.'
+                          : 'Try the subtraction: new weight = old weight − step size × gradient.'
+                      : 'A gradient is the slope of the loss with respect to this particular weight.'}
+                  </p>
+                </div>
               )}
-            </svg>
-          </div>
-          <div className="guide-narration" aria-live="polite">
-            <span className="guide-number">{stage + 1}</span>
-            <div>
-              <h2>{scenes[stage].title}</h2>
-              <p>{scenes[stage].text}</p>
-            </div>
-          </div>
-          {stage === 5 && (
-            <div className="guide-prompt">
-              <p>Before pressing the button: should the highlighted weight increase or decrease?</p>
-              <div>
-                <button
-                  className="button"
-                  aria-pressed={choice === 'up'}
-                  onClick={() => setChoice('up')}
-                >
-                  Increase ↑
+              {stage === 6 && receipt && (
+                <div className="backprop-receipt">
+                  <div>
+                    <span>First weight</span>
+                    <strong>
+                      {n(receipt.firstWeightBefore)} → {n(receipt.network.weights[0][0])}
+                    </strong>
+                  </div>
+                  <div>
+                    <span>Loss on this example</span>
+                    <strong>
+                      {n(receipt.before.loss)} → {n(receipt.after.loss)}
+                    </strong>
+                  </div>
+                </div>
+              )}
+              <div className="guide-controls">
+                <button className="button" onClick={reset}>
+                  <RotateCcw size={15} />
+                  Restart story
                 </button>
+                <div className="guide-dots" role="group" aria-label={`Stop ${stage + 1} of 7`}>
+                  {stageNames.map((_, i) => (
+                    <span key={i} className={i === stage ? 'current' : i < stage ? 'past' : ''} />
+                  ))}
+                </div>
                 <button
                   className="button"
-                  aria-pressed={choice === 'down'}
-                  onClick={() => setChoice('down')}
+                  disabled={stage >= 5}
+                  onClick={() => setPlaying(!playing)}
                 >
-                  Decrease ↓
+                  {playing && stage < 5 ? <Pause size={15} /> : <Play size={15} />}
+                  {playing && stage < 5 ? 'Pause story' : 'Play story'}
+                </button>
+                <button className="button primary" onClick={next}>
+                  {stage < 5
+                    ? 'Next: ' + stageNames[stage + 1]
+                    : stage === 5
+                      ? 'Move the weights'
+                      : 'Follow another update'}
+                  <ArrowRight size={15} />
                 </button>
               </div>
-              <p className="guide-feedback" role="status">
-                {choice
-                  ? g === 0
-                    ? 'Its gradient is zero. Neither direction is suggested by this local derivative.'
-                    : (choice === 'up') === g < 0
-                      ? 'Yes. Subtracting the signed gradient moves this weight in that direction.'
-                      : 'Try the subtraction: new weight = old weight − step size × gradient.'
-                  : 'A gradient is the slope of the loss with respect to this particular weight.'}
+              <p className="backprop-auto-note">
+                The story pauses before changing a weight. You decide when to take the step.
               </p>
             </div>
-          )}
-          {stage === 6 && receipt && (
-            <div className="backprop-receipt">
-              <div>
-                <span>First weight</span>
-                <strong>
-                  {n(receipt.before.gradients.weights[0][0] * rate + network.weights[0][0])} →{' '}
-                  {n(network.weights[0][0])}
-                </strong>
-              </div>
-              <div>
-                <span>Loss on this example</span>
-                <strong>
-                  {n(receipt.before.loss)} → {n(receipt.after.loss)}
-                </strong>
-              </div>
-            </div>
-          )}
-          <div className="guide-controls">
-            <button className="button" onClick={reset}>
-              <RotateCcw size={15} />
-              Restart story
-            </button>
-            <div className="guide-dots" role="group" aria-label={`Stop ${stage + 1} of 7`}>
-              {stageNames.map((_, i) => (
-                <span key={i} className={i === stage ? 'current' : i < stage ? 'past' : ''} />
-              ))}
-            </div>
-            <button className="button" disabled={stage >= 5} onClick={() => setPlaying(!playing)}>
-              {playing && stage < 5 ? <Pause size={15} /> : <Play size={15} />}
-              {playing && stage < 5 ? 'Pause story' : 'Play story'}
-            </button>
-            <button className="button primary" onClick={next}>
-              {stage < 5
-                ? 'Next: ' + stageNames[stage + 1]
-                : stage === 5
-                  ? 'Move the weights'
-                  : 'Follow another update'}
-              <ArrowRight size={15} />
-            </button>
+            {closeUp}
           </div>
-          <p className="backprop-auto-note">
-            The story pauses before changing a weight. You decide when to take the step.
-          </p>
+          <details className="backprop-detail" key={`calculation-${stage}`}>
+            <summary>Show this step’s calculation</summary>
+            <p>{scenes[stage].calculation}</p>
+          </details>
+          <details className="backprop-detail backprop-map" key={`map-${stage}`}>
+            <summary>See how the whole network connects</summary>
+            <p>
+              The large cards above show the current step. This map puts that step back into the
+              whole network.
+            </p>
+            <div className="backprop-scene">
+              <svg viewBox="0 0 740 330" role="img" aria-labelledby="route-title route-desc">
+                <title id="route-title">One example moves through a two-neuron network</title>
+                <desc id="route-desc">
+                  {scenes[stage].text} Purple paths carry values forward. Orange paths carry
+                  gradients backward.
+                </desc>
+                <defs>
+                  <marker
+                    id="backprop-arrow"
+                    markerWidth="7"
+                    markerHeight="7"
+                    refX="6"
+                    refY="3.5"
+                    orient="auto"
+                  >
+                    <path d="M0 0L7 3.5L0 7Z" fill="#9c87b5" />
+                  </marker>
+                </defs>
+                <text x="64" y="30" className="bp-column" textAnchor="middle">
+                  INPUTS
+                </text>
+                <text x="300" y="30" className="bp-column" textAnchor="middle">
+                  HIDDEN: MIX + GATE
+                </text>
+                <text x="554" y="30" className="bp-column" textAnchor="middle">
+                  GUESS
+                </text>
+                <text x="689" y="30" className="bp-column" textAnchor="middle">
+                  MISTAKE
+                </text>
+                {[
+                  [0, 0],
+                  [0, 1],
+                  [1, 0],
+                  [1, 1],
+                ].map(([i, j]) => {
+                  const path = `M96 ${i === 0 ? 110 : 243} C165 ${i === 0 ? 110 : 243}, 204 ${j === 0 ? 110 : 243}, 254 ${j === 0 ? 110 : 243}`;
+                  return (
+                    <g key={`${i}-${j}`}>
+                      <path
+                        d={path}
+                        fill="none"
+                        stroke={stage === 4 && i === 0 && j === 0 ? '#c5834a' : '#c7bed5'}
+                        strokeWidth={i === 0 && j === 0 ? 3 : 1.5}
+                        markerEnd="url(#backprop-arrow)"
+                      />
+                      {stage === 1 && !reducedMotion && (
+                        <circle r="5" fill="#80629f">
+                          <animateMotion dur="1.6s" path={path} repeatCount="2" fill="freeze" />
+                        </circle>
+                      )}
+                      {stage === 4 && i === 0 && j === 0 && !reducedMotion && (
+                        <circle r="5" fill="#b9773a">
+                          <animateMotion
+                            dur="1.8s"
+                            path="M254 110 C204 110,165 110,96 110"
+                            repeatCount="2"
+                            fill="freeze"
+                          />
+                        </circle>
+                      )}
+                    </g>
+                  );
+                })}
+                {[0, 1].map((j) => {
+                  const path = `M346 ${j === 0 ? 110 : 243} C427 ${j === 0 ? 110 : 243},452 174,518 174`;
+                  return (
+                    <g key={j}>
+                      <path
+                        d={path}
+                        fill="none"
+                        stroke={stage === 4 && j === 0 ? '#c5834a' : '#b5c8b3'}
+                        strokeWidth="2"
+                        markerEnd="url(#backprop-arrow)"
+                      />
+                      {stage === 2 && !reducedMotion && (
+                        <circle r="5" fill="#608958">
+                          <animateMotion dur="1.6s" path={path} repeatCount="2" fill="freeze" />
+                        </circle>
+                      )}
+                      {stage === 4 && j === 0 && !reducedMotion && (
+                        <circle r="5" fill="#b9773a">
+                          <animateMotion
+                            dur="1.8s"
+                            path="M518 174 C452 174,427 110,346 110"
+                            repeatCount="2"
+                            fill="freeze"
+                          />
+                        </circle>
+                      )}
+                    </g>
+                  );
+                })}
+                <path
+                  d="M590 174H650"
+                  stroke="#b5c8b3"
+                  strokeWidth="2"
+                  markerEnd="url(#backprop-arrow)"
+                />
+                {[1, 2].map((x, i) => (
+                  <g key={x}>
+                    <circle
+                      cx="64"
+                      cy={i === 0 ? 110 : 243}
+                      r="31"
+                      fill="#eef1e6"
+                      stroke="#c7d3bf"
+                    />
+                    <text x="64" y={i === 0 ? 117 : 250} textAnchor="middle" className="bp-value">
+                      {x}
+                    </text>
+                  </g>
+                ))}
+                {[0, 1].map((j) => (
+                  <g key={j}>
+                    <rect
+                      x="254"
+                      y={(j === 0 ? 110 : 243) - 33}
+                      width="92"
+                      height="66"
+                      rx="18"
+                      fill={stage === 4 && j === 0 ? '#fae9d8' : '#eee6f6'}
+                      stroke={stage === 4 && j === 0 ? '#c5834a' : '#b29bc8'}
+                      strokeWidth={stage === 1 || stage === 4 ? 2 : 1}
+                    />
+                    <text
+                      x="300"
+                      y={(j === 0 ? 110 : 243) + 5}
+                      textAnchor="middle"
+                      className="bp-value"
+                    >
+                      {stage >= 1 ? n(trace.hidden[j]) : '?'}
+                    </text>
+                    <text
+                      x="300"
+                      y={(j === 0 ? 110 : 243) + 50}
+                      textAnchor="middle"
+                      className="bp-label"
+                    >
+                      mixing station {j + 1}
+                    </text>
+                  </g>
+                ))}
+                <circle
+                  cx="554"
+                  cy="174"
+                  r="36"
+                  fill="#e3eddd"
+                  stroke="#7b9a69"
+                  opacity={stage >= 2 ? 1 : 0.35}
+                />
+                <text x="554" y="180" className="bp-value" textAnchor="middle">
+                  {stage >= 2 ? n(trace.prediction) : '?'}
+                </text>
+                <text x="554" y="230" className="bp-label" textAnchor="middle">
+                  target: {target}
+                </text>
+                <rect
+                  x="650"
+                  y="149"
+                  width="78"
+                  height="50"
+                  rx="12"
+                  fill="#f4eadf"
+                  stroke="#c5a581"
+                  opacity={stage >= 3 ? 1 : 0.35}
+                />
+                <text x="689" y="178" className="bp-small-value" textAnchor="middle">
+                  {stage >= 3 ? n(trace.loss) : '?'}
+                </text>
+                <text x="689" y="219" className="bp-label" textAnchor="middle">
+                  loss
+                </text>
+                <rect x="125" y="70" width="100" height="27" rx="7" fill="#f2edf8" />
+                <text x="175" y="89" className="bp-weight" textAnchor="middle">
+                  w = {n(network.weights[0][0])}
+                </text>
+                {stage >= 4 && stage < 6 && (
+                  <>
+                    <rect x="125" y="138" width="114" height="31" rx="7" fill="#f8e8d7" />
+                    <text x="182" y="158" className="bp-weight" textAnchor="middle">
+                      gradient {n(g)}
+                    </text>
+                    <text x="370" y="325" textAnchor="middle" className="bp-label">
+                      ← Backward means calculating sensitivity. Inputs are not flowing backward.
+                    </text>
+                  </>
+                )}
+              </svg>
+            </div>
+          </details>
         </section>
       )}
 
