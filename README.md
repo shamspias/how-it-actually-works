@@ -27,6 +27,18 @@ npm ci
 npm run dev
 ```
 
+## Publish to Cloudflare
+
+This is a static frontend: calculations run in the browser, with no backend or database. Cloudflare can serve the generated files while your computer is off.
+
+```sh
+make cloudflare-login # One-time browser sign-in
+make deploy-check    # Validate the build without publishing
+make deploy          # Publish and print the public URL
+```
+
+See [the deployment guide](docs/deployment.md) for account selection, updates, and verification. The configuration uses Cloudflare Workers Static Assets without a Worker script.
+
 ## Three ways into the same idea
 
 Every chapter offers these modes:
