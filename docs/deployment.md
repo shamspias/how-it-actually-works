@@ -1,5 +1,7 @@
 # Publish the learning lab to Cloudflare
 
+Public site: **[how-it-actually-works.algolyzerlab.workers.dev](https://how-it-actually-works.algolyzerlab.workers.dev)**.
+
 This project is a static React application. Cloudflare serves the HTML, JavaScript, CSS, fonts, and icons; the browser runs the simulations. There is no application backend, database, AI API, or server-side training process.
 
 The [Wrangler configuration](../wrangler.jsonc) publishes only `dist/`, using [Cloudflare Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/binding/). It deliberately has no Worker script entry point. The name “Workers” here identifies the hosting product; this deployment contains static files only.
@@ -14,7 +16,7 @@ make deploy-check
 make deploy
 ```
 
-The login opens Cloudflare's authorization flow in your browser. Complete it using the account that should own the site. `make deploy-check` builds and validates the configuration without publishing. `make deploy` builds the current source and uploads the result. Wrangler prints the public `https://how-it-actually-works.<your-subdomain>.workers.dev` URL after a successful deployment. This example address is a template, not a claim that a deployment already exists.
+The login opens Cloudflare's authorization flow in your browser. Complete it using the account that should own the site. `make deploy-check` builds and validates the configuration without publishing. `make deploy` builds the current source and uploads the result. Wrangler prints the public URL after a successful deployment. In a different account, its form is `https://how-it-actually-works.<your-subdomain>.workers.dev`; the account's subdomain determines the address.
 
 If more than one Cloudflare account is available, select the intended account or provide its ID for the command:
 

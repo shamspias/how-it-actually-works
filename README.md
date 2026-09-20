@@ -2,6 +2,8 @@
 
 A hands-on field guide for the question behind the explanation: **“But what is actually happening?”**
 
+**[Open the learning lab online](https://how-it-actually-works.algolyzerlab.workers.dev)** — no installation needed.
+
 The first collection opens up machine learning, starting before the technical words. Teach a pretend watering helper, keep the number it changed, and use it for another guess. Then follow that same idea through backpropagation, learned features, deep networks, and the boxes in a research paper. Each step connects a visible action to its calculation and runnable code.
 
 ![The learning lab with visual, mathematical, and code learning modes](docs/learning-lab.png)
