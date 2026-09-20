@@ -22,6 +22,8 @@ Next, hide the answer and try another seed count. The input and guess change; th
 
 **Code follow-up:** Run `node examples/learning-loop.mjs`. Point to the assignment that saves the new dial and the prediction function that only reads it.
 
+**Slow down one update:** After **Practice once**, use the three receipt cards: **Guess**, **Compare**, and **Adjust & save**. **Replay this change** moves the highlight across that saved record; it does not run another update. Point to the dashed answer line in the cup and compare it with the water level.
+
 **Give it back:** “Which action changes the recipe, and which action just uses it?” Pip is a character used to explain instructions; no little person or knowledgeable electricity lives inside the model.
 
 ## 2. One tiny learner
@@ -53,6 +55,8 @@ Finish the four stops before opening **Ready to experiment? Break the rule, then
 ## 4. Follow one mistake
 
 **Visual story:** Start with the two input values. Step through the mixing stations and the output, then reveal the target. With the default settings, the guess is `1.25` and the answer is `2`. Follow one highlighted connection backward through the error's dependencies.
+
+At the weight-preview step, use **Preview +0.1 on one weight**. Follow the large cards from first weight to top mixture to guess to loss. The preview recomputes a finite change without changing the saved model. Open **Show this step’s calculation** to distinguish that experiment from the local derivative. The whole-network map is also optional.
 
 At **Choose the adjustment**, ask whether the first weight should increase or decrease. Its gradient is `−0.375`. Choose **Increase**, then **Move the weights**. The first weight changes from `0.5` to `0.5375`; the whole update also adjusts the other parameters. Read the receipt after the change.
 

@@ -39,6 +39,12 @@ Every chapter offers these modes:
 
 Begin with **Play & see**. Pause after one change and explain it in your own words before opening the equations. Prediction questions and short checkpoints help you find the step to revisit. Use **Explain a word** in the top bar whenever a term is unfamiliar; its searchable explanations connect the word to an example. The network and shortcut chapters also have optional free labs.
 
+The opening game puts the controls beside Pip's watering station. After **Practice once**, inspect the three-part record: the old guess, the comparison, and the newly saved dial. **Replay this change** highlights that completed update without training again. In the backpropagation story, large cards follow one step at a time; **Preview +0.1 on one weight** shows how a change affects the mixture, guess, and loss before you update the saved model.
+
+Use the green story controls to work through an experiment. The separate **Next lesson** control names the upcoming lesson and records the current one as explored. A short question before moving on lets you explain the idea yourself or reveal a plain-language reminder. Completion records exploration, not a test score.
+
+![Preview one weight change and follow its effect through the mixture, guess, and loss](docs/backprop-preview.png)
+
 ## Twelve discoveries, one learning path
 
 Start with one change, learn how networks build and test patterns, then trace larger machines. Chapter links also work as direct URLs, for example `http://127.0.0.1:5173/#learned-features`.

@@ -61,6 +61,10 @@ For a new collection, such as computer hardware, give it a separate lesson list 
 
 Give every control a clear label and a sensible default. Someone should be able to get their first meaningful result with one obvious action. Keep reset visible and distinguish changing the experiment from changing its current state.
 
+Place the current task and its action together. Keep the first useful control visible without scrolling on an ordinary desktop; on a narrow screen, put the instruction and action before a large illustration. Use large values for the current step and make a complete network map optional. Distinguish the story's **Next: …** action from the course's **Next lesson** action. A replay should inspect a saved result, not silently run training again.
+
+The shared [LessonRecap.tsx](../src/components/LessonRecap.tsx) asks one question in the learner's own words before the chapter transition, with a hidden explanation they can reveal. Add a recap when adding a guided chapter; use a question about the mechanism, not a vocabulary test. The tiny-learner chapter already has its own recall question and transition.
+
 Use native buttons, inputs, selects, and expandable sections where possible. SVG diagrams need a title and description. If a point or node is selectable, provide a keyboard route to it; an HTML selector can complement the graphic. Do not communicate a class or state through color alone. Use text, shape, or line style as well.
 
 Check narrow layouts, long labels, zoom, keyboard focus, and reduced-motion preferences. A detailed arithmetic table may scroll within its own container; the whole page should not require horizontal scrolling. A paused or completed state should be understandable without watching the preceding animation.
