@@ -3,6 +3,13 @@
   "name": "how-it-actually-works",
   "compatibility_date": "2026-09-20",
   "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "learn.algolyzerlab.com",
+      "custom_domain": true,
+      "zone_name": "algolyzerlab.com",
+    },
+  ],
   "assets": {
     "directory": "./dist",
   },
