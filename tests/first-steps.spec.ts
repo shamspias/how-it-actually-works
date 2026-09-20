@@ -72,3 +72,80 @@ test('word help gives examples, searches, and returns focus without leaving the 
   await expect(page.getByRole('button', { name: 'Explain a word', exact: true })).toBeFocused();
   await expect(page).toHaveURL(/#gradient-descent$/);
 });
+
+test('the practice receipt explains the actual old guess and saved update without training during replay', async ({
+  page,
+}) => {
+  await page.goto('/#first-steps');
+  await page.getByRole('button', { name: 'Next: You move the dial' }).click();
+  await page.getByRole('button', { name: 'Bigger dial' }).click();
+  await page.getByRole('button', { name: 'Bigger dial' }).click();
+  await page.getByRole('button', { name: 'Next: Let the program practice' }).click();
+  await page.getByRole('button', { name: 'Practice once', exact: true }).click();
+  await expect(page.getByTestId('pip-receipt-before-guess')).toHaveText('2 drops');
+  await expect(page.getByTestId('pip-receipt-dial')).toHaveText('1 → 1.4');
+  await expect(page.locator('.pip-receipt-caption')).toContainText('New guess: 2.8 drops');
+  await page.getByRole('button', { name: /^2 Compare/ }).click();
+  await expect(page.locator('.pip-receipt-caption')).toContainText('2 drops too small');
+  await page.getByText('Why this amount of change?', { exact: true }).click();
+  await expect(page.locator('.pip-receipt-math')).toContainText('new dial: 1 − 0.1 × (-4) = 1.4');
+
+  await page.getByRole('button', { name: 'Replay this change', exact: true }).click();
+  await expect(page.getByRole('button', { name: /^1 Guess/ })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await expect(page.getByRole('button', { name: /^3 Adjust & save/ })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await expect(page.getByRole('button', { name: 'Replay this change', exact: true })).toBeVisible();
+  await expect(page.getByTestId('pip-dial')).toHaveText('1.4');
+  await expect(page.locator('.pip-receipt-header h3')).toHaveText('What changed in practice 1?');
+
+  await page.getByRole('button', { name: 'Practice once', exact: true }).click();
+  await expect(page.getByTestId('pip-receipt-before-guess')).toHaveText('2.8 drops');
+  await expect(page.getByTestId('pip-receipt-dial')).toHaveText('1.4 → 1.64');
+  await expect(page.locator('.pip-receipt-math')).toContainText(
+    'new dial: 1.4 − 0.1 × (-2.4) = 1.64',
+  );
+});
+
+test('receipt playback stops for manual inspection and mode changes, including a narrow reduced-motion view', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#first-steps');
+  const firstAction = page.getByRole('button', { name: 'Next: You move the dial' });
+  const box = await firstAction.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.y + box!.height).toBeLessThan(900);
+  await firstAction.click();
+  for (let i = 0; i < 2; i++) await page.getByRole('button', { name: 'Bigger dial' }).click();
+  await page.getByRole('button', { name: 'Next: Let the program practice' }).click();
+  await page.getByRole('button', { name: 'Practice once', exact: true }).click();
+  expect(
+    await page
+      .locator('.pip-glass > i')
+      .evaluate((element) => getComputedStyle(element).transitionDuration),
+  ).toBe('0s');
+  await page.getByRole('button', { name: 'Replay this change', exact: true }).click();
+  await page.getByRole('button', { name: /^2 Compare/ }).click();
+  await expect(page.getByRole('button', { name: 'Replay this change', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^2 Compare/ })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await page.getByRole('button', { name: 'Replay this change', exact: true }).click();
+  await page.getByRole('button', { name: 'Follow the math', exact: true }).click();
+  await page.getByRole('button', { name: 'Play & see', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Replay this change', exact: true })).toBeVisible();
+  await expect(page.getByTestId('pip-dial')).toHaveText('1.4');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
+    true,
+  );
+  await page.getByRole('button', { name: 'Back one step', exact: true }).click();
+  await expect(page.getByTestId('pip-dial')).toHaveText('1');
+  await expect(page.locator('.pip-receipt')).toHaveCount(0);
+});
