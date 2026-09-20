@@ -1,20 +1,14 @@
 .learning-mode-bar {
-  margin: 25px 0 28px;
-}
-.learning-mode-bar > span {
-  display: block;
-  font-size: 10px;
-  letter-spacing: 1.4px;
-  color: #687463;
-  margin-bottom: 11px;
+  margin: 18px 0 22px;
 }
 .learning-modes {
-  display: inline-flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 720px;
   padding: 5px;
   border: 1px solid #dce2d5;
-  background: #edf0e7;
-  border-radius: 11px;
+  background: #eceedf;
+  border-radius: 14px;
   gap: 5px;
 }
 .learning-modes button {
@@ -23,27 +17,44 @@
   align-items: center;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 7px;
-  padding: 11px 16px;
-  font-size: 12px;
+  border-radius: 10px;
+  padding: 11px 14px;
+  text-align: left;
+  min-width: 0;
+  min-height: 59px;
+  font-size: 13px;
   color: #58664f;
 }
+.learning-modes strong,
+.learning-modes small {
+  display: block;
+}
+.learning-modes strong {
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+.learning-modes small {
+  font-size: 11px;
+  margin-top: 4px;
+}
 .learning-modes button[aria-pressed='true'] {
-  border-color: #d7cce5;
-  background: #fffefa;
-  color: #705293;
-  box-shadow: 0 2px 3px #2e40350a;
+  border-color: #bdabd3;
+  background: #fffefb;
+  color: #624580;
+  box-shadow: 0 2px 5px #2e403510;
 }
 .learning-mode-bar > p {
   color: #66745c;
-  font-size: 11px;
-  margin-top: 10px;
+  font-size: 12px;
+  margin-top: 9px;
 }
 .guide-card {
   padding: 25px;
   border: 1px solid #dfe4d7;
-  border-radius: 14px;
-  background: #fffefa;
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: 0 4px 20px #293d3505;
   margin: 20px 0;
 }
 .guide-card > h2 {
@@ -51,7 +62,7 @@
   margin: 12px 0;
 }
 .guide-card p {
-  font-size: 14px;
+  font-size: 16px;
   color: #56654f;
   max-width: 760px;
 }
@@ -76,7 +87,7 @@
   margin: 2px 0 9px;
 }
 .guide-narration p {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
   color: #516747;
 }
@@ -100,8 +111,8 @@
   padding-top: 18px;
 }
 .guide-controls .button {
-  font-size: 12px;
-  min-height: 43px;
+  font-size: 14px;
+  min-height: 46px;
 }
 .guide-dots {
   display: flex;
@@ -522,14 +533,20 @@
     gap: 3px;
   }
   .learning-modes button {
-    flex: 1;
-    padding: 10px 8px;
+    padding: 10px 4px;
     gap: 5px;
-    font-size: 10px;
+    flex-direction: column;
+    text-align: center;
     justify-content: center;
   }
+  .learning-modes strong {
+    font-size: 11px;
+  }
+  .learning-modes small {
+    display: none;
+  }
   .learning-modes svg {
-    width: 14px;
+    width: 19px;
   }
   .guide-card {
     padding: 18px;
@@ -546,7 +563,7 @@
     font-size: 17px;
   }
   .guide-narration p {
-    font-size: 13px;
+    font-size: 15px;
   }
   .guide-controls {
     justify-content: center;

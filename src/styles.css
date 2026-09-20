@@ -6,7 +6,7 @@
     'Segoe UI',
     sans-serif;
   color: #293d35;
-  background: #f6f7f3;
+  background: #f5f6f0;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,7 +15,7 @@
   --green: #365e47;
   --purple: #8670b5;
   --border: #e1e5db;
-  --surface: #fffefa;
+  --surface: #fffefb;
   --mint: #e8efe2;
 }
 * {
@@ -119,7 +119,7 @@ select {
   min-height: 100vh;
 }
 .sidebar {
-  background: #fbfbf7;
+  background: #fcfcf8;
   width: 262px;
   position: fixed;
   inset: 0 auto 0 0;
@@ -127,7 +127,7 @@ select {
   flex-direction: column;
   border-right: 1px solid var(--border);
   z-index: 40;
-  padding: 32px 20px 19px;
+  padding: 24px 16px 19px;
   overflow-y: auto;
 }
 .brand {
@@ -161,12 +161,12 @@ select {
   transform: rotate(-4deg);
 }
 .sidebar-intro {
-  font-size: 10.5px;
+  font-size: 12px;
   color: #60675b;
-  margin: 16px 9px 38px;
+  margin: 12px 9px 24px;
 }
 .sidebar-label {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 650;
   letter-spacing: 1.4px;
   color: #5f685a;
@@ -208,8 +208,8 @@ select {
 .chapter-label {
   display: flex;
   justify-content: space-between;
-  margin-top: 31px;
-  margin-bottom: 15px;
+  margin-top: 22px;
+  margin-bottom: 6px;
 }
 .chapter-label > span {
   letter-spacing: 0.5px;
@@ -217,7 +217,7 @@ select {
 }
 .chapter-nav {
   display: grid;
-  gap: 6px;
+  gap: 3px;
 }
 .chapter-link {
   position: relative;
@@ -227,18 +227,18 @@ select {
   text-align: left;
   border: 1px solid transparent;
   background: transparent;
-  padding: 12px 9px;
+  padding: 10px 9px;
   gap: 10px;
   border-radius: 8px;
 }
 .chapter-link.active {
-  background: #eeebf6;
-  border-color: #e8e2f2;
+  background: #eee8f7;
+  border-color: #d6c9e8;
 }
 .chapter-link.active::before {
   content: '';
   position: absolute;
-  left: -21px;
+  left: -17px;
   top: 12px;
   bottom: 12px;
   width: 3px;
@@ -248,11 +248,11 @@ select {
 .chapter-number {
   display: grid;
   place-items: center;
-  font-size: 10px;
+  font-size: 11px;
   border: 1px solid #e2e5dc;
   color: #5f6856;
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
   border-radius: 7px;
   flex-shrink: 0;
 }
@@ -267,13 +267,14 @@ select {
 }
 .chapter-link strong {
   display: block;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 650;
 }
 .chapter-link small {
-  display: block;
+  display: none;
   margin-top: 5px;
-  font-size: 9px;
+  font-size: 11px;
   color: #60675a;
   letter-spacing: -0.1px;
 }
@@ -281,15 +282,16 @@ select {
   color: #705a98;
 }
 .chapter-link.active small {
+  display: block;
   color: #6e5e86;
 }
 .course-progress {
-  padding: 25px 10px 28px;
+  padding: 22px 10px;
 }
 .course-progress > div:first-child {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 12px;
   color: #5f6857;
 }
 .progress-track {
@@ -307,7 +309,7 @@ select {
 }
 .course-progress > small {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   color: #606758;
   margin-top: 10px;
 }
@@ -368,7 +370,7 @@ select {
   margin-left: 262px;
 }
 .topbar {
-  height: 72px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -380,7 +382,7 @@ select {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 10px;
+  font-size: 12px;
   color: #5e685a;
 }
 .breadcrumb strong {
@@ -415,6 +417,8 @@ select {
   border: 0;
   border-radius: 7px;
   color: #5e6854;
+  min-height: 40px;
+  min-width: 40px;
 }
 .icon-button:hover {
   background: #eaece4;
@@ -425,8 +429,8 @@ select {
   border-radius: 7px;
 }
 .main-content {
-  max-width: 1410px;
-  padding: 30px 44px 0;
+  max-width: 1180px;
+  padding: 22px 40px 0;
   margin: 0 auto;
   outline: none;
 }
@@ -435,9 +439,9 @@ select {
   align-items: center;
   justify-content: space-between;
   color: #5f6855;
-  font-size: 8px;
-  letter-spacing: 1.4px;
-  margin-bottom: 32px;
+  font-size: 12px;
+  letter-spacing: 0;
+  margin-bottom: 22px;
   gap: 12px;
 }
 .course-kicker > span {
@@ -451,16 +455,16 @@ select {
   line-height: 1;
 }
 .course-kicker .reading-time {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0;
   white-space: nowrap;
   color: #5f6855;
 }
 .lesson-heading {
-  margin-bottom: 28px;
+  margin-bottom: 16px;
 }
 .eyebrow {
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 1.65px;
   font-weight: 650;
   color: #715b92;
@@ -471,26 +475,32 @@ select {
   margin: 0 8px;
 }
 .lesson-heading h1 {
-  font-size: clamp(30px, 3.45vw, 48px);
+  font-size: clamp(30px, 3.1vw, 43px);
   line-height: 1.17;
-  letter-spacing: -2px;
+  letter-spacing: -1.6px;
   font-weight: 750;
-  margin: 14px 0 15px;
+  margin: 10px 0 12px;
 }
 .lesson-heading h1 em {
   font-style: normal;
   color: #6f5d8a;
 }
 .lesson-heading > p {
-  font-size: 13px;
-  max-width: 650px;
+  font-size: 16px;
+  max-width: 740px;
   color: #616856;
   line-height: 1.8;
+}
+.lesson-heading > .eyebrow {
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 1.3px;
+  color: #715b92;
 }
 .panel {
   background: #fffefa;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 23px;
   box-shadow: 0 2px 3px #293d3502;
   min-width: 0;
@@ -537,14 +547,14 @@ select {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 550;
   padding: 11px 15px;
   border: 1px solid #dce2d3;
   border-radius: 7px;
   background: #fffefa;
   color: #576b47;
-  min-height: 38px;
+  min-height: 44px;
   text-decoration: none;
 }
 .button:hover:not(:disabled) {
@@ -1279,13 +1289,13 @@ details > p {
 
 @media (min-width: 1650px) {
   .main-content {
-    padding-top: 39px;
+    padding-top: 24px;
   }
   .course-kicker {
-    margin-bottom: 42px;
+    margin-bottom: 22px;
   }
   .lesson-heading {
-    margin-bottom: 35px;
+    margin-bottom: 16px;
   }
 }
 @media (max-width: 1250px) {
@@ -1372,14 +1382,14 @@ details > p {
     padding: 11px 6px;
   }
   .chapter-link strong {
-    font-size: 10px;
+    font-size: 12px;
   }
   .chapter-link small {
-    font-size: 8px;
+    font-size: 11px;
   }
   .course-kicker {
-    font-size: 7px;
-    letter-spacing: 0.7px;
+    font-size: 11px;
+    letter-spacing: 0;
   }
   .main-content {
     padding: 25px 23px 0;
@@ -1489,17 +1499,17 @@ details > p {
     letter-spacing: -1.5px;
   }
   .lesson-heading > p {
-    font-size: 12px;
+    font-size: 15px;
   }
   .chapter-link {
     padding: 12px 9px;
     gap: 10px;
   }
   .chapter-link strong {
-    font-size: 11px;
+    font-size: 13px;
   }
   .chapter-link small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .brand {
     margin: 0 9px;
@@ -1510,7 +1520,7 @@ details > p {
     height: 48px;
   }
   .course-kicker {
-    margin-bottom: 27px;
+    margin-bottom: 18px;
   }
   .is-presenting .mobile-menu {
     display: none;
@@ -1527,11 +1537,11 @@ details > p {
     padding: 0 17px;
   }
   .course-kicker {
-    font-size: 6px;
-    letter-spacing: 0.7px;
+    font-size: 11px;
+    letter-spacing: 0;
   }
   .course-kicker .reading-time {
-    font-size: 8px;
+    font-size: 10px;
     gap: 4px;
   }
   .course-kicker .tiny-star {
@@ -1542,8 +1552,8 @@ details > p {
     letter-spacing: -1.2px;
   }
   .eyebrow {
-    font-size: 8px;
-    letter-spacing: 1.3px;
+    font-size: 10px;
+    letter-spacing: 1px;
   }
   .panel {
     padding: 19px;

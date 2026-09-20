@@ -23,6 +23,7 @@ import {
 import TinyLearner from './components/TinyLearner';
 import FirstSteps from './components/FirstSteps';
 import WordHelp from './components/WordHelp';
+import LessonRecap from './components/LessonRecap';
 const PaperJourney = lazy(() => import('./components/PaperJourney'));
 const DeepJourney = lazy(() => import('./components/DeepJourney'));
 const FeatureJourney = lazy(() => import('./components/FeatureJourney'));
@@ -275,7 +276,7 @@ export default function App() {
             </strong>
           </span>
         </a>
-        <div className="sidebar-intro">A field guide for curious minds.</div>
+        <div className="sidebar-intro">Big ideas. Small discoveries.</div>
         <div className="sidebar-label">THE COLLECTION</div>
         <div className="collection-current">
           <span className="collection-icon">
@@ -283,7 +284,7 @@ export default function App() {
           </span>
           <div>
             <strong>Machine learning</strong>
-            <span>Open the black box</span>
+            <span>Learn by trying things</span>
           </div>
           <ChevronRight size={16} />
         </div>
@@ -359,6 +360,7 @@ export default function App() {
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <Menu size={21} />
+              <span>Lessons</span>
             </button>
             <span>The learning lab</span>
             <ChevronRight size={14} />
@@ -366,16 +368,14 @@ export default function App() {
           </div>
           <div className="topbar-actions">
             <button
-              className="icon-button"
+              className="icon-button word-help-trigger"
               aria-label="Explain a word"
               title="Explain a word"
               onClick={() => setWordsOpen(true)}
             >
               <BookOpen size={19} />
+              <span>Explain a word</span>
             </button>
-            <span className="local-badge">
-              <span /> Runs in your browser
-            </span>
             <button
               className="icon-button"
               aria-label={presenting ? 'Exit presentation mode' : 'Enter presentation mode'}
@@ -398,19 +398,18 @@ export default function App() {
         </header>
         <main className="main-content" id="lesson-content" ref={content} tabIndex={-1}>
           <div className="course-kicker">
-            <span>
-              <span className="tiny-star">✳</span> LESS SCROLLING PAST. MORE LOOKING INSIDE.
+            <span className="lesson-position">
+              Lesson {String(chapter + 1).padStart(2, '0')} <span>/ {chapters.length}</span>
             </span>
-            <span className="reading-time">
-              <BookOpen size={13} /> {chapters[chapter].time} of curiosity
+            <span className="lesson-phase">
+              {chapter < 4
+                ? 'Start with one change'
+                : chapter < 8
+                  ? 'Build and test patterns'
+                  : 'Explore bigger machines'}
             </span>
+            <span className="reading-time">About {chapters[chapter].time} · go at your pace</span>
           </div>
-          {chapterBridges[chapters[chapter].id] && (
-            <details className="learning-bridge" key={chapters[chapter].id}>
-              <summary>How does this connect to what I just learned?</summary>
-              <p>{chapterBridges[chapters[chapter].id]}</p>
-            </details>
-          )}
           <Suspense fallback={<p role="status">Opening this discovery…</p>}>
             <div key={chapter} className="lesson-body">
               {chapters[chapter].id === 'first-steps' && <FirstSteps />}
@@ -428,6 +427,15 @@ export default function App() {
             </div>
           </Suspense>
           {chapters[chapter].id !== 'one-weight' && (
+            <LessonRecap chapterId={chapters[chapter].id} key={`recap-${chapters[chapter].id}`} />
+          )}
+          {chapterBridges[chapters[chapter].id] && (
+            <details className="learning-bridge" key={`bridge-${chapters[chapter].id}`}>
+              <summary>How does this connect to what I just learned?</summary>
+              <p>{chapterBridges[chapters[chapter].id]}</p>
+            </details>
+          )}
+          {chapters[chapter].id !== 'one-weight' && (
             <div className="lesson-navigation">
               <button
                 className="text-button"
@@ -436,14 +444,23 @@ export default function App() {
               >
                 ← Previous discovery
               </button>
-              <button className="button primary" onClick={complete}>
+              {chapter < chapters.length - 1 && (
+                <p className="next-lesson-preview">
+                  <span>UP NEXT</span>
+                  {chapters[chapter + 1].title}
+                </p>
+              )}
+              <button className="button course-next" onClick={complete}>
                 {chapter === chapters.length - 1
                   ? completed.includes(chapters[chapter].id)
                     ? 'Course explored'
                     : 'Mark course explored'
-                  : 'Got it. Let’s keep going'}
+                  : 'Next lesson'}
                 {chapter === chapters.length - 1 ? <Check size={16} /> : <ArrowRight size={16} />}
               </button>
+              <small className="completion-hint">
+                This marks the current lesson as explored. Come back anytime.
+              </small>
             </div>
           )}
           {chapter === chapters.length - 1 && completed.length === chapters.length && (

@@ -29,7 +29,7 @@ test('the first lesson separates a manual choice, a training update, and a froze
   await expect(page.locator('.first-action')).toContainText('We did not list every answer');
   await page.getByRole('button', { name: 'The adjusted dial number.' }).click();
   await expect(page.locator('.first-word-map')).toContainText('Inference');
-  await page.getByRole('button', { name: 'Got it. Let’s keep going' }).click();
+  await page.getByRole('button', { name: 'Next lesson', exact: true }).click();
   await expect(page).toHaveURL(/#one-weight$/);
   expect(
     await page.evaluate(() => JSON.parse(localStorage.getItem('hiaw-progress-v2') ?? '[]')),

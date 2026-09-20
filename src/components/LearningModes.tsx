@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import {
   BookOpen,
   Check,
@@ -20,24 +20,38 @@ export function ModeSwitcher({
   value: LearningMode;
   onChange: (value: LearningMode) => void;
 }) {
+  const hintId = useId();
+  const hints: Record<LearningMode, string> = {
+    visual: 'Start here. Try one small action, then watch what changes.',
+    math: 'Connect the picture to numbers. Take one calculation at a time.',
+    code: 'Follow the highlighted lines. The complete example is yours to run.',
+  };
   return (
     <div className="learning-mode-bar">
-      <span>CHOOSE YOUR WAY IN</span>
       <div className="learning-modes" role="group" aria-label="How would you like to learn?">
         {(
           [
-            { id: 'visual', label: 'Play & see', icon: Gamepad2 },
-            { id: 'math', label: 'Follow the math', icon: Sigma },
-            { id: 'code', label: 'Read the code', icon: Code2 },
+            { id: 'visual', label: 'Play & see', note: 'Try the idea', icon: Gamepad2 },
+            { id: 'math', label: 'Follow the math', note: 'See the numbers', icon: Sigma },
+            { id: 'code', label: 'Read the code', note: 'Build it yourself', icon: Code2 },
           ] as const
-        ).map(({ id, label, icon: Icon }) => (
-          <button key={id} aria-pressed={value === id} onClick={() => onChange(id)}>
-            <Icon size={17} />
-            {label}
+        ).map(({ id, label, note, icon: Icon }) => (
+          <button
+            key={id}
+            aria-label={label}
+            aria-pressed={value === id}
+            aria-describedby={value === id ? hintId : undefined}
+            onClick={() => onChange(id)}
+          >
+            <Icon size={20} aria-hidden="true" />
+            <span>
+              <strong>{label}</strong>
+              <small>{note}</small>
+            </span>
           </button>
         ))}
       </div>
-      <p>Same idea. Three ways to understand it.</p>
+      <p id={hintId}>{hints[value]}</p>
     </div>
   );
 }
