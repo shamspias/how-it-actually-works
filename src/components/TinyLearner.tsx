@@ -607,7 +607,12 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
                   values below use <strong>w = {number(calculation.weightBefore)}</strong>.
                   Displayed numbers are rounded; training uses full precision.
                 </p>
-                <div className="tiny-math-table-wrap">
+                <div
+                  className="tiny-math-table-wrap"
+                  role="region"
+                  aria-label="Training example calculations"
+                  tabIndex={0}
+                >
                   <table className="tiny-math-table">
                     <caption>Every training example contributes to this update</caption>
                     <thead>

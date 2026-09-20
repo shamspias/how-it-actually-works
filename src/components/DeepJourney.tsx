@@ -655,7 +655,12 @@ export default function DeepJourney() {
               contributions, so δℓ₋₁ = δℓ[1 + ¼φ′(zℓ)wℓ]. These are chain-rule calculations, not
               requests made by a neuron.
             </p>
-            <div className="deep-table-scroll">
+            <div
+              className="deep-table-scroll"
+              role="region"
+              aria-label="Gradients through the current layers"
+              tabIndex={0}
+            >
               <table>
                 <caption>Gradients from the current network, before any update</caption>
                 <thead>

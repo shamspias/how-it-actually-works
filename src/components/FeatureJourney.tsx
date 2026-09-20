@@ -490,7 +490,12 @@ export default function FeatureJourney() {
                 ))}
               </select>
             </label>
-            <div className="feature-table-scroll">
+            <div
+              className="feature-table-scroll"
+              role="region"
+              aria-label="Gradient contributions from the four examples"
+              tabIndex={0}
+            >
               <table className="feature-vote-table">
                 <caption>Four unaveraged votes for mixer {unit + 1}’s first input weight</caption>
                 <thead>

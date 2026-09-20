@@ -224,7 +224,12 @@ function AttentionMath({
         A vector is just a list of numbers. Our question has two numbers:{' '}
         <strong>{vector(trace.query)}</strong>. Compare it with each card’s two-number key.
       </p>
-      <div className="architecture-table-scroll">
+      <div
+        className="architecture-table-scroll"
+        role="region"
+        aria-label="Attention scores and message shares"
+        tabIndex={0}
+      >
         <table>
           <caption>
             Query: {words[queryIndex]}. All displayed decimals are rounded; calculations use full
