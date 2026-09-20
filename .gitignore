@@ -6,6 +6,9 @@ playwright-report/
 test-results/
 *.tsbuildinfo
 *.log
+.wrangler/
+.dev.vars
+.dev.vars.*
 
 # Local environment (keep examples shareable)
 .env

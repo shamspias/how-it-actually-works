@@ -11,6 +11,9 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
+    "cloudflare:login": "wrangler login",
+    "deploy": "npm run build && wrangler deploy",
+    "deploy:check": "npm run build && wrangler deploy --dry-run",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -36,6 +39,7 @@
     "prettier": "^3.9.7",
     "typescript": "~5.9.3",
     "vite": "^8.3.0",
-    "vitest": "^4.0.0"
+    "vitest": "^4.0.0",
+    "wrangler": "4.135.0"
   }
 }
