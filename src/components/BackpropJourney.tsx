@@ -88,8 +88,8 @@ export default function BackpropJourney() {
   const scenes = [
     {
       title: 'Start with two numbers.',
-      text: `The network receives 1 and 2. This practice example has an answer of ${target}. First we will see what the network guesses with its current settings.`,
-      action: 'Follow the inputs into the first mixing station.',
+      text: `Imagine a new garden helper with two readings: light level 1 and soil dryness 2. For this made-up practice card, we supply water amount ${target}. Its connected mixing stations must turn those two readings into one guess.`,
+      action: 'Each line carries a number. Follow the two readings into the first mixing station.',
       calculation: `Inputs: x₁ = 1, x₂ = 2. Target: ${target}. The target is used to score the guess; it is not an input to these mixing stations.`,
     },
     {
@@ -142,11 +142,11 @@ export default function BackpropJourney() {
           <p className="bp-focus-label">WHAT THE NETWORK RECEIVES</p>
           <div className="bp-value-pair">
             <div className="bp-big-value">
-              <span>First input</span>
+              <span>First input · light</span>
               <strong>1</strong>
             </div>
             <div className="bp-big-value">
-              <span>Second input</span>
+              <span>Second input · dryness</span>
               <strong>2</strong>
             </div>
           </div>
@@ -360,7 +360,11 @@ export default function BackpropJourney() {
         <h1>
           A network is a <em>chain of effects.</em>
         </h1>
-        <p>One example. Two little mixing stations. We will watch every move before adding more.</p>
+        <p>
+          Pip, our pretend watering program, used one dial. Our next garden helper uses connected
+          calculations, called a neural network, to turn two readings into a water guess. Follow one
+          mistake back to the dials that helped produce it.
+        </p>
       </header>
       <ModeSwitcher
         value={mode}

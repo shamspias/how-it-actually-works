@@ -88,16 +88,16 @@ export default function FirstSteps() {
     setReplaying(false);
   }
   const titles = [
-    'Pip needs a little practice.',
+    'Meet Pip, your watering helper.',
     'Help Pip turn the dial.',
     'Now let the instructions try.',
     'A new question. The same dial.',
     'What did practice leave behind?',
   ];
   const stories = [
-    'Our job: 2 drops for every seed. Pip can multiply by a saved dial, but its first guess is too small.',
+    'Pip is a tiny program drawn as a robot. Our make-believe garden needs 2 drops per seed. It guesses the water by multiplying seeds by one saved number: its dial.',
     'Turn the dial until 2 seeds get 4 drops. This time, you choose the number.',
-    'Press Practice once. The instructions compare the guess with the answer, then save a small dial change.',
+    'Now the program takes a turn, starting from dial 1 again. Press Practice once: it compares its guess with our answer, calculates a small change, and saves the new dial.',
     'Choose a new number of seeds. The question changes. The saved dial stays still.',
     'Practice changed something we can keep. Choose what is still inside Pip.',
   ];
@@ -118,7 +118,7 @@ export default function FirstSteps() {
         <h1>
           What does <em>“learning” change?</em>
         </h1>
-        <p>Teach Pip one tiny job. Find what stays after practice.</p>
+        <p>Meet Pip, our pretend watering robot. You’re the gardener in this story.</p>
       </header>
       <ModeSwitcher value={mode} onChange={changeMode} />
       {mode === 'visual' && (
@@ -319,7 +319,7 @@ export default function FirstSteps() {
                         <i />
                         <span />
                       </div>
-                      <span>SAVED DIAL</span>
+                      <span>PIP’S SAVED DIAL</span>
                       <div className="pip-dial">
                         <i
                           style={{ transform: `rotate(${dial * 65 - 90}deg)` }}
@@ -516,8 +516,9 @@ export default function FirstSteps() {
         <section className="panel first-math">
           <h2>Put numbers on the action you just saw.</h2>
           <p>
-            The model is ŷ = wx. Here x = 2, the target y = 4, and w is the saved dial. ŷ means “the
-            guess,” not the supplied answer.
+            Pip’s job is still to guess water from a seed count. Write that multiplication as ŷ =
+            wx: x = 2 seeds, y = 4 drops is our supplied answer, and w is the saved dial. ŷ (say
+            “y-hat”) means Pip’s guess. A model is this calculation together with its saved number.
           </p>
           <ol>
             <li>
@@ -573,7 +574,7 @@ export default function FirstSteps() {
             {
               label: 'Separate a question from its answer',
               explanation:
-                'The example supplies input 2 and target 4. A target is used while practicing; predicting a new input does not require its answer.',
+                'Pip is the program below: there is no hidden robot code. The example supplies input 2 seeds and target 4 drops. A target is the answer used during practice; a new prediction does not require its answer.',
               lines: code
                 .split('\n')
                 .flatMap((line, i) => (line.includes('export const lesson') ? [i + 1] : [])),
@@ -611,6 +612,15 @@ export default function FirstSteps() {
           ]}
         />
       )}
+      <details className="first-boundary">
+        <summary>Why teach a rule we could just write down?</summary>
+        <p>
+          For this garden, we could simply write “multiply by 2.” We picked an easy rule so you can
+          check every guess and every change. In tasks such as recognizing a handwritten letter, a
+          useful rule is much harder to write by hand. We can supply examples and a mistake score,
+          then use training to adjust the model’s numbers. We still have to test new examples.
+        </p>
+      </details>
       <details className="first-boundary">
         <summary>Where this story ends</summary>
         <p>

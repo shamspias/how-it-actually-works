@@ -104,17 +104,17 @@ function journeyReducer(state: JourneyState, action: Action): JourneyState {
 const guide = [
   {
     title: 'First, you steer.',
-    text: 'The machine guesses 5. The answer should be 2. Its only knob is the number it guesses. Which direction would make its mistake smaller?',
+    text: 'Our practice card says: input 1 should give answer 2. The machine multiplies 1 by its weight, now 5, so it guesses 5. Move the hiker to change that weight. Which way makes the guess closer to 2?',
     next: 'Next: feel the slope',
   },
   {
     title: 'Now cover the hiker’s eyes.',
-    text: 'You can see the whole hill. Our pretend hiker only feels the slope under their feet. If the ground rises to the right, walk left. That local tilt is called a gradient.',
+    text: 'You can see the whole hill. Our pretend hiker only feels the slope under their feet. If the ground rises to the right, walk left. The program calculates that local tilt from the mistake formula. With one weight, this slope is its gradient.',
     next: 'Next: choose a step',
   },
   {
     title: 'A direction is not a distance.',
-    text: 'A small step follows the slope safely on this smooth bowl. The step size is called the learning rate. Click once and watch the weight become a little better.',
+    text: 'Knowing which way helps does not tell us how far to jump. The learning rate scales the slope to choose the move. Click Take one step: the program subtracts learning rate × slope from the saved weight.',
     next: 'Next: repeat the rule',
   },
   {
@@ -325,8 +325,9 @@ export default function GradientJourney() {
           Learning is a trail of <em>smaller mistakes.</em>
         </h1>
         <p>
-          One number. One hill. One instruction at a time. Walk the idea first, then open the exact
-          maths or the code that does it.
+          Pip, our pretend watering program, used a saved number called a weight. Now picture one
+          weight as a hiker’s position: changing the weight moves the hiker; a smaller mistake puts
+          them lower on the hill. You will discover how the program chooses a direction.
         </p>
       </header>
       <ModeSwitcher value={mode} onChange={changeMode} />
@@ -443,7 +444,7 @@ export default function GradientJourney() {
             <p className="gradient-status" role="status">
               {state.notice ||
                 (stage < 2
-                  ? 'There is no hidden destination instruction in the update. The error supplies the direction.'
+                  ? 'The flag marks the best weight for us to see. The update uses the current slope; it does not jump straight to the flag.'
                   : `Ready. Step size is ${rate}. Every click runs a real calculation.`)}
             </p>
             {stage >= 2 && slopeMethod && (
@@ -600,9 +601,10 @@ export default function GradientJourney() {
           <p className="eyebrow">SAME WALK · THE EXACT ARITHMETIC</p>
           <h2>Why does subtracting the slope help?</h2>
           <p>
-            Use one training example: input x = 1 and target y = 2. The prediction is wx = w. The
-            error is w − 2. Square it so positive and negative misses both count, then divide by 2
-            to make the derivative tidy.
+            Our practice card contains input x = 1 and the expected answer, or target, y = 2. The
+            adjustable weight is w. Multiply input by weight to predict: wx = w. The error is guess
+            − answer, or w − 2. Square it so misses in either direction count, then divide by 2 to
+            make the later arithmetic simpler.
           </p>
           <ol className="gradient-equations">
             <li>
@@ -614,17 +616,18 @@ export default function GradientJourney() {
               <strong>Measure how a tiny change affects that score.</strong>
               <code>dL/dw = ½ × 2(w − 2) × 1 = w − 2</code>
               <p>
-                The power rule differentiates the square. The chain rule multiplies by the inside
-                derivative d(w − 2)/dw = 1.
+                Read dL/dw as “how fast the loss changes when the weight moves a tiny amount.” This
+                derivative is the hiker’s slope. The power rule turns the square into 2(w − 2); the
+                chain rule also multiplies by the inside slope, 1.
               </p>
             </li>
             <li>
               <strong>Move opposite that change.</strong>
               <code>w_next = w − η(dL/dw)</code>
               <p>
-                η, read “eta,” is the learning rate. For a tiny displacement Δw, ΔL ≈ (dL/dw)Δw.
-                Choosing Δw = −η(dL/dw) gives ΔL ≈ −η(dL/dw)² ≤ 0. This is a local approximation;
-                large steps can break it.
+                η, read “eta,” is the learning rate. Δ means “change in,” and ≈ means “approximately
+                equal.” For a tiny displacement Δw, ΔL ≈ (dL/dw)Δw. Choosing Δw = −η(dL/dw) gives ΔL
+                ≈ −η(dL/dw)² ≤ 0. This is a local approximation; large steps can break it.
               </p>
             </li>
           </ol>
@@ -644,6 +647,11 @@ export default function GradientJourney() {
                 (hillLoss(weight + 0.001, landscape) - hillLoss(weight - 0.001, landscape)) / 0.002,
               )}
             </code>
+            <p>
+              The finite difference checks the slope by trying a weight just to the right and just
+              to the left: change in height ÷ distance across. It should be close to the derivative
+              above.
+            </p>
             <code>
               Next gradient step = {fmt(weight)} − {rate} × {fmt(gradient)} ={' '}
               {fmt(weight - rate * gradient)}
@@ -667,10 +675,11 @@ export default function GradientJourney() {
             <code>w_t = 2 + (1 − η)ᵗ(w₀ − 2)</code>
           </div>
           <p>
-            For this curvature, 0 &lt; η &lt; 2 converges; η = 1 solves it in one step; η = 2
-            bounces; η &gt; 2 diverges unless you already started at 2. Different loss curvature
-            changes the safe interval. This exact calculation predicts this training loss, not
-            performance on unseen real-world data.
+            Here w₀ is the starting weight, w_t is the weight after t updates, and the raised t
+            means multiply the same factor t times. For this curvature, 0 &lt; η &lt; 2 converges; η
+            = 1 solves it in one step; η = 2 bounces; η &gt; 2 diverges unless you already started
+            at 2. Different loss curvature changes the safe interval. This exact calculation
+            predicts this training loss, not performance on unseen real-world data.
           </p>
         </section>
       )}

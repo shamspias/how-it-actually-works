@@ -79,7 +79,7 @@ export default function DeepJourney() {
     'A deep network repeats these same operations.',
   ];
   const descriptions = [
-    'A parcel carries a number, not a secret thought. Each station has an adjustable multiplier, called a weight, and an added offset, called a bias. Start with the number 1.',
+    'Our parcel starts with input 1. The practice card says the final answer should also be 1. Each station multiplies by its saved weight, adds its bias, and applies a gate. The parcel pictures the changing number; the dials picture the saved settings.',
     'Multiply 1 by 0.5, then add 0. That makes 0.5. The ReLU gate keeps positive numbers and replaces negative numbers with 0. So this parcel leaves with 0.5.',
     'Multiply the new number 0.5 by another 0.5, then add 0. The gate keeps 0.25. Two layers means two stations in a row. The last parcel is our guess.',
     'The guess is 0.25; this practice example’s answer is 1. The error is −0.75. Squaring it and dividing by 2 gives a loss of 0.28125. Loss is a score for this miss: smaller is better.',
@@ -273,7 +273,11 @@ export default function DeepJourney() {
         <h1>
           Small stations. <em>A longer chain.</em>
         </h1>
-        <p>You already changed a weight. Now follow the same calculation through more layers.</p>
+        <p>
+          Imagine a parcel carrying a number through a row of calculation stations. Each station
+          reads it, does arithmetic, and passes a new number onward. These stations are layers.
+          Follow the parcel forward, then trace the mistake backward.
+        </p>
       </header>
       <ModeSwitcher
         value={mode}
@@ -631,9 +635,11 @@ export default function DeepJourney() {
           <section className="guide-card">
             <h2>Forward: compute and remember.</h2>
             <p>
-              Let a₀ = x be the input. At layer ℓ, zℓ = wℓaℓ₋₁ + bℓ. The gate φ makes aℓ = φ(zℓ).
-              Here φ can be identity, ReLU, or tanh. For ReLU, φ′(z) = 1 for z &gt; 0 and 0 for z
-              &lt; 0; we choose 0 at the kink. For tanh, φ′(z) = 1 − tanh²(z).
+              Use ℓ (“ell”) to number the stations. a₀ = x is the first parcel; aℓ is the number
+              leaving station ℓ. Its weight wℓ and bias bℓ give total zℓ = wℓaℓ₋₁ + bℓ. The gate φ
+              (“phi”) makes aℓ = φ(zℓ). Here φ can be identity, ReLU, or tanh. For ReLU, φ′(z) = 1
+              for z &gt; 0 and 0 for z &lt; 0; we choose 0 at the kink. For tanh, φ′(z) = 1 −
+              tanh²(z).
             </p>
             <p>
               With our scaled residual route, aℓ = aℓ₋₁ + ¼φ(zℓ). The ¼ is an explicit teaching

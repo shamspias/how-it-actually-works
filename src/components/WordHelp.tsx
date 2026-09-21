@@ -4,6 +4,11 @@ import './word-help.css';
 
 const words = [
   [
+    'Pip / watering dial',
+    'Pip is our pretend watering robot: a picture of a tiny computer program.',
+    'You supply seed counts and water answers. Its saved dial is a number used to multiply the next seed count. Practice changes that number; Pip does not understand plants.',
+  ],
+  [
     'Input',
     'The information you give a model for one question.',
     'Two coordinates, an image converted to numbers, or the earlier tokens in a sentence.',

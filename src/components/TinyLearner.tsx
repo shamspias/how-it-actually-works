@@ -286,8 +286,9 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
           How does a machine <span>learn?</span>
         </h1>
         <p>
-          No magic. A guess, a mistake, and one small adjustment.
-          <br className="tiny-desktop-break" /> Let’s see every part of it happen.
+          Pip, our pretend watering program, had one dial. Now give a fresh copy three practice
+          cards: 1 seed → 2 drops, 2 → 4, and 3 → 6. Watch all three cards help adjust the same
+          dial, now called a weight.
         </p>
       </header>
       <ModeSwitcher
@@ -306,7 +307,7 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
             {
               label: 'Start with examples and a guess',
               explanation:
-                'The data has inputs and the right answers. The machine only has one adjustable multiplier.',
+                'Each data row is a watering card: [seed count, correct drops]. This fresh learner starts at weight 0.5. It averages feedback from all three cards before changing that shared multiplier.',
               lines: tinyCode
                 .split('\n')
                 .flatMap((line, i) =>
@@ -355,7 +356,7 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
               <span className="tiny-step-number">01</span>
               <p>
                 <strong>Make a guess</strong>
-                <span>Use a number called a weight.</span>
+                <span>Multiply seeds by the saved weight.</span>
               </p>
             </div>
             <ArrowRight size={15} className="tiny-story-arrow" />
@@ -381,7 +382,7 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
               <div className="tiny-panel-heading">
                 <div>
                   <h2 id="tiny-chart-heading">Meet your tiny machine</h2>
-                  <p>One input. One weight. One guess.</p>
+                  <p>Across: seed count. Up: water amount. The line shows guesses.</p>
                 </div>
                 <span className="tiny-live">
                   <i />
@@ -404,7 +405,10 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
               />
               <div className="tiny-chart-caption">
                 <MousePointer2 size={14} />
-                <span>The green dots are examples. Move the purple line to match them.</span>
+                <span>
+                  Green dots: our supplied answers. Purple line: guesses from the current weight.
+                  Try matching them.
+                </span>
               </div>
             </section>
 
@@ -443,8 +447,8 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
               </div>
               <div className="tiny-selected-example">
                 <div>
-                  <span>FOR INPUT {example.input}</span>
-                  <span>TARGET {example.target}</span>
+                  <span>INPUT: {example.input} SEEDS</span>
+                  <span>ANSWER: {example.target} DROPS</span>
                 </div>
                 <p>
                   {example.input} <span>×</span> <b>{number(model.weight)}</b> <span>=</span>{' '}
@@ -645,7 +649,7 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
                     <h3>Turn misses into a score</h3>
                     <p>
                       Square each error so opposite misses don’t cancel. Average, then halve it to
-                      simplify the derivative.
+                      simplify the derivative. Here n = 3 examples; Σ means add their contributions.
                     </p>
                     <code>L = (1 / 2n) Σ(wx − y)²</code>
                     <code>
@@ -657,8 +661,8 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
                     <span className="tiny-math-count">2</span>
                     <h3>Find the local slope</h3>
                     <p>
-                      The chain rule connects the error to the weight. Multiply each error by its
-                      input, then average.
+                      A gradient is the slope of the mistake score as the weight changes. Multiply
+                      each error by its input, then average. The chain rule below explains why.
                     </p>
                     <code>dL/dw = (1/n) Σ(wx − y) × x</code>
                     <code>

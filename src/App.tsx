@@ -39,7 +39,7 @@ const chapters = [
   {
     id: 'first-steps',
     title: 'What does learning change?',
-    note: 'Teach Pip. Keep one changed number.',
+    note: 'Meet Pip, a pretend watering robot.',
     time: '4 min',
     icon: Lightbulb,
   },

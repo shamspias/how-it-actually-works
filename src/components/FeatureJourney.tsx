@@ -29,10 +29,10 @@ const titles = [
   'Keep the recipe. Use it again.',
 ];
 const notes = [
-  'Exactly one light on → ring. Both on or both off → quiet. The computer receives two numbers: 0 for off and 1 for on.',
-  'Each mixer combines the two numbers using its own adjustable recipe. We call the recipe numbers weights. Select a mixer to see its response.',
+  'These four cards are our answer key. Exactly one light on → ring. Both on or both off → quiet. Each light becomes a number: 0 means off, 1 means on. First learn our rule yourself.',
+  'Inside the doorbell program are four mixers: tiny multiply-add-and-bend calculations, like the last lesson’s stations. Each has its own weights and bias. Select one to see the number it produces from the two lights.',
   'We label only the final answer: ring or quiet. There are no correct-answer labels for the four mixers in the middle.',
-  'Keep the same card selected. As the weights change, that card produces different hidden responses. Those responses are the learned features.',
+  'Keep the same light card selected. Practice changes the weights, so the same lights produce different numbers inside the program. We call these internal responses features. “Hidden” means between the input and answer; you can inspect them here.',
   'Let’s change one thing: disconnect one mixer from the final answer. Keep every other weight fixed. Then measure what changes.',
   'The saved weights are the learned recipe. Using the recipe makes a guess. Changing the recipe requires another learning step.',
 ];
@@ -119,7 +119,9 @@ export default function FeatureJourney() {
         <div className="eyebrow">THE MISSING MIDDLE · LEARNED FEATURES</div>
         <h1>How does a network learn what to notice?</h1>
         <p>
-          Follow four tiny mixers. Watch their recipes change. Then unplug one and test its work.
+          You’re building a toy doorbell with two lights. It should ring when exactly one light is
+          on. Can practice teach the little calculation stations inside it useful patterns, when we
+          only supply the final ring-or-quiet answers?
         </p>
       </header>
       <ModeSwitcher
@@ -453,6 +455,13 @@ export default function FeatureJourney() {
               <code>hⱼ = tanh(aⱼ), z = Σⱼ vⱼhⱼ + c, p = sigmoid(z)</code>
               <code>L = −t ln(p) − (1−t) ln(1−p)</code>
             </div>
+            <p>
+              x₁ and x₂ are the two lights. j picks one of the four mixers. w and b are its weights
+              and bias; v and c belong to the final answer station. t is our answer (1 for ring, 0
+              for quiet); p is the model’s ring probability. Σ means add all four contributions.
+              Sigmoid squeezes the final score into 0…1; ln is the natural logarithm used by this
+              loss.
+            </p>
             <p>
               tanh bends a sum into −1…+1. Without nonlinear operations between linear layers,
               stacking layers would still produce one affine transformation. A single affine

@@ -48,8 +48,9 @@ export default function NetworkLab() {
           A network comes <em>alive.</em>
         </h1>
         <p>
-          A few numbers can learn a surprising pattern. Give them examples, press train, and look
-          inside every prediction.
+          This separate free lab sorts dots into two groups. Each dot’s horizontal and vertical
+          positions are the inputs; its group is the supplied answer. Choose a pattern, train the
+          network, then click a dot to trace its guess through the calculation.
         </p>
       </div>
       <NetworkExperiment key={JSON.stringify(config)} config={config} onConfig={setConfig} />
