@@ -63,7 +63,7 @@ export default function PhysicalJourney() {
   }
 
   const explanations = [
-    `Read ${bits} from the weight's memory location. Under our encoding, this means ${startRaw} ÷ 16 = ${number(weight)}. Registers hold working copies for arithmetic.`,
+    `Read ${bits} from the weight's memory location. Under our encoding, this means ${startRaw} ÷ 16 = ${number(weight)}. Registers are small working storage inside the processor; they hold copies for arithmetic.`,
     `An instruction makes arithmetic circuits multiply the stored weight by input 1: ${number(weight)} × 1 = ${number(prediction)}. The next circuits receive the resulting bit pattern.`,
     `Compare the prediction with the supplied answer 0.5. The error is ${number(error)}; half its square is ${number(loss)}. A target gives the program a criterion for improvement.`,
     `The program evaluates the derivative: (prediction − target) × input = ${number(gradient)}. It then calculates ${number(weight)} − 0.25 × ${number(gradient)} = ${number(idealNext)}.`,
@@ -94,8 +94,9 @@ console.log({ weight, loss, gradient, idealNext, stored: nextRaw / scale, bits }
           How does a weight become <em>electricity?</em>
         </h1>
         <p>
-          A weight is a number with a physical representation. Watch a program read that
-          representation, calculate an update, and write a new one.
+          Where does a saved dial live? Inside a computer, a number is represented by physical
+          states. Follow one weight from memory to arithmetic and back. Our eight switches are a
+          picture of its bits: digits that can be 0 or 1.
         </p>
       </header>
       <ModeSwitcher
@@ -115,9 +116,10 @@ console.log({ weight, loss, gradient, idealNext, stored: nextRaw / scale, bits }
           <span className="pill">Toy fixed-point format</span>
         </div>
         <p>
-          We use eight bits for a signed integer, then divide by 16. Click any bit or move the
-          slider. Each column has a place value; the leftmost contributes <strong>−8</strong> when
-          it is 1.
+          Each switch contributes the number printed below it when it is on (1), and zero when it is
+          off (0). Add those contributions to get the weight. Click one switch and watch the total
+          change. The leftmost can subtract <strong>8</strong>, so we can represent negative weights
+          too.
         </p>
         <div
           className="physical-bit-row"
@@ -171,7 +173,8 @@ console.log({ weight, loss, gradient, idealNext, stored: nextRaw / scale, bits }
           </div>
         </div>
         <p className="physical-small-note">
-          A real digital signal uses allowed voltage ranges for 0 and 1; there is no universal “1 =
+          This format stores a signed whole number divided by 16, so its smallest step is 1/16. A
+          real digital signal uses allowed voltage ranges for 0 and 1; there is no universal “1 =
           one volt.” This eight-bit teaching format is not Float32. The moving packets below show
           information flow, not individual electrons.
         </p>

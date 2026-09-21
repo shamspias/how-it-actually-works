@@ -44,7 +44,7 @@ export default function ShortcutJourney() {
     'Teach the lesson you actually meant.',
   ];
   const notes = [
-    'Circles usually sit on mint. Squares usually sit on lavender. The label always names the shape. But both shape and background are useful clues in practice. Which do you think the model will rely on?',
+    'A label is the answer we supply below each card. Circles usually sit on mint; squares usually sit on lavender. The answer always names the shape. But both shape and background are useful clues in practice. Which do you think the model will rely on?',
     'The model really ran 600 updates. It gets most familiar examples right. That score cannot tell us whether it followed shape, color, or a mixture. We need a new experiment.',
     `The label is still circle. Only its background changes. The model currently assigns ${score(probability)} to circle. If the guess changes with the background, that gives evidence the background affects its decision.`,
     'Mix the backgrounds in the practice examples. Now color is unreliable and shape remains useful. Retraining this toy model makes shape the useful clue. This is a controlled result, not a guarantee for every model.',
@@ -72,7 +72,11 @@ export default function ShortcutJourney() {
           <br />
           <em>Which clue?</em>
         </h1>
-        <p>Do one little experiment to find out what a model depends on.</p>
+        <p>
+          You’re the detective. A card-sorting program must answer “circle” or “square.” Its
+          practice cards have colored backgrounds too. Train it, then change only the background to
+          find out which clue its answer depends on.
+        </p>
       </header>
       <ModeSwitcher value={mode} onChange={setMode} />
       {mode === 'visual' && (
@@ -125,7 +129,7 @@ export default function ShortcutJourney() {
                 <span>THE MODEL’S GUESS</span>
                 <strong>{probability >= 0.5 ? 'Circle' : 'Square'}</strong>
                 <p>
-                  <b>{score(probability)}</b> chance of circle
+                  <b>{score(probability)}</b> model’s circle score
                 </p>
               </div>
             </div>

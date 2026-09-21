@@ -194,7 +194,7 @@ function AttentionScene({
         strokeWidth="2"
       />
       <text x="380" y="277" textAnchor="middle" className="architecture-card-word">
-        {stage === 3 ? `${words[queryIndex]} + context` : `${words[queryIndex]} asks`}
+        {stage === 3 ? `Context for ${words[queryIndex]}` : `${words[queryIndex]} asks`}
       </text>
       <text x="380" y="304" textAnchor="middle" className="architecture-svg-small">
         {stage === 3 ? vector(trace.output) : `question ${vector(trace.query)}`}
@@ -452,8 +452,14 @@ export default function ArchitectureJourney() {
             <span className="pill">4 moves · real arithmetic</span>
           </div>
           <p>
-            Start with the purple “she” card. Press <strong>Play the attention story</strong>. Then
-            ask from “it” and notice which message gets through.
+            Mia is the person in our little story; the cup is an object. We give each word card
+            numbers for those clues. Start with the purple “she” card and press{' '}
+            <strong>Play the attention story</strong>. Then ask from “it” and compare.
+          </p>
+          <p className="architecture-scope">
+            A query (Q) is the requesting card’s numerical question. A key (K) is a card’s numerical
+            address. A value (V) is the message it can send. We chose these numbers to make the
+            mechanism visible; this exercise mixes information, without training the words.
           </p>
           <div className="architecture-word-controls">
             {words.map((word, index) => (
@@ -642,9 +648,10 @@ export default function ArchitectureJourney() {
             <span className="pill">One memory slot</span>
           </div>
           <p>
-            You have a backpack with room for one number. A marked card says “remember this”. Other
-            cards are distractions. Control the gate: how much should a distraction replace your
-            memory?
+            In this second game, the program reads cards one at a time. Its “backpack” is one saved
+            working number, called state. A marked card says “remember 7”; other cards are
+            distractions. Control the gate: how much should each distraction replace that number?
+            Changing state while reading is different from training weights.
           </p>
           <label className="control-group" htmlFor="noise-write-gate">
             <span>

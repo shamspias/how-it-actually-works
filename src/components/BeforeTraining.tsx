@@ -70,9 +70,11 @@ export default function BeforeTraining() {
           <span className="pill">An exact answer exists</span>
         </div>
         <p>
-          Our model always guesses <strong>w</strong>. The only training answer is{' '}
-          <strong>3</strong>. Start at zero and pull the guess toward 3. Change the step size and
-          see whether our shortcut matches every update.
+          For a new, fully specified exercise, imagine a dial whose displayed number is the whole
+          guess: <strong>w</strong>. Unlike the mystery machine, we know the update rule and every
+          practice answer. The only training answer is <strong>3</strong>. Start at zero and pull
+          the guess toward 3. Change the step size and see whether our shortcut matches every
+          update.
         </p>
         <div className="lesson-grid theory-two-col">
           <div>

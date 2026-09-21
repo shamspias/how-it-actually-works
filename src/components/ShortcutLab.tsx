@@ -100,8 +100,9 @@ export default function ShortcutLab() {
           <em>Wrong reason?</em>
         </h1>
         <p>
-          You teach it circles and squares. It discovers something easier. Change the background,
-          and find out what the numbers really learned.
+          This is the card sorter’s free lab. You supply examples labeled circle or square. The
+          program receives two numerical clues: shape and background. Train it, then swap the
+          backgrounds to test which clue affects its guesses.
         </p>
       </div>
       <div className="experiment-banner">
@@ -116,7 +117,7 @@ export default function ShortcutLab() {
         <section className="panel shortcut-training" aria-labelledby="shortcut-data-title">
           <div className="panel-header">
             <h2 id="shortcut-data-title">
-              <FlaskConical size={17} /> Choose its childhood
+              <FlaskConical size={17} /> Choose its practice cards
             </h2>
             <span className="step-tag">01</span>
           </div>

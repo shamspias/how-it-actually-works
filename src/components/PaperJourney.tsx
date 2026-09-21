@@ -50,7 +50,7 @@ function description(stage: number, c: Blueprint) {
   return [
     {
       title: 'A sentence already carries its practice answers.',
-      text: 'Cover the next word. Guess it. Uncover it and compare. Sliding this little game along ordinary text creates training examples without a person writing a label for every word.',
+      text: 'Cover the word after “Mia.” Guess it, then uncover “likes” and compare. Repeat along the sentence. We call each text piece a token; this toy uses whole words, while real tokenizers often use word pieces. The existing next token supplies each practice answer.',
       input: 'A piece of existing text',
       output: `${c.tokens} input tokens and their next-token targets`,
       learns: 'The text is data. It is not a trainable weight.',
@@ -85,7 +85,7 @@ function description(stage: number, c: Blueprint) {
       learns: `Addition stores no weights. This LayerNorm stores ${c.width} scale numbers and ${c.width} shifts.`,
     },
     {
-      title: 'Give each position its own little neural network.',
+      title: 'Use the same little network at every position.',
       text: 'The feed-forward network expands a row, bends it with ReLU, then brings it back to the original width. Every position uses the same weights in this block. Add another residual path and another normalization afterward.',
       input: `${c.width} numbers per row`,
       output: `${c.width} → ${c.hidden} → ${c.width} numbers per row`,
@@ -389,8 +389,9 @@ export default function PaperJourney() {
           A big model is a <em>route you can trace.</em>
         </h1>
         <p>
-          Follow one piece of text from its first numbers to its training feedback. Then read the
-          boxes in a paper.
+          You’re building a next-word guessing machine. Its practice text begins “Mia likes warm
+          tea.” Mia is just a name in our example sentence. Follow the text through the boxes of a
+          small Transformer blueprint, then use the same questions to read a research paper.
         </p>
       </header>
       <ModeSwitcher value={mode} onChange={setMode} />
@@ -744,11 +745,14 @@ export default function PaperJourney() {
             <span className="eyebrow">WRITE DOWN THE ASSUMPTIONS FIRST</span>
             <h2>A small, specified decoder.</h2>
             <p>
-              One sequence, no batch dimension shown. Learned token and absolute-position
-              embeddings. Each of L separate blocks has biased causal self-attention, a residual
-              plus LayerNorm, a biased ReLU feed-forward network, then a second residual plus
-              LayerNorm. No final norm. A separate, untied vocabulary projection includes a bias.
-              Dropout and cross-attention are omitted.
+              A decoder is a model that predicts the next token from the tokens so far. Here we
+              trace one sequence, with no batch dimension shown. T = input token count, V =
+              vocabulary size, C = position capacity, d = row width, h = heads, f = inner width, and
+              L = blocks. We use learned token and absolute-position embeddings. Each of L separate
+              blocks has biased causal self-attention, a residual plus LayerNorm, a biased ReLU
+              feed-forward network, then a second residual plus LayerNorm. No final norm. A
+              separate, untied vocabulary projection includes a bias. Dropout and cross-attention
+              are omitted.
             </p>
             <div className="paper-equations">
               <code>X₀ = E[token IDs] + P[position IDs]</code>

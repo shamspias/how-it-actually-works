@@ -20,7 +20,11 @@ export default function PredictionJourney() {
         <h1>
           Can you predict <em>the hidden rule?</em>
         </h1>
-        <p>A tiny detective game about the difference between calculating and knowing.</p>
+        <p>
+          You find a machine with its rule covered up. You can see three old questions and answers.
+          Your job: guess its answer to a new question, then find out whether those clues were
+          enough to know.
+        </p>
       </header>
       <ModeSwitcher value={mode} onChange={setMode} />
       {mode === 'visual' && (
@@ -29,7 +33,7 @@ export default function PredictionJourney() {
             <span className="guide-kicker">{revealed ? 'THE REVEAL' : 'YOUR CLUES'}</span>
             <h2>
               {revealed
-                ? 'Two worlds. Exactly the same clues.'
+                ? 'Two possible rules. Exactly the same clues.'
                 : 'A mystery machine showed you three answers.'}
             </h2>
             <div className="mystery-cards">
@@ -96,7 +100,7 @@ export default function PredictionJourney() {
                   </div>
                   <div>
                     <span className="pill">WORLD B</span>
-                    <h3>Add a bend between the clues.</h3>
+                    <h3>Add a curve that passes through the clues.</h3>
                     <p>
                       Every clue fits. At input 3, answer <strong>7.5</strong>.
                     </p>

@@ -97,8 +97,9 @@ export default function ScaleLesson() {
           <em>Same need for evidence.</em>
         </h1>
         <p>
-          A million adjustable numbers do not introduce a hidden learner. They create a much larger
-          computation—and many more interacting ways to represent patterns.
+          You’re planning a bigger machine before building it. Our watering program Pip had one
+          adjustable number; networks can have millions. Use this workbench to count their saved
+          numbers and storage. A size calculation cannot tell us how well the machine will learn.
         </p>
       </header>
       <ModeSwitcher value={mode} onChange={setMode} />
@@ -222,8 +223,9 @@ export default function ScaleLesson() {
               <span className="pill">Fully connected network</span>
             </div>
             <p>
-              Keep 8 inputs and 2 outputs. Add wider or deeper hidden layers. Every connecting line
-              needs a weight, and every hidden or output unit gets one bias.
+              Imagine a sorter receiving 8 measurements and producing 2 answer scores. Width is the
+              number of units side by side; depth is the number of hidden layers in a row. Each line
+              needs a weight, and each unit adds a bias. Change width or depth and watch the count.
             </p>
             <div className="lesson-grid theory-two-col">
               <div className="theory-controls">
