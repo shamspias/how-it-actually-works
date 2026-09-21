@@ -13,6 +13,8 @@ Write one sentence describing the uncertainty: “Why does changing this number 
 
 Begin with an action the learner already understands. Introduce its technical name after the learner can describe the action. [FirstSteps.tsx](../src/components/FirstSteps.tsx) does this with a watering dial: only after practice does it name input, target, weight, training, and inference.
 
+Introduce the story before giving its instructions. Name the character, explain what it represents, give the learner a role, and state the task and answer source. “Teach Pip” only works after “Pip is a pretend watering robot, a picture of a tiny program; you are the gardener.” Put that context in the opening, not only in an expandable limitation at the bottom. When an example changes, introduce the new task and explain its numbers again. A direct chapter link or a switch straight to math/code should still make sense.
+
 Use a familiar analogy if it helps, then connect each part to a concrete quantity. Make clear where the analogy ends. A neuron is not a little person making a decision; a transistor sketch is not a complete circuit simulator.
 
 ## Build outward from inspectable code
@@ -67,7 +69,7 @@ The shared [LessonRecap.tsx](../src/components/LessonRecap.tsx) asks one questio
 
 Use native buttons, inputs, selects, and expandable sections where possible. SVG diagrams need a title and description. If a point or node is selectable, provide a keyboard route to it; an HTML selector can complement the graphic. Do not communicate a class or state through color alone. Use text, shape, or line style as well.
 
-Check narrow layouts, long labels, zoom, keyboard focus, and reduced-motion preferences. A detailed arithmetic table may scroll within its own container; the whole page should not require horizontal scrolling. A paused or completed state should be understandable without watching the preceding animation.
+Check narrow layouts, long labels, zoom, keyboard focus, and reduced-motion preferences. A detailed arithmetic table may scroll within its own container; the whole page should not require horizontal scrolling. Code lines must stack vertically with indentation preserved. The shared reader wraps long lines by default, offers a wrap toggle, and scrolls its source panel to the explained lines without moving the whole page. Copy must preserve the original source, excluding line numbers. A paused or completed state should be understandable without watching the preceding animation.
 
 Make the math match the moment being described. A “last update” panel needs the weight, gradient, and learning rate from that update, even if the learner subsequently moves the rate slider. Rounded values should be identified as rounded. With multiple examples, distinguish a single-example derivative from the batch average used for training.
 

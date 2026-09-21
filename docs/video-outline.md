@@ -6,7 +6,7 @@ Open the lab with `make run`. Use the top-bar presentation control, increase bro
 
 ## Opening: what changed?
 
-Show Pip, two seeds, the supplied answer of four drops, and its first guess. Keep the vocabulary ordinary: a question, an answer, and a dial. Let the viewer turn the dial, then reset for the programmed practice.
+First introduce Pip: a pretend watering robot, drawn to represent a tiny computer program. The viewer is the gardener. In this make-believe garden, we choose the answer rule of two drops per seed; it is not advice about real plants. Then show two seeds, the supplied answer of four drops, and Pip's first guess. Keep the vocabulary ordinary: a question, an answer, and a dial. Let the viewer turn the dial, then reset for the programmed practice.
 
 **Narration idea:** “The machine made a guess. One stored number changed. Let’s find out why—and what that does and does not tell us about the next guess.”
 
@@ -54,7 +54,7 @@ Finish the four stops before opening **Ready to experiment? Break the rule, then
 
 ## 4. Follow one mistake
 
-**Visual story:** Start with the two input values. Step through the mixing stations and the output, then reveal the target. With the default settings, the guess is `1.25` and the answer is `2`. Follow one highlighted connection backward through the error's dependencies.
+**Visual story:** Introduce a different pretend garden helper. Its practice card contains two readings, light level `1` and soil dryness `2`, and a supplied water answer of `2`. These are made-up readings for the calculation, not a real gardening dataset. Step through the mixing stations and the output, then compare with the target. With the default settings, the guess is `1.25`. Follow one highlighted connection backward through the error's dependencies.
 
 At the weight-preview step, use **Preview +0.1 on one weight**. Follow the large cards from first weight to top mixture to guess to loss. The preview recomputes a finite change without changing the saved model. Open **Show this step’s calculation** to distinguish that experiment from the local derivative. The whole-network map is also optional.
 

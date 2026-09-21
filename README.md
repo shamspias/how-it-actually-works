@@ -4,7 +4,7 @@ A hands-on field guide for the question behind the explanation: **“But what is
 
 **[Open the learning lab at learn.algolyzerlab.com](https://learn.algolyzerlab.com)** — no installation needed.
 
-The first collection opens up machine learning, starting before the technical words. Teach a pretend watering helper, keep the number it changed, and use it for another guess. Then follow that same idea through backpropagation, learned features, deep networks, and the boxes in a research paper. Each step connects a visible action to its calculation and runnable code.
+The first collection opens up machine learning, starting before the technical words. Meet Pip, a pretend watering robot that represents a tiny program. You are the gardener: supply examples, keep the number practice changes, and use it for another guess. Then follow that same idea through backpropagation, learned features, deep networks, and the boxes in a research paper. Each lesson introduces its scene, task, and the meaning of its numbers before asking you to act.
 
 ![The learning lab with visual, mathematical, and code learning modes](docs/learning-lab.png)
 
@@ -52,6 +52,8 @@ Every chapter offers these modes:
 | **Read the code**   | Walk through highlighted source lines, copy the code, and run a small implementation yourself.         |
 
 Begin with **Play & see**. Pause after one change and explain it in your own words before opening the equations. Prediction questions and short checkpoints help you find the step to revisit. Use **Explain a word** in the top bar whenever a term is unfamiliar; its searchable explanations connect the word to an example. The network and shortcut chapters also have optional free labs.
+
+**Read the code** uses numbered, indented lines that wrap on a phone. Move through the explanations to bring the relevant lines into view, or turn wrapping off to scroll within the source panel. Copy the complete runnable program without line numbers. A short JavaScript introduction is available below each example.
 
 The opening game puts the controls beside Pip's watering station. After **Practice once**, inspect the three-part record: the old guess, the comparison, and the newly saved dial. **Replay this change** highlights that completed update without training again. In the backpropagation story, large cards follow one step at a time; **Preview +0.1 on one weight** shows how a change affects the mixture, guess, and loss before you update the saved model.
 

@@ -8,6 +8,10 @@ node examples/neural-network.mjs
 
 These examples need no Python installation, GPU, API key, or machine-learning package. The source uses ordinary numbers, arrays, and `Math`; some files also use Node's built-in facilities to print output or detect direct execution. The website's **Read the code** mode links the explanation to relevant source lines.
 
+The reader shows the filename and numbered source lines, preserving indentation. Long lines wrap to fit a phone; turn **Wrap lines** off to scroll horizontally inside the code panel. **Next part** brings the explained lines into view. **Copy code** copies the complete original program with line breaks and without line numbers. **First time reading JavaScript?** explains the basic notation. Moving between explanations does not execute the program; run the shown command in your terminal to see its output.
+
+![The code reader with numbered lines and a guided explanation](read-the-code.png)
+
 ## Choose one mechanism
 
 | File                                                                     | Calculation to inspect                                                                       |
