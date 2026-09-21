@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import {
   BookOpen,
   Check,
@@ -81,13 +81,26 @@ export function CodeWalkthrough({
   const [step, setStep] = useState(0);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
+  const [wrapLines, setWrapLines] = useState(true);
+  const source = useRef<HTMLPreElement>(null);
   const current = steps[Math.min(step, steps.length - 1)];
   const fileName = code.match(/Run: node (?:examples\/)?([^\s]+)/)?.[1] ?? 'learning-example.mjs';
+  const lines = code.trimEnd().split('\n');
   useEffect(() => {
     setStep(0);
     setCopied(false);
     setCopyError(false);
   }, [code]);
+  useEffect(() => {
+    const viewport = source.current;
+    const highlighted = viewport?.querySelector<HTMLElement>('.code-highlight');
+    if (!viewport || !highlighted) return;
+    const panel = viewport.getBoundingClientRect();
+    const line = highlighted.getBoundingClientRect();
+    if (line.top >= panel.top + 16 && line.bottom <= panel.bottom - 16) return;
+    // Scroll only the source viewport, keeping the explanation and page in place.
+    viewport.scrollTop += line.top - panel.top - 16;
+  }, [step, code, wrapLines]);
   return (
     <section className="panel code-walkthrough" aria-label={title}>
       <div className="panel-header">
@@ -135,35 +148,65 @@ export function CodeWalkthrough({
           <ChevronRight size={16} />
         </button>
       </div>
-      <pre className="source-code" tabIndex={0} aria-label="Runnable source code">
-        <code>
-          {code
-            .trimEnd()
-            .split('\n')
-            .map((line, index) => (
+      <div className="code-editor">
+        <div className="code-file-bar">
+          <span>
+            <Code2 size={16} aria-hidden="true" />
+            <strong>{fileName}</strong>
+          </span>
+          <span className="code-language">JavaScript · {lines.length} lines</span>
+          <button type="button" aria-pressed={wrapLines} onClick={() => setWrapLines(!wrapLines)}>
+            Wrap lines
+          </button>
+        </div>
+        <pre
+          ref={source}
+          className={`source-code ${wrapLines ? 'source-wrap' : ''}`}
+          tabIndex={0}
+          aria-label="Runnable source code"
+        >
+          <code>
+            {lines.map((line, index) => (
               <span
                 key={index}
-                className={current?.lines.includes(index + 1) ? 'code-highlight' : ''}
+                className={`source-line ${current?.lines.includes(index + 1) ? 'code-highlight' : ''}`}
               >
                 <span className="line-number" aria-hidden="true">
                   {index + 1}
                 </span>
-                <span>{line || ' '}</span>
-                {'\n'}
+                <span
+                  className={`line-text ${line.trimStart().startsWith('//') ? 'code-comment' : ''}`}
+                >
+                  {line || ' '}
+                </span>
               </span>
             ))}
-        </code>
-      </pre>
+          </code>
+        </pre>
+      </div>
       <p className="code-note">
         <BookOpen size={16} />
-        Highlighted lines belong to the current explanation. Save the complete code as {
-          fileName
-        }{' '}
-        and run: node {fileName}.
+        Each numbered row is one source line. Wrap lines fits long lines to the screen. Next part
+        brings its highlighted lines into view. Copy code keeps the original indentation and line
+        breaks. Save the complete code as {fileName} and run: node {fileName}.
       </p>
       {copyError && (
         <p role="status">Clipboard access is unavailable. Select the code above to copy it.</p>
       )}
+      <details className="code-reading-help">
+        <summary>First time reading JavaScript?</summary>
+        <p>
+          Read from top to bottom. <code>//</code> starts a note for humans. <code>const</code>{' '}
+          names a value; <code>let</code> names one we may replace later. A <code>function</code> is
+          a reusable recipe, and <code>return</code> gives its result. Square brackets hold a list;
+          a <code>for</code> loop repeats instructions.
+        </p>
+        <p>
+          This panel explains the program; Next part moves the explanation, without running code. To
+          execute it, install Node.js, save the copied text using the filename above, and run the
+          shown command in a terminal. It prints the calculated results there.
+        </p>
+      </details>
     </section>
   );
 }
