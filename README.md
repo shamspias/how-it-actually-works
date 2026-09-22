@@ -57,6 +57,8 @@ Begin with **Play & see**. Pause after one change and explain it in your own wor
 
 The opening game puts the controls beside Pip's watering station. After **Practice once**, inspect the three-part record: the old guess, the comparison, and the newly saved dial. **Replay this change** highlights that completed update without training again. In the backpropagation story, large cards follow one step at a time; **Preview +0.1 on one weight** shows how a change affects the mixture, guess, and loss before you update the saved model.
 
+After the hiker tutorial, try **A low guess. Which way should the dial turn?** Three cards begin with the same error. Preview a larger dial, choose a move, and see why the correct update can increase, decrease, or leave a weight unchanged. The last card shows why a wrong answer can need a different model, not simply more turns of the same dial.
+
 Use the green story controls to work through an experiment. The separate **Next lesson** control names the upcoming lesson and records the current one as explored. A short question before moving on lets you explain the idea yourself or reveal a plain-language reminder. Completion records exploration, not a test score.
 
 ![Preview one weight change and follow its effect through the mixture, guess, and loss](docs/backprop-preview.png)
@@ -120,6 +122,7 @@ Try the new bridges directly:
 
 ```sh
 node examples/learning-loop.mjs      # What persists after practice?
+node examples/error-and-gradient.mjs # Why doesn't the same error mean the same update?
 node examples/learned-features.mjs   # How do hidden responses change?
 node examples/deep-network.mjs      # How does feedback cross more layers?
 node examples/read-architecture.mjs # Do the blueprint's shapes and counts fit?
@@ -142,6 +145,8 @@ The free network lab's separate “unseen” examples never provide training gra
 The simplifications are explicit: the shortcut classifier receives two numerical features instead of pixels; the attention and memory games demonstrate ingredients rather than complete trained Transformer or Mamba models; and the eight-bit hardware lesson is a teaching format rather than a transistor-level simulation. Physics and quantum computing are discussed with those boundaries in view.
 
 Read the [mathematical derivations](docs/theory.md), [learned-feature experiment](docs/learned-features.md), [deep-network derivation](docs/deep-networks.md), [architecture notes](docs/architectures.md), [physical computation notes](docs/physical-computation.md), and [research-paper reading guide](docs/reading-papers.md). Sources sit beside the claims they support.
+
+The [concept review](docs/concept-review.md) records the questions checked across all twelve chapters, the counterexamples used, and what automated checks cannot establish about understanding.
 
 ## Save an experiment
 

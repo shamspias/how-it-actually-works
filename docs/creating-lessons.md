@@ -73,6 +73,8 @@ Check narrow layouts, long labels, zoom, keyboard focus, and reduced-motion pref
 
 Make the math match the moment being described. A “last update” panel needs the weight, gradient, and learning rate from that update, even if the learner subsequently moves the rate slider. Rounded values should be identified as rounded. With multiple examples, distinguish a single-example derivative from the batch average used for training.
 
+Try a counterexample to each shortcut in the narration. Does “a low guess needs a bigger weight” survive a negative input? Does zero gradient mean zero error? Does a memory failure come from distractions or a later overwrite? Re-read every explanation after changing a control, adding evidence, and resetting. A question must offer a correct answer in every reachable state, including “no change.” Keep worksheet answers separate when their underlying task changes. See the [concept review](concept-review.md) for the current chapter checks.
+
 ## Test the claim, then the interaction
 
 Tests should catch mistakes in the mechanism, not repeat its source code in another spelling. Useful examples include:

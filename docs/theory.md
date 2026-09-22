@@ -6,6 +6,22 @@ The reusable calculations live in [`src/lib/theory.ts`](../src/lib/theory.ts). T
 
 ## An exactly solvable training run
 
+Before solving a whole trajectory, separate **error** from **gradient**. In the hiker chapter's three-card experiment, `p = wx`, `error = p − y`, and `L = ½(p − y)²`. The chain rule gives `dL/dw = (p − y)x`. Error describes the guess; the gradient also includes how this particular weight affects the guess.
+
+At starting weight 1 and learning rate 0.1:
+
+| Input x | Target y | Guess p | Error | Gradient | Next weight | Next loss |
+| ------- | -------- | ------- | ----- | -------- | ----------- | --------- |
+| 2       | 4        | 2       | −2    | −4       | 1.4         | 0.72      |
+| −2      | 0        | −2      | −2    | 4        | 0.6         | 0.72      |
+| 0       | 2        | 0       | −2    | 0        | 1           | 2         |
+
+Every starting loss is 2. A negative input reverses the effect of changing the weight. A zero input removes that weight's influence: `w × 0` cannot reach 2 for any finite w. Adding a bias gives the model a route to change its answer. This is an exact calculation for the specified multiplication and loss, not a universal `error × input` recipe for every parameter. Networks compose local derivatives along paths and add contributions where paths meet. A zero gradient alone does not certify a correct prediction or a global optimum. [Deep Learning, chapter 4: Numerical Computation](https://www.deeplearningbook.org/contents/numerical.html).
+
+The experiment executes [`error-and-gradient.mjs`](../examples/error-and-gradient.mjs) in both the browser and Node. Its finite +0.1 preview is kept separate from the derivative used for the saved update.
+
+## Predicting the whole trajectory
+
 For `L(w) = 0.5(w - 3)^2`, ordinary gradient descent with constant learning rate `η` gives:
 
 ```text

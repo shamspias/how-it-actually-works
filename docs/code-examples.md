@@ -36,12 +36,14 @@ Attention and selective-state examples demonstrate ingredients of architectures.
 
 ## Follow the new bridges
 
+- [`error-and-gradient.mjs`](../examples/error-and-gradient.mjs) starts three cards with error −2 and computes gradients −4, +4, and 0. It powers the hiker chapter's dial experiment. Run `node --test examples/error-and-gradient.test.mjs` to compare its derivatives with finite differences and verify all three update directions.
+
 - [`learning-loop.mjs`](../examples/learning-loop.mjs) separates prediction from the assignment that saves a training update. The same code drives Pip's opening game.
 - [`learned-features.mjs`](../examples/learned-features.mjs) trains a 2 → 4 → 1 network, prints its changed hidden responses, and disconnects a unit to measure its effect. See [learned features](learned-features.md).
 - [`deep-network.mjs`](../examples/deep-network.mjs) implements forward values, every weight and bias derivative, mean batch updates, nonlinear gates, and a scaled residual route. See [deep networks](deep-networks.md).
 - [`read-architecture.mjs`](../examples/read-architecture.mjs) checks a specified decoder's shapes and parameter ledger, builds shifted text targets, and calculates next-token loss. It audits a blueprint; it does not train a language model. See [reading papers](reading-papers.md).
 
-These four examples also run through `make examples`. The feature and deep lessons execute their example modules directly, so the displayed numbers and copyable code share the same calculation.
+These examples also run through `make examples`. The gradient, feature, and deep lessons execute their example modules directly, so the displayed numbers and copyable code share the same calculation.
 
 ## Read the complete neural network
 

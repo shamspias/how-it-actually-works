@@ -46,6 +46,8 @@ node examples/one-weight.mjs
 
 Finish the four stops before opening **Ready to experiment? Break the rule, then try alternatives.** Show an oversized step, then a landscape with several valleys. Compare gradient descent, momentum, random search, and grid search using the displayed calculations and number of loss evaluations. Ask what information each method uses.
 
+**The missing link:** First try **A low guess. Which way should the dial turn?** All three cards start with error −2. Preview the larger dial before choosing an update. Positive input needs a larger weight; negative input needs a smaller weight; zero input cannot improve through this weight. Ask “What does this dial do to the guess?” before naming that local effect a derivative. Use the zero-input card to motivate the bias in the next lesson. Run `node examples/error-and-gradient.mjs` to reproduce the receipts.
+
 **Math follow-up:** Differentiate `L(w) = 0.5(w − 2)²`, then substitute the current weight. Show how repeated multiplication gives an exact forecast for this particular bowl. State that its safe step-size range depends on this objective's curvature.
 
 **Code follow-up:** Run `node examples/gradient-descent.mjs`, change the rate, and inspect the resulting trajectory.
