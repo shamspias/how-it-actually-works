@@ -33,7 +33,9 @@ export default function PredictionJourney() {
             <span className="guide-kicker">{revealed ? 'THE REVEAL' : 'YOUR CLUES'}</span>
             <h2>
               {revealed
-                ? 'Two possible rules. Exactly the same clues.'
+                ? extra
+                  ? 'One new clue separates these two rules.'
+                  : 'Two possible rules. Exactly the same clues.'
                 : 'A mystery machine showed you three answers.'}
             </h2>
             <div className="mystery-cards">
@@ -94,7 +96,9 @@ export default function PredictionJourney() {
                     <span className="pill">WORLD A</span>
                     <h3>Return the input.</h3>
                     <p>
-                      Every clue fits. At input 3, answer <strong>3</strong>.
+                      {extra ? 'Ruled out by the new clue.' : 'All three original clues fit.'} At
+                      input 3, this rule gives <strong>3</strong>
+                      {extra ? ', but the new observation says 7.5.' : '.'}
                     </p>
                     <div className="world-result">{straightRule(probe).toFixed(2)}</div>
                   </div>
@@ -102,7 +106,8 @@ export default function PredictionJourney() {
                     <span className="pill">WORLD B</span>
                     <h3>Add a curve that passes through the clues.</h3>
                     <p>
-                      Every clue fits. At input 3, answer <strong>7.5</strong>.
+                      {extra ? 'All four clues fit.' : 'All three original clues fit.'} At input 3,
+                      this rule gives <strong>7.5</strong>.
                     </p>
                     <div className="world-result">{curvedRule(probe).toFixed(2)}</div>
                   </div>

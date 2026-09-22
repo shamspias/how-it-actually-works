@@ -267,7 +267,11 @@ function BlueprintBuilder({
 
 function PaperReading() {
   const [paper, setPaper] = useState<'transformer' | 'mamba'>('transformer');
-  const [items, setItems] = useState<string[]>([]);
+  const [checked, setChecked] = useState<Record<'transformer' | 'mamba', string[]>>({
+    transformer: [],
+    mamba: [],
+  });
+  const items = checked[paper];
   const questions = [
     'Task: What goes in, and what must come out?',
     'Data: Where do examples and targets come from?',
@@ -333,7 +337,8 @@ function PaperReading() {
       <h3>Your paper-reading worksheet</h3>
       <p>
         Pick a paper. Check an item after you can answer it in your own words. Checkmarks record
-        your reading, not a test score.
+        your reading, not a test score. Each paper has its own checkmarks in this worksheet; leaving
+        this view clears them.
       </p>
       <div className="paper-checklist">
         {questions.map((question) => (
@@ -342,11 +347,12 @@ function PaperReading() {
               type="checkbox"
               checked={items.includes(question)}
               onChange={() =>
-                setItems(
-                  items.includes(question)
-                    ? items.filter((item) => item !== question)
-                    : [...items, question],
-                )
+                setChecked((current) => ({
+                  ...current,
+                  [paper]: current[paper].includes(question)
+                    ? current[paper].filter((item) => item !== question)
+                    : [...current[paper], question],
+                }))
               }
             />
             <span>{question}</span>
@@ -757,16 +763,24 @@ export default function PaperJourney() {
             <div className="paper-equations">
               <code>X₀ = E[token IDs] + P[position IDs]</code>
               <code>Q = XWQ + bQ, K = XWK + bK, V = XWV + bV</code>
-              <code>A = softmax(QKᵀ / √(d/h) + causal mask)V</code>
-              <code>Y = LayerNorm(X + Concat(heads)WO + bO)</code>
+              <code>Qᵢ, Kᵢ, Vᵢ = head i’s d/h-column slices of Q, K, V</code>
+              <code>headᵢ = softmax(QᵢKᵢᵀ / √(d/h) + causal mask)Vᵢ</code>
+              <code>Y = LayerNorm(X + Concat(head₁, …, headₕ)WO + bO)</code>
               <code>Xnext = LayerNorm(Y + ReLU(YW₁ + b₁)W₂ + b₂)</code>
               <code>logits = XL Wvocab + bvocab</code>
               <code>loss = −(1/T) Σₜ ln pₜ(correct next token)</code>
             </div>
             <p>
-              Each head uses a slice of Q, K, and V of width d/h. The causal mask is 0 for allowed
-              entries and −∞ for forbidden ones, so softmax assigns forbidden entries zero
-              probability.
+              The full Q, K, and V tables each have T rows and d columns. Split the columns into h
+              heads; each head compares and mixes only its own slices. Concatenation puts the heads’
+              output columns side by side again. The causal mask is 0 for allowed entries and −∞ for
+              forbidden ones, so softmax assigns forbidden entries zero probability.
+            </p>
+            <p data-testid="paper-head-calculation">
+              In your blueprint: each head’s Qᵢ and Kᵢ has shape {config.tokens} ×{' '}
+              {result.headWidth}. QᵢKᵢᵀ gives {config.tokens} × {config.tokens} scores, scaled by √
+              {result.headWidth}. Mixing Vᵢ produces {config.tokens} × {result.headWidth} numbers
+              per head. Join {config.heads} heads to recover {config.tokens} × {config.width}.
             </p>
             <details>
               <summary>What LayerNorm calculates</summary>

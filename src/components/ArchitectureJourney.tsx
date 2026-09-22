@@ -643,7 +643,11 @@ export default function ArchitectureJourney() {
           <div className="panel-header">
             <div>
               <p className="eyebrow">YOUR MISSION</p>
-              <h3>Keep 7 safe while noise goes past.</h3>
+              <h3>
+                {extraMemory && memoryQuestion === 'latest'
+                  ? 'Finish with the latest marked number: 4.'
+                  : 'Keep 7 safe while noise goes past.'}
+              </h3>
             </div>
             <span className="pill">One memory slot</span>
           </div>
@@ -854,7 +858,7 @@ export default function ArchitectureJourney() {
                   <p>
                     {currentMemory
                       ? `Keep ${format(currentMemory.retained)} from the old memory. Write ${format(currentMemory.written)} from this card. The backpack now holds ${format(currentMemory.after)}.`
-                      : 'Read the marked 7 first. Then follow the three distractions. Try to finish with exactly 7.'}
+                      : `Read the marked 7 first. Then follow the three distractions.${extraMemory ? ' A second marked card will write 4.' : ''} Your question asks for ${targetMemory}: ${extraMemory && memoryQuestion === 'latest' ? 'the latest' : 'the first'} marked number.`}
                   </p>
                 </div>
               </div>
@@ -898,9 +902,13 @@ export default function ArchitectureJourney() {
                   </strong>
                   <p>
                     {memoryCorrect
-                      ? 'Now add a second marked card and ask for the first one. What must a memory keep for that harder task?'
-                      : extraMemory && noiseGate === 0 && memoryQuestion === 'first'
-                        ? 'The second marked card replaced 7 with 4. This one-slot overwrite rule cannot retrieve both marked values. It needs a different memory design or a different task.'
+                      ? extraMemory
+                        ? 'The final marked card writes 4, so this rule can answer “latest”. Now ask for the first marked number. A different question can need a different memory design.'
+                        : 'Now add a second marked card and ask for the first one. What must a memory keep for that harder task?'
+                      : extraMemory && memoryQuestion === 'first'
+                        ? noiseGate === 0
+                          ? 'The second marked card replaced 7 with 4. This one-slot overwrite rule cannot retrieve both marked values. It needs a different memory design or a different task.'
+                          : `The final marked card overwrites ${format(currentMemory?.before ?? 0)} with 4. Closing the distraction gate still cannot keep 7 past that card: marked cards always replace this memory. We need a different memory design to answer “first”.`
                         : 'Distractions wrote into the backpack. Move their gate to 0% and replay. Closing that gate keeps the marked number safe.'}
                   </p>
                 </div>

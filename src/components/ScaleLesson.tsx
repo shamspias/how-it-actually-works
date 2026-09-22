@@ -21,11 +21,11 @@ const architectureCopy: Record<
   Transformer: {
     title: 'Let positions gather useful context.',
     simple:
-      'Attention computes how much each allowed position contributes to another. Learned query and key vectors determine the mixture; value vectors carry the information being mixed.',
+      'Attention builds questions (queries), addresses (keys), and messages (values) from the current input using learned weight tables. Comparing questions with addresses produces scores; softmax turns them into shares for mixing messages.',
     steps: ['Token vectors', 'Queries · keys', 'Mix value vectors', 'Feed-forward block'],
     math: 'Attention(Q, K, V) = softmax(QKᵀ / √dₖ + mask)V',
     detail:
-      'Q, K, and V come from learned projections of token representations. The mask can hide future positions in a causal language model. Feed-forward layers, residual connections, normalization, and position information also matter. An attention score is a mixing coefficient, not by itself a complete explanation of an answer.',
+      'Q, K, and V are working values recalculated from the input using learned projections. A raw comparison score can be negative; softmax converts allowed scores into nonnegative shares that sum to one. Those shares are the mixing coefficients. A mask can hide future positions. Feed-forward layers, residual connections, normalization, and position information also matter. The shares alone do not fully explain an answer.',
   },
   Mamba: {
     title: 'Carry a state. Update what matters.',
@@ -34,7 +34,7 @@ const architectureCopy: Record<
     steps: ['Current input', 'Select update', 'Change state', 'Read output'],
     math: 'hₜ = Āₜhₜ₋₁ + B̄ₜxₜ     →     yₜ = Cₜhₜ',
     detail:
-      'This is a simplified state-space recurrence, not the complete Mamba block. Selection makes update quantities depend on the input; the full block also contains projections, convolution, and gating. Mamba uses an efficient scan during training. Its state is a learned numerical summary, not a transcript of every earlier token.',
+      'This is a simplified state-space recurrence, not the complete Mamba block. Selection makes update quantities depend on the input; the full block also contains projections, convolution, and gating. Mamba uses an efficient scan during training. Its state is a changing numerical summary computed using learned parameters. Updating that state is different from training those parameters, and the state need not preserve every earlier token.',
   },
 };
 
