@@ -11,6 +11,7 @@ import {
 } from '../lib/optimizers';
 import { CodeWalkthrough, ModeSwitcher, type LearningMode } from './LearningModes';
 import gradientCode from '../../examples/gradient-descent.mjs?raw';
+import GradientCompass from './GradientCompass';
 import './gradient.css';
 
 const fmt = (n: number) =>
@@ -104,7 +105,7 @@ function journeyReducer(state: JourneyState, action: Action): JourneyState {
 const guide = [
   {
     title: 'First, you steer.',
-    text: 'Our practice card says: input 1 should give answer 2. The machine multiplies 1 by its weight, now 5, so it guesses 5. Move the hiker to change that weight. Which way makes the guess closer to 2?',
+    text: 'Our practice card says: input 1 should give answer 2. Move the hiker to change the weight. Which way makes the guess closer to 2?',
     next: 'Next: feel the slope',
   },
   {
@@ -359,6 +360,8 @@ export default function GradientJourney() {
                     : guide[stage].title}
                 </h2>
                 <p>
+                  {stage === 0 &&
+                    `The machine multiplies 1 by its current weight, ${fmt(weight)}, so it guesses ${fmt(weight)}. `}
                   {stage === 3 && !slopeMethod
                     ? 'Check a candidate number. Score its mistake. Keep it only if it improves the best guess so far. The orange ring shows the candidate, even when the hiker stays put.'
                     : guide[stage].text}
@@ -500,6 +503,7 @@ export default function GradientJourney() {
             )}
           </section>
 
+          {stage === 3 && <GradientCompass />}
           {stage === 3 && (
             <details className="panel gradient-challenges">
               <summary>Ready to experiment? Break the rule, then try alternatives.</summary>

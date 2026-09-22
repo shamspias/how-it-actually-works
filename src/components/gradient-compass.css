@@ -1,0 +1,233 @@
+.gradient-compass {
+  display: grid;
+  gap: 18px;
+}
+.gradient-compass > h2 {
+  font-size: 23px;
+}
+.gradient-compass p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.compass-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.compass-cards button {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  padding: 15px;
+  border: 1px solid #d8dfd0;
+  border-radius: 10px;
+  background: #fafbf7;
+  color: #43513b;
+  cursor: pointer;
+}
+.compass-cards button[aria-pressed='true'] {
+  border-color: #7a658e;
+  background: #f2edf7;
+  box-shadow: inset 0 0 0 1px #7a658e;
+}
+.compass-cards span,
+.compass-cards small {
+  font-size: 12px;
+}
+.compass-machine {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  background: #f4f6ef;
+  border-radius: 12px;
+  padding: 24px 12px;
+}
+.compass-machine > div {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.compass-machine span,
+.compass-machine small {
+  font-size: 12px;
+  color: #5c6953;
+}
+.compass-machine strong {
+  font-size: 25px;
+  font-variant-numeric: tabular-nums;
+}
+.compass-dial-face {
+  width: 58px;
+  height: 58px;
+  border: 2px solid #806796;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #ece5f3;
+}
+.compass-dial-face > span {
+  width: 3px;
+  height: 24px;
+  background: #705488;
+  border-radius: 2px;
+  transform-origin: 50% 100%;
+  margin-top: -24px;
+  transition: transform 650ms ease;
+}
+.compass-number-line {
+  position: relative;
+  height: 102px;
+  margin: 16px 18px 0;
+}
+.compass-number-line::before {
+  content: '';
+  position: absolute;
+  top: 37px;
+  left: 0;
+  right: 0;
+  border-top: 2px solid #aebaa4;
+}
+.compass-target,
+.compass-guess {
+  position: absolute;
+  top: 32px;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+}
+.compass-target {
+  background: #568147;
+  box-shadow: 0 0 0 5px #e4eddc;
+}
+.compass-guess {
+  background: #806097;
+  transition: left 650ms ease;
+}
+.compass-target span,
+.compass-guess span {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 650;
+}
+.compass-target span {
+  bottom: 26px;
+  color: #4d703e;
+}
+.compass-guess span {
+  top: 25px;
+  color: #76548c;
+}
+.compass-low,
+.compass-high {
+  position: absolute;
+  top: 74px;
+  font-size: 11px;
+  color: #5c6953;
+}
+.compass-low {
+  left: 0;
+}
+.compass-high {
+  right: 0;
+}
+.compass-step {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  border-top: 1px solid #e4e8db;
+  padding-top: 18px;
+}
+.compass-step h3,
+.compass-receipt h3 {
+  font-size: 17px;
+}
+.compass-choices {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.compass-choices [aria-pressed='true'] {
+  background: #ece5f3;
+  border-color: #806796;
+}
+.compass-feedback {
+  padding: 14px;
+  border-left: 3px solid #806796;
+  background: #f5f0f8;
+  border-radius: 0 8px 8px 0;
+}
+.compass-receipt {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+  background: #eff4e9;
+  border-radius: 12px;
+}
+.compass-receipt ol {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.compass-receipt li + li {
+  margin-top: 10px;
+}
+.gradient-compass .text-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+}
+.compass-more {
+  border-top: 1px solid #e4e8db;
+  padding-top: 18px;
+}
+.compass-more > summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.6;
+}
+.compass-more > div {
+  padding-top: 18px;
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.compass-more code {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+  .compass-cards {
+    grid-template-columns: 1fr;
+  }
+  .compass-cards button {
+    grid-template-columns: 48px 1fr;
+    gap: 5px 10px;
+    padding: 12px;
+  }
+  .compass-cards small {
+    grid-column: 2;
+  }
+  .compass-machine {
+    padding: 18px 5px;
+    gap: 4px;
+  }
+  .compass-machine span {
+    font-size: 11px;
+  }
+  .compass-receipt {
+    padding: 15px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .compass-guess,
+  .compass-dial-face > span {
+    transition: none;
+  }
+}
