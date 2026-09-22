@@ -34,7 +34,7 @@ const notes = [
   'We label only the final answer: ring or quiet. There are no correct-answer labels for the four mixers in the middle.',
   'Keep the same light card selected. Practice changes the weights, so the same lights produce different numbers inside the program. We call these internal responses features. “Hidden” means between the input and answer; you can inspect them here.',
   'Let’s change one thing: disconnect one mixer from the final answer. Keep every other weight fixed. Then measure what changes.',
-  'The saved weights are the learned recipe. Using the recipe makes a guess. Changing the recipe requires another learning step.',
+  'The saved weights and biases are the learned recipe. Weights multiply inputs; biases add an extra amount. Using these saved settings makes a guess. A new prediction alone does not change them.',
 ];
 const signed = (value: number) => `${value >= 0 ? '+' : '−'}${Math.abs(value).toFixed(3)}`;
 const probability = (value: number) => `${(value * 100).toFixed(1)}%`;
@@ -277,7 +277,7 @@ export default function FeatureJourney() {
                   </div>
                   <ArrowRight className="feature-machine-arrow" size={22} aria-hidden="true" />
                   <div className="feature-machine-output">
-                    <span>CHANCE OF RING</span>
+                    <span>MODEL’S RING SCORE</span>
                     <strong data-testid="feature-probability">{probability(response.p)}</strong>
                     <span>{response.p >= 0.5 ? 'Ring' : 'Quiet'} at a 50% cutoff</span>
                   </div>
@@ -287,7 +287,7 @@ export default function FeatureJourney() {
                   <LightPair x={CARDS[cardIndex].x} y={CARDS[cardIndex].y} />
                   <ArrowRight aria-hidden="true" />
                   <span className="feature-saved-recipe">
-                    Saved weights
+                    Saved settings
                     <br />
                     <strong>17 numbers</strong>
                   </span>
@@ -299,7 +299,8 @@ export default function FeatureJourney() {
                 <div className="feature-small-note">
                   Response means a number between −1 and +1. The middle mark is zero. Different
                   starting weights give the mixers different responses; none has a name like “both
-                  lights.”
+                  lights.” The ring score is the model’s probability estimate for Ring, not a
+                  measured chance of being correct.
                 </div>
               )}
               {stage === 3 && (
@@ -382,6 +383,11 @@ export default function FeatureJourney() {
               )}
               {stage === 5 && (
                 <div className="feature-question">
+                  <p>
+                    What are the 17 saved numbers? The four mixers each have 2 weights and 1 bias:
+                    12 numbers. The final station has 4 weights and 1 bias: 5 more. Altogether, that
+                    is 12 weights + 5 biases.
+                  </p>
                   <h3>What did practice leave behind?</h3>
                   <div className="choice-buttons">
                     <button
@@ -389,7 +395,7 @@ export default function FeatureJourney() {
                       aria-pressed={savedGuess === 'weights'}
                       onClick={() => setSavedGuess('weights')}
                     >
-                      Changed weights
+                      Changed weights and biases
                     </button>
                     <button
                       className="button"
@@ -403,7 +409,7 @@ export default function FeatureJourney() {
                     <p role="status">
                       {savedGuess === 'weights'
                         ? 'Yes. Each layer turns an input into numbers the next layer can use. Training adjusts those transformations together.'
-                        : 'No hidden labels were supplied. Only the weights changed. Choose the saved recipe.'}
+                        : 'No hidden labels were supplied. Practice changed the weights and biases. Choose the saved recipe.'}
                     </p>
                   )}
                   <button className="button" onClick={() => setUses(uses + 1)}>

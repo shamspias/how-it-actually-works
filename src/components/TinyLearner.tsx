@@ -589,7 +589,11 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
               <span className="tiny-update-operator">×</span>
               <div>
                 <span>GRADIENT</span>
-                <b className="tiny-gradient-value">{number(calculation.gradient)}</b>
+                <b className="tiny-gradient-value">
+                  {calculation.gradient !== 0 && Math.abs(calculation.gradient) < 0.0005
+                    ? calculation.gradient.toExponential(2)
+                    : number(calculation.gradient)}
+                </b>
               </div>
               <ArrowRight size={19} className="tiny-update-arrow" />
               <div className="tiny-update-after">
@@ -597,11 +601,13 @@ export default function TinyLearner({ onContinue }: { onContinue: () => void }) 
                 <b>{number(calculation.weightAfter)}</b>
               </div>
               <p>
-                {calculation.gradient < -0.0005
-                  ? 'Negative slope? Subtracting it increases the weight.'
-                  : calculation.gradient > 0.0005
-                    ? 'Positive slope? Subtracting it decreases the weight.'
-                    : 'A zero gradient means this weight stays put.'}
+                {calculation.gradient === 0
+                  ? 'A zero gradient means this weight stays put.'
+                  : Math.abs(calculation.gradient) < 0.0005
+                    ? `This gradient is small, not zero. It proposes a tiny ${calculation.gradient < 0 ? 'increase' : 'decrease'} in the weight; rounded weights may look unchanged.`
+                    : calculation.gradient < 0
+                      ? 'Negative slope? Subtracting it increases the weight.'
+                      : 'Positive slope? Subtracting it decreases the weight.'}
               </p>
             </div>
             {showMath && (

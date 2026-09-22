@@ -628,6 +628,12 @@ export default function DeepJourney() {
               If you change this setup during the unfinished visual story, returning to Play &amp;
               see restarts that story with its original numbers.
             </p>
+            <p>
+              Changing depth, gate, or bypass rebuilds the chain: every station starts with the
+              current first weight, and every bias resets to 0. Choosing a starting multiplier
+              rebuilds it with that number instead. Changing the input or learning rate keeps the
+              saved weights and biases.
+            </p>
             {controls}
             {chain(true)}
             {pathProduct}

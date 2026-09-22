@@ -36,7 +36,7 @@ export default function BackpropJourney() {
   const [playing, setPlaying] = useState(false);
   const [rate, setRate] = useState(0.1);
   const [target, setTarget] = useState(2);
-  const [choice, setChoice] = useState<'up' | 'down' | null>(null);
+  const [choice, setChoice] = useState<'up' | 'down' | 'same' | null>(null);
   const [receipt, setReceipt] = useState<StepReceipt | null>(null);
   const [round, setRound] = useState(0);
   const [lab, setLab] = useState(false);
@@ -100,7 +100,7 @@ export default function BackpropJourney() {
     },
     {
       title: 'Mix the two results to make a guess.',
-      text: `One final station combines the two mixtures. Its answer is ${n(trace.prediction)}. So far, we have only calculated: none of the weights have changed.`,
+      text: `One final station combines the two mixtures. Its answer is ${n(trace.prediction)}. During this forward pass, we only calculate: the weights stay at their current settings.`,
       action: 'Look at the guess. Next we will compare it with the practice answer.',
       calculation: `${n(trace.hidden[0])} × ${n(network.outputWeights[0])} + ${n(trace.hidden[1])} × ${n(network.outputWeights[1])} + ${n(network.outputBias)} = ${n(trace.prediction)}. The final station has its own two weights and a bias. This example uses no gate at the output.`,
     },
@@ -118,8 +118,8 @@ export default function BackpropJourney() {
     },
     {
       title: 'Choose which way to turn the dial.',
-      text: `The first weight’s gradient is ${n(g)}. ${g < 0 ? 'Its negative sign says a tiny increase would lower this loss.' : g > 0 ? 'Its positive sign says a tiny decrease would lower this loss.' : 'A zero gradient suggests no change to this weight.'} Now choose a direction.`,
-      action: 'Make your prediction, then move all the weights once.',
+      text: `The first weight’s gradient is ${n(g)}. ${g < 0 ? 'Its negative sign says a tiny increase would lower this loss.' : g > 0 ? 'Its positive sign says a tiny decrease would lower this loss.' : 'Multiplying this zero gradient by the learning rate gives zero, so this update leaves the weight alone.'} Predict what the update will do.`,
+      action: 'Make your prediction, then apply the update rule to every weight and bias.',
       calculation: `New first weight = ${n(network.weights[0][0])} − ${rate} × (${n(g)}) = ${n(network.weights[0][0] - rate * g)}. We subtract learning rate × gradient. Each weight and bias gets its own gradient, calculated using the same old network. A finite step can still overshoot.`,
     },
     {
@@ -398,7 +398,8 @@ export default function BackpropJourney() {
               {stage === 5 && (
                 <div className="guide-prompt">
                   <p>
-                    Before pressing the button: should the highlighted weight increase or decrease?
+                    Before pressing the button: will the highlighted weight increase, decrease, or
+                    stay the same?
                   </p>
                   <div>
                     <button
@@ -415,14 +416,25 @@ export default function BackpropJourney() {
                     >
                       Decrease ↓
                     </button>
+                    <button
+                      className="button"
+                      aria-pressed={choice === 'same'}
+                      onClick={() => setChoice('same')}
+                    >
+                      Stay the same
+                    </button>
                   </div>
                   <p className="guide-feedback" role="status">
                     {choice
-                      ? g === 0
-                        ? 'Its gradient is zero. Neither direction is suggested by this local derivative.'
-                        : (choice === 'up') === g < 0
-                          ? 'Yes. Subtracting the signed gradient moves this weight in that direction.'
-                          : 'Try the subtraction: new weight = old weight − step size × gradient.'
+                      ? choice === 'same'
+                        ? g === 0
+                          ? 'Yes. Learning rate × 0 = 0, so this weight stays put. Other weights can still change.'
+                          : 'This gradient is not zero. Subtracting learning rate × gradient will change the weight. Try a direction.'
+                        : g === 0
+                          ? 'Learning rate × 0 = 0. This rule leaves the weight alone; choose Stay the same.'
+                          : (choice === 'up') === g < 0
+                            ? 'Yes. Subtracting the signed gradient moves this weight in that direction.'
+                            : 'Try the subtraction: new weight = old weight − step size × gradient.'
                       : 'A gradient is the slope of the loss with respect to this particular weight.'}
                   </p>
                 </div>
@@ -732,6 +744,7 @@ export default function BackpropJourney() {
                   next.biases[0] = -10;
                   setNetwork(next);
                   setReceipt(null);
+                  setChoice(null);
                   setStage(0);
                   setRound(0);
                 }}
@@ -757,6 +770,7 @@ export default function BackpropJourney() {
                 onChange={(e) => {
                   setRate(+e.target.value);
                   setReceipt(null);
+                  setChoice(null);
                   setStage(0);
                 }}
               />
